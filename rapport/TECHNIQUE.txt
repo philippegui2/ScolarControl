@@ -1,0 +1,11 @@
+/**
+* Dossier d'énumération de remarques
+*
+***/
+
+L'application compte deux principaux types d'utilisateurs
+  -> Les enseignants
+  -> Les élèves
+  -> Un admin (aussi)
+Chaque type d'utilisateur a un dossier spécifique qui porte son nom
+Tous les dossiers utilsateurs sont réunis dans le dossier /users
