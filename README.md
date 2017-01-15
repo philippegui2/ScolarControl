@@ -22,6 +22,7 @@ gestion scolaire
 	* - [ ] Ajout des clés dans le respect total des règles
 * Systèmes & Télécoms
 	* - [ ] Ajout d'evoie de notificaions par SMS
+* Fin de taches	
 ## Taches Réalisées
 * Développement
 	* Choix des langages de programmation _php /Objet_ _Javascript/Jquery_ _Ajax_ _JSON_
