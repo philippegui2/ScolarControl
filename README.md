@@ -7,7 +7,9 @@ gestion scolaire
 	* Une bonne gestion de tous les acteurs participants à la scolarité
 	* une gestion efficaces des payements scolaires 
 	* Aux parents d'élèves de surveiller les activités scolaires des leurs enfants
+Fin des objectifs
 ## Taches à réaliser
+====================
 * Developpement
 	* - [x] Choix des langages de programmation
 	* - [x] Développement des IHM
@@ -22,8 +24,9 @@ gestion scolaire
 	* - [ ] Ajout des clés dans le respect total des règles
 * Systèmes & Télécoms
 	* - [ ] Ajout d'evoie de notificaions par SMS
-* Fin de taches	
+Fin de taches	
 ## Taches Réalisées
+====================
 * Développement
 	* Choix des langages de programmation _php /Objet_ _Javascript/Jquery_ _Ajax_ _JSON_
 	* Développement des IHM
