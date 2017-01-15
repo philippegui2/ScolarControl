@@ -1,15 +1,13 @@
 # ScolarControl
 gestion scolaire
-## Objectifs
+## Objectifs#
 * Permettre:
 	* Une gestion facile des dossiers des élèves
 	* Un bon suivi des elèves
 	* Une bonne gestion de tous les acteurs participants à la scolarité
 	* une gestion efficaces des payements scolaires 
 	* Aux parents d'élèves de surveiller les activités scolaires des leurs enfants
-Fin des objectifs
-## Taches à réaliser
-====================
+##Taches à réaliser#
 * Developpement
 	* - [x] Choix des langages de programmation
 	* - [x] Développement des IHM
@@ -25,8 +23,7 @@ Fin des objectifs
 * Systèmes & Télécoms
 	* - [ ] Ajout d'evoie de notificaions par SMS
 Fin de taches	
-## Taches Réalisées
-====================
+##Taches Réalisées#
 * Développement
 	* Choix des langages de programmation _php /Objet_ _Javascript/Jquery_ _Ajax_ _JSON_
 	* Développement des IHM
