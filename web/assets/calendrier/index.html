@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<script type="text/javascript" src="calendrier.js"></script>
+		<link rel="stylesheet" media="screen" type="text/css" title="Design" href="design.css" />
+	</head>
+	<body>
+		<!-- Tableau obligatoire ! C'est lui qui contiendra le calendrier ! -->
+		<table class="ds_box" cellpadding="0" cellspacing="0" id="ds_conclass" style="display: none;">
+			<tr>
+				<td id="ds_calclass"></td>
+			</tr>
+		</table>
+		
+		
+		<!-- Les champs texte avec le code "onclick" déclenchant le script -->
+		<input type="text" name="date1" onclick="ds_sh(this);" />
+		
+		<input type="text" name="date2" onclick="ds_sh(this);" />
+		
+		<input type="text" name="date3" onclick="ds_sh(this);" />
+		
+	</body>
+</html>

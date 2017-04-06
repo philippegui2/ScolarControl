@@ -1,24 +1,22 @@
-<?php
-  define("NOMPAGE", "Accueil");
-  define("ENTETEPAGE", "Entete");
-  include_once("menu.php");
-?>
-
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <a class="" href="../admin/index.php?road=ajouter">
 		<div class="info-box blue-bg">
-			<i class="fa fa-cloud-download"></i>
-			<div class="count">Nombre d'élèves</div>
-			<div class="title">Eleves</div>
+			<i class="fa fa-edit fa-fw"></i>
+			<div class="count">Ajout</div>
+			<div class="title">Ajouter des utilisateurs</div>
 		</div><!--/.info-box-->
+            </a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <a class="" href="../admin/index.php?road=lister">
 		<div class="info-box brown-bg">
-			<i class="fa fa-shopping-cart"></i>
-			<div class="count">Nombres d'enseignant</div>
-			<div class="title">Enseignants</div>
+			<i class="fa fa-table fa-fw"></i>
+			<div class="count">listage</div>
+			<div class="title">Lister des utilisateurs</div>
 		</div><!--/.info-box-->
+            </a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -71,7 +69,3 @@
 		</div><!--/.info-box-->
 	</div><!--/.col-->
 </div><!--/.row-->
-
-<?php
-  include_once("menuBas.php");
-?>

@@ -51,7 +51,7 @@
             </div>
 
             <!--logo start-->
-            <a href="index.html" class="logo">Scolar<span class="lite">Control</span></a>
+            <a href="../admin/index.php?road=accueil" class="logo">Scolar<span class="lite">Control</span></a>
             <!--logo end-->
 
             <div class="nav search-row" id="top_menu">
@@ -107,27 +107,25 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
+                  <li>
+                      <a class="" href="../admin/index.php?road=ajouter">
+                          <i class="fa fa-edit fa-fw"></i>
+                          <span>Ajouter utilisateur</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a class="" href="../admin/index.php?road=lister">
+                          <i class="fa fa-table fa-fw"></i>
+                          <span>Liste utilisateurs</span>
+
+                      </a>
+                  </li>
                   <li class="active">
-                      <a class="" href="index.html">
+                      <a class="" href="../admin/index.php?road=accueil">
                           <i class="icon_house_alt"></i>
                           <span>Accueil</span>
                       </a>
                   </li>
-                  <li>
-                      <a class="" href="widgets.html">
-                          <i class="icon_genius"></i>
-                          <span>Widgets</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="" href="chart-chartjs.html">
-                          <i class="icon_piechart"></i>
-                          <span>Charts</span>
-
-                      </a>
-
-                  </li>
-
               </ul>
               <!-- sidebar menu end-->
           </div>
