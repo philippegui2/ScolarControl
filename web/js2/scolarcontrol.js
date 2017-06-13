@@ -6,6 +6,7 @@
  * ** NOMDELAPAGEDANSLAQUELLEELLESETROUVEnomDeLaFonction **
  */
 
+/*
 function AJOUTERajouterUtilisateur(){
     $(function() 
         {       
@@ -21,3 +22,4 @@ function AJOUTERajouterUtilisateur(){
         }
       );
 }
+*/

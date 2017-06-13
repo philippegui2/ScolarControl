@@ -44,3 +44,6 @@ gestion scolaire
 	* Type de base de données choisie _Mysql_
 	* Création de la base de données
 * Systèmes & Télécoms
+
+##Focntionnalités à ajouter##
+*possibilité de voir la liste des élèves qui ne sont pas en règles et ceci par classe (zone comptabilité)

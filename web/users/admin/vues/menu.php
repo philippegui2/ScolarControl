@@ -33,6 +33,7 @@
     <link href="../../css/style-responsive.css" rel="stylesheet" />
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <script src="../../js/jquery.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
     <!--[if lt IE 9]>
       <script src="../../js/html5shiv.js"></script>
@@ -120,10 +121,10 @@
 
                       </a>
                   </li>
-                  <li class="active">
-                      <a class="" href="../admin/index.php?road=accueil">
-                          <i class="icon_house_alt"></i>
-                          <span>Accueil</span>
+                  <li class="">
+                      <a class="" href="../admin/index.php?road=parametrage">
+                          <i class="fa fa-gears fa-fw"></i>
+                          <span>Parametrage</span>
                       </a>
                   </li>
               </ul>

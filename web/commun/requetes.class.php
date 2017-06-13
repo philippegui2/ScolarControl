@@ -1,8 +1,10 @@
 <?php
 /*
-*fichier de configuration de requetes vers la base de données
-*
-*/
+ * fichier de configuration de requetes vers la base de données
+ * @author Philippe Kolama GUILAVOGUI
+ * This is a database requests file
+ */
+
 Class Requetes
 {
     private $base;
@@ -76,39 +78,138 @@ Class Requetes
     //fin méthodes secondaires
     //méthodes de recupération dans la base de données
         public function getUser(){
-            $req= "SELECT * FROM `users`";
+            $req= "SELECT * FROM `users` order by prenomUser";
             return $this->select($req,$params);
         }
     
         public function getUserByid($id){
-            
+            $req= "SELECT * FROM `users` WHERE matUser=:matUser";
+            $params = array(
+                    "matUser" => $id
+            );
+            return $this->select($req,$params);
         }
         
         public function getStatut(){
             $req= "SELECT * FROM `statut`";
             return $this->select($req,$params);
         }
-    
+        
+        public function getDepartement(){
+            $req= "SELECT * FROM `departement`";
+            return $this->select($req,$params);
+        }
+        
+        public function getClasse(){
+            $req= "SELECT * FROM `classe` order by libelle";
+            return $this->select($req,$params);
+        }
+        
+        public function getMatiere(){
+            $req= "SELECT * FROM `matiere` order by libelle";
+            return $this->select($req,$params);
+        }
+        
+        public function getMatiereClasseDepartement(){
+            $req="SELECT m.id idMatiere, m.libelle libelleMatiere, m.coefficient coefMatiere, c.id idClasse, c.libelle libelleClasse, d.id idDepartement,d.libelle libelleDepartement from matiere m, classe c, departement d where m.idClasse=c.id and c.departement=d.id";
+            return $this->select($req,$params);
+        }
+        
+        
+        public function getMatiereByClasse($idClasse){
+            $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from matiere_classe mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
+            $params = array(
+                    "idClasse" => $idClasse,
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getNoteByUserandMatiere($idEleve,$idMatiere){
+            $req="SELECT * from notes where matUser=:matUser and idMatiere=:idMatiere";
+            $params = array(
+                "matUser" => $idEleve,
+                "idMatiere" => $idMatiere,
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getEleveById($idEleve){
+            ;  
+        }
+        
+        public function getClasseDepartement(){
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id";
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
     
     //méthodes d'enregistement dans la base de données
-        public function setUser($donnees){
-            $req = "INSERT INTO `users` (`matUser`, `prenomUser`, `nomUser`, `pseudoUser`, `sexeUser`, `naissanceUser`, `passwordUser`, `supprimer`, `statutUser`) VALUES (:matUser, :prenomUser, :nomUser, :pseudoUser, :sexeUser, :naissanceUser, :passwordUser, :supprimer, :statutUser)";
+        public function setUser($donnees,$photo){//enregistrement des nouveaux utilisateurs
+            $req = "INSERT INTO `users` (`matUser`, `prenomUser`, `nomUser`, `pseudoUser`, `sexeUser`, `naissanceUser`, `lieuNaissance`, `adresseUser`, `contactUser`, `passwordUser`, `dateInscription`, `photo`,`supprimer`, `statutUser`) VALUES (:matUser, :prenomUser, :nomUser, :pseudoUser, :sexeUser, :naissanceUser, :lieuNaissance, :adresseUser, :contactUser,:passwordUser, :dateInscription, :photo,:supprimer, :statutUser)";
             $params = array(
                     "matUser" => $donnees["matUser"],
                     "prenomUser" => $donnees["prenomUser"],
                     "nomUser" => $donnees["nomUser"],
                     "pseudoUser" => $donnees["matUser"],
                     "sexeUser" => $donnees["sexeUser"],
-                    "naissanceUser" => $donnees["naissanceUser"],
+                    "naissanceUser" => implode("-",array_reverse(explode("/",$donnees["naissanceUser"]))),
+                    "lieuNaissance" => $donnees["lieuNaissanceUser"],
+                    "adresseUser" => $donnees["adresseUser"],
+                    "contactUser" => $donnees["contactUser"],
                     "passwordUser" => MD5($donnees["matUser"]),
+                    "dateInscription" => date("Y-m-d"),
+                    "photo" => $photo,
                     "supprimer" => 0,
                     "statutUser" => $donnees["statutProfil"]
             );
             return $this->insert($req,$params);
-            
+        }
+        
+        public function setDepartement($donnees){//enregistrement des nouveaux départements
+            $req = "INSERT INTO `departement` (`id`, `libelle`) VALUES (NULL, :libelle)";
+            $params = array(
+             "libelle" => $donnees["libDpt"]   
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setClasse($donnees){//enregistrement des nouvelles classes
+            $req = "INSERT INTO `classe` (`id`, `libelle`, `departement`) VALUES (NULL, :libelle, :departement)";
+            $params = array(
+             "libelle" => $donnees["libDpt"],
+             "departement" => $donnees["departement"]
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setMatiere($donnees){//enregistrement des nouvelles classes
+            $req = "INSERT INTO `matiere` (`id`, `libelle`, `idClasse`) VALUES (NULL, :designation, :idClasse)";
+            $params = array(
+                "designation" => $donnees["designation"],
+                "idClasse" => $donnees["classeMatiere"]
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setClasseMatiere($classe,$matiere,$coefficient){//enregistrement des nouvelles classes
+            $req = "INSERT INTO `matiere_classe` (`idClasse`, `idMatiere`,`coefficient`) VALUES (:idClasse, :idMatiere,:coefficient)";
+            $params = array(
+             "idClasse" => $classe,
+             "idMatiere" => $matiere,
+             "coefficient" => $coefficient,
+            );
+            return $this->insert($req,$params);
         }
 
+        public function setEleve($donnees){
+            $req = "INSERT INTO `eleve` (`matUser`, `idClasse`) VALUES (:matUser, :idClasse)";
+            $params = array(
+             "matUser" => $donnees["matUser"],
+             "idClasse" => $donnees["classeEleve"]
+            );
+            return $this->insert($req,$params);
+        }
+                
 
         //fin méthodes d'enregistement dans la base de données
     

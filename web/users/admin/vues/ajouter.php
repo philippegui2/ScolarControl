@@ -8,7 +8,7 @@
             <div class="panel-body">
                     <div class="col-lg-12">
                             <!--Debut du formulaire d'inscription-->
-                        <form role="form" method="POST" action="../admin/index.php">
+                        <form enctype="multipart/form-data" role="form" method="POST" action="../admin/index.php">
                             <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                                 <input type="text" class="form-control" placeholder="matricule" name="matUser">
@@ -39,27 +39,24 @@
                                 <span class="input-group-addon"><i class="fa fa-calendar fa-faw"></i></span>
                                 <input type="text" class="form-control" placeholder="Date de naissance" name="naissanceUser" id="dateP">
                             </div>
-
                             <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-map-marker fa-faw"></i></span>
                                 <input type="text" class="form-control" placeholder="Lieu de naissance" name="lieuNaissanceUser">
                             </div>
-
                             <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-phone fa-faw"></i></span>
                                 <input type="num" class="form-control" placeholder="Telephone" name="contactUser">
                             </div>
-
                             <div class="form-group input-group">
                                 <select class="form-control" required name="sexeUser">
                                     <option value="X" >Sexe de l'utilisateur</option>
-                                    <option value="M" >Masculin</option>
-                                    <option value="F" >Feminin</option>
+                                    <option value="Masculin" >Masculin</option>
+                                    <option value="Feminin" >Feminin</option>
                                 </select>
                             </div>
                             <div class="form-group input-group">
                                 <label>Statut</label>
-                                <select class="form-control" required name="statutProfil">
+                                <select class="form-control" required name="statutProfil" id="statut">
                                     <option value="0">choisir</option>
                                     <?php 
                                         foreach ($statuts as $statut) 
@@ -68,8 +65,28 @@
                                         }                                                   
                                     ?>
                                 </select>
-
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputFile">Photo</label>
+                                <input type="file" id="exampleInputFile" name="photoUser">
+                            </div>
+                            <!-- zone des ajouts-->
+                                <div id="eleve">
+                                    <div class="form-group input-group">
+                                        <select class="form-control" required name="classeEleve">
+                                            <option value="0">choisir la classe</option>
+                                            <?php 
+                                                foreach ($classesDpt as $classeDpt) 
+                                                {
+                                                    echo '<option value="'.$classeDpt['idClasse'].'">'.$classeDpt['idClasse']."".$classeDpt['libelleClasse']." ".$classeDpt['libelleDepartement'].'</option>';
+                                                }                                                   
+                                            ?>
+                                        </select>
+                                    </div>                         
+                                </div>
+                            
+                            
+                            <!-- fin zone des ajouts-->
                             <button type="submit" class="btn btn-info" name="action" value="AJOUTERajouter">Créer</button>
                         </form>
                         <!--Fin du formulaire d'inscription-->
@@ -80,4 +97,24 @@
         <!-- /.panel -->
     </div>
 </div><!--/.row-->
-
+<script type="text/javascript">
+    
+{
+	$(function()
+	{   
+            //zone d'initialisation
+                $("#eleve").hide();
+            //fin zone d'initialisation
+            $("#statut").click(function(){
+                if($("#statut").prop('selected',true).val()==2){
+                    $("#eleve").show();
+                }else{
+                    $("#eleve").hide();
+                }
+                    
+            }
+            );
+            
+	});
+}
+</script>
