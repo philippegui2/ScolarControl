@@ -57,8 +57,7 @@ if(0)
                     break;
                 case "notes":{
                         //$matieres=$req->getMatiereByClasse(4);//recuperation des matières en fonction de la classe
-                        print_r($notes=$req->getNoteByUserandMatiere("T4WR",3));
-                    echo "toto";
+                        $notes=$req->getNoteByUser("T4WR");
                     }
                     break;
                 case "departements":{
@@ -96,7 +95,7 @@ if(0)
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
             switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages 
                 case "infos":{
-                    $_SESSION["user"]=$userEnVue=$req->getUserByid($_REQUEST["param"]);
+                    $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     //$statuts=$req->getStatut();
                     }
                     break;
@@ -149,7 +148,9 @@ if(0)
             break;
             case "MATIEREajouter":{
                 $req->setMatiere($_REQUEST);
-                $matieres=$req->getMatiere();
+                //$matieres=$req->getMatiere();
+                $matieres=$req->getMatiereClasseDepartement();
+                $classesDpt=$req->getClasseDepartement();
                 include_once("vues/matiere.php");//On recharge la page
             }
             break;

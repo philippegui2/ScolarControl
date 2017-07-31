@@ -124,6 +124,15 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+        public function getNoteByUser($idEleve){
+            //$req="SELECT n.idMatiere idMatiere, n.noteControle noteControle, n.noteTP noteTP, n.noteExamen noteExamen, m.libelle libelleMatiere, m.coefficient coefMatiere from matiere m, note n where n.idMatiere=m.id and n.matUser=:matUser";
+            $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle, m.coefficient  from notes n INNER JOIN matiere m ON n.idMatiere=m.id where matUser=:matUser";
+            $params = array(
+                "matUser" => $idEleve
+            );
+            return $this->select($req,$params);
+        }
+        
         public function getNoteByUserandMatiere($idEleve,$idMatiere){
             $req="SELECT * from notes where matUser=:matUser and idMatiere=:idMatiere";
             $params = array(
@@ -182,10 +191,11 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setMatiere($donnees){//enregistrement des nouvelles classes
-            $req = "INSERT INTO `matiere` (`id`, `libelle`, `idClasse`) VALUES (NULL, :designation, :idClasse)";
+        public function setMatiere($donnees){//enregistrement des nouvelles matières
+            $req = "INSERT INTO `matiere` (`id`, `libelle`, `coefficient`, `idClasse`) VALUES (NULL, :designation, :coefficient, :idClasse)";
             $params = array(
                 "designation" => $donnees["designation"],
+                "coefficient" => $donnees["coefMatiere"],
                 "idClasse" => $donnees["classeMatiere"]
             );
             return $this->insert($req,$params);

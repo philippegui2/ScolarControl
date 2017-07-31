@@ -22,6 +22,7 @@ gestion scolaire
 	* - [x] Début de developpement de la vue élève
 	* - [ ] Début de developpement de la vue enseignant
 	* - [ ] Début de developpement de la vue gardien
+        * - [ ] Ajouter la possibilité de fabriquer des requètes avec des cases à cocher (ex. effectif de tous les DUT1)
 * Base de données:
 	* - [x] Choix du type de base de données en fonction du nombre de requetes par unité de temps et du type d'information
 	* - [x] Création de la de données

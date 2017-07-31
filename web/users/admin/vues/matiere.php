@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-10">
         <div class="panel panel-default">
             <div class="panel-heading">
                 liste des matières <button type="button" data-toggle="modal" data-target="#ajMatiere" title="Ajouter un département" id="" style="display:inline;" class="btn btn-default pull-right btn-minimize" ><i class="fa fa-plus"></i></button>
@@ -18,6 +18,22 @@
                                         <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-university fa-fw"></i></span>
                                             <input type="text" class="form-control" placeholder="Ajouter le libellé de la nouvelle matière" name="designation">
+                                        </div>
+                                        
+                                        <div class="form-group input-group">
+                                            <select class="form-control" required name="coefMatiere">
+                                                <option value="0">Choisir le coefficient de la matiere</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
                                         </div>
                                         
                                         <div class="form-group input-group">
@@ -55,6 +71,7 @@
                             <tr>
                                 <th><i class="fa fa-list-ol fa-fw"></i></th>
                                 <th><i class="fa fa-cube fa-fw"></i>Libellé</th>
+                                <th><i class="fa fa-cube fa-fw"></i>Coefficient</th>
                                 <th><i class="fa fa-home fa-fw"></i>Classe</th>
                                 <th><i class="fa fa-home fa-fw"></i>Département</th>
                                 <th><i class="fa fa-wrench fa-fw"></i>Action</th>
@@ -66,6 +83,7 @@
                             <tr>
                                 <td><?php echo intval($key+1);?></td>
                                 <td><?php echo $matiere["libelleMatiere"];?></td>
+                                <td><?php echo $matiere["coefMatiere"];?></td>
                                 <td><?php echo $matiere["libelleClasse"];?></td>
                                 <td><?php echo $matiere["libelleDepartement"];?></td>
                                 <td></td>
