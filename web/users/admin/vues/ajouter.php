@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group input-group">
                                 <span class="input-group-addon"><i class="fa fa-phone fa-faw"></i></span>
-                                <input type="num" class="form-control" placeholder="Telephone" name="contactUser">
+                                <input type="tel" class="form-control" placeholder="Telephone" name="contactUser">
                             </div>
                             <div class="form-group input-group">
                                 <select class="form-control" required name="sexeUser">

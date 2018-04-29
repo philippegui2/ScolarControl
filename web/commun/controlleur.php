@@ -1,10 +1,12 @@
 <?php
 /*
 *contolleur frontal
+*Auteur Philippe K. GUILAVOGUI
+*Copyright 2017 : TeGuiLab  
 */
     if(isset($_REQUEST["login"]))
     {
-      session_start();
+
       include_once("../server/baseConf.php");
       include_once("requetes.class.php");
       include_once("../web/users/User.class.php");
@@ -14,6 +16,9 @@
       //si l'utilisateur existe, création d'un objet utilisateur qui representera l'utilisateur
       if($user)
       {
+        //création de la session
+        session_start();
+      	//Instanciation de l'utilisateur
         $utilisateur = new User($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
         //creation de la session de l'utilisateur
         $_SESSION["user"]=$utilisateur;

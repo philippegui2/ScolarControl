@@ -4,6 +4,7 @@
  * This page is the admin bundlle controller
  * the road is the page that will be called in the middle
  * The param is the url param
+ * © 2017 TeGuiLab
 */
 session_start();
 ob_start();

@@ -36,7 +36,7 @@
 
     <div class="container">
 
-      <form class="login-form" action="index.php">
+      <form class="login-form" method="POST" action="index.php">
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
             <?php

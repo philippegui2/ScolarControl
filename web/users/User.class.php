@@ -10,26 +10,26 @@ Class User
     private $prenom;
     private $pseudo;
     private $sexe;
-	  private $naissance;
+    private $naissance;
     //constructeur
     public function __construct($matricule, $prenom, $nom, $pseudo, $sexe, $naissance)
     {
-      $this->$matricule = $matricule;
-      $this->$nom = $nom;
-      $this->$prenom = $prenom;
-      $this->$pseudo = $pseudo;
-      $this->$sexe = $sexe;
-      $this->$naissance = $naissance;
+      $this->matricule = $matricule;
+      $this->nom = $nom;
+      $this->prenom = $prenom;
+      $this->pseudo = $pseudo;
+      $this->sexe = $sexe;
+      $this->naissance = $naissance;
     }
     //getteurs et setteurs
     public function getMatricule()
     {
-      return $this->$matricule;
+      return $this->matricule;
     }
 
     public function setMatricule($matricule)
     {
-      $this->$matricule = $matricule;
+      $this->matricule = $matricule;
     }
     //
     // public function getNom()
