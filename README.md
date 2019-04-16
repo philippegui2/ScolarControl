@@ -3,14 +3,18 @@ gestion scolaire
 ## Objectifs #
 * Permettre:
 	* Une gestion facile des dossiers des élèves
+        * Une bonne gestionn transparente des notes
 	* Un bon suivi des elèves
 	* Une bonne gestion de tous les acteurs participants à la scolarité
 	* une gestion efficaces des payements scolaires 
 	* Aux parents d'élèves de surveiller les activités scolaires des leurs enfants
 	* Une bonne gestion des salles et des emplois du temps
-
+        * Possibilité de concevoir des évalustion en ligne (QCM)
+        * Association d'une bibliothèque numérique
 ##Taches à réaliser #
 * Developpement:
+        * - [x] Modification des informations des élèves (Korka)
+        * - [x] Supresion des utilisateurs, avec ajout de popup-modal pour confirmation (Tidiane)
 	* - [x] Choix des langages de programmation
 	* - [x] Développement des IHM
 	* - [x] Authentification des utilisateurs lors de la connexion
@@ -20,12 +24,19 @@ gestion scolaire
 	* - [x] Repartition des vues en fonctions des status
 	* - [x] Début de developpement de la vue admin
 	* - [x] Début de developpement de la vue élève
+        * - [x] Fonction ajout de département
+        * - [x] Fonction ajout d'élève
+        * - [x] Fonction ajout de classe
+        * - [x] Fonction ajout de Matière
 	* - [ ] Début de developpement de la vue enseignant
 	* - [ ] Début de developpement de la vue gardien
         * - [ ] Ajouter la possibilité de fabriquer des requètes avec des cases à cocher (ex. effectif de tous les DUT1)
+        * - [ ] Ajouter la gestion des presences en module paramètrable (par API optionnel)
+        * - [ ] Ajouter le module d'évaluation des élèves
+        * - [ ] Ajouter le module d'évaluation des enseignants 
 * Base de données:
 	* - [x] Choix du type de base de données en fonction du nombre de requetes par unité de temps et du type d'information
-	* - [x] Création de la de données
+	* - [x] Création de la base de données
 	* - [ ] Ajout des tables en fonction de la nécessité
 	* - [ ] Ajout des clés dans le respect total des règles
 * Systèmes & Télécoms:

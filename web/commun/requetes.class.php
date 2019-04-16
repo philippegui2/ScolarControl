@@ -77,12 +77,12 @@ Class Requetes
         }
     //fin méthodes secondaires
     //méthodes de recupération dans la base de données
-        public function getUser(){
+        public function getUser(){//récupère les utilisateurs
             $req= "SELECT * FROM `users` order by prenomUser";
             return $this->select($req,$params);
         }
     
-        public function getUserByid($id){
+        public function getUserByid($id){//récupère les utilisateurs en fonction de l'id
             $req= "SELECT * FROM `users` WHERE matUser=:matUser";
             $params = array(
                     "matUser" => $id
@@ -90,22 +90,22 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getStatut(){
+        public function getStatut(){//récupère les statuts
             $req= "SELECT * FROM `statut`";
             return $this->select($req,$params);
         }
         
-        public function getDepartement(){
+        public function getDepartement(){//récupère les départements
             $req= "SELECT * FROM `departement`";
             return $this->select($req,$params);
         }
         
-        public function getClasse(){
+        public function getClasse(){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
             return $this->select($req,$params);
         }
         
-        public function getMatiere(){
+        public function getMatiere(){//récupère les matières
             $req= "SELECT * FROM `matiere` order by libelle";
             return $this->select($req,$params);
         }
