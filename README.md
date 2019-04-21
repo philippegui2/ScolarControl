@@ -23,17 +23,25 @@ gestion scolaire
 	* - [ ] developpement des 
 	* - [x] Repartition des vues en fonctions des status
 	* - [x] Début de developpement de la vue admin
-	* - [x] Début de developpement de la vue élève
+	* - [x] Début de developpement de la vue élève (Jean)
+        * - [x] Obliger l'élève à modifier son mot de passe lors de la première connexion (Jean)
+        * - [x] Page accueil (Jean)
+        * - [ ] Visualisation des notes dans les matières (Jean)
+        * - [ ] Visualisation de l'état de la scolarité
+        * - [ ] Visualisation de l'emploi du temps
+        * - [ ] Visualisation de la régularité aux cours [les absences]
         * - [x] Fonction ajout de département
         * - [x] Fonction ajout d'élève
         * - [x] Fonction ajout de classe
         * - [x] Fonction ajout de Matière
 	* - [ ] Début de developpement de la vue enseignant
+        * - [ ] Possibilité d'ajout des enseignats aux classes
 	* - [ ] Début de developpement de la vue gardien
         * - [ ] Ajouter la possibilité de fabriquer des requètes avec des cases à cocher (ex. effectif de tous les DUT1)
         * - [ ] Ajouter la gestion des presences en module paramètrable (par API optionnel)
         * - [ ] Ajouter le module d'évaluation des élèves
-        * - [ ] Ajouter le module d'évaluation des enseignants 
+        * - [ ] Ajouter le module d'évaluation des enseignants
+        * - [ ] Modifier la fonction de hachage MD5 -> SHA1
 * Base de données:
 	* - [x] Choix du type de base de données en fonction du nombre de requetes par unité de temps et du type d'information
 	* - [x] Création de la base de données
