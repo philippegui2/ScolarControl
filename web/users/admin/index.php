@@ -28,7 +28,7 @@ if(0)
 
 <?php
     if(isset($_REQUEST["road"])){ //zone de traitement des liens
-        if(!isset($_REQUEST["param"])){
+        if(!isset($_REQUEST["param"])){// si le paramètre de nom "parametre" n'est pas rnseigné
             switch ($_REQUEST["road"]) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "accueil":{
 
@@ -108,7 +108,7 @@ if(0)
             include_once("vues/".$route.".php");
         }
         
-    }else if(isset($_REQUEST["action"])){ //zone de traitement des cliques
+    }else if(isset($_REQUEST["action"])){ //zone de traitement des clics
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
                 $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre

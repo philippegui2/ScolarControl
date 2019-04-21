@@ -2,7 +2,7 @@
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <a class="" href="../admin/index.php?road=ajouter">
 		<div class="info-box blue-bg">
-			<i class="fa fa-edit fa-fw"></i>
+			<i class="fa fa-plus fa-fw"></i>
 			<div class="count">Ajout</div>
 			<div class="title">Ajouter des utilisateurs</div>
 		</div><!--/.info-box-->
