@@ -26,7 +26,7 @@ gestion scolaire
 	* - [x] Début de developpement de la vue élève (Jean)
         * - [x] Obliger l'élève à modifier son mot de passe lors de la première connexion (Jean)
         * - [x] Page accueil (Jean)
-        * - [ ] Visualisation des notes dans les matières (Jean)
+        * - [x] Visualisation des notes dans les matières (Jean)
         * - [ ] Visualisation de l'état de la scolarité
         * - [ ] Visualisation de l'emploi du temps
         * - [ ] Visualisation de la régularité aux cours [les absences]
