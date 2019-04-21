@@ -55,8 +55,8 @@
 
                                   </div><!-- fin modal body -->
                                   <div class="modal-footer">
-                                          <button type="button" id="boutModifInfosPatient" class="btn btn-default" data-dismiss="modal" onclick="envoieModifPatient()" >Modifier</button>
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>  
+                                          <button type="button" id="" class="btn btn-default" data-dismiss="modal" onclick="supprimerUser(<?php echo $publication["idPub"]; ?>)" >OUI</button>
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">NON</button>  
 
                             </div><!-- /.modal-content -->
                           </div><!-- /.modal-dialog -->
@@ -76,3 +76,41 @@
         <!-- /.panel -->
     </div>
 </div><!--/.row-->
+
+
+
+à voir
+
+function affImage(idPub){
+        $("#loading-div").show();
+        $(function(){  
+                var param="index.php?JQrequest="+idPub;
+                $.ajax({
+                    type: 'GET',
+                    url: param, timeout: 3000,
+                    cache: true,
+                    success: function(data){
+                        var data=JSON.parse(data);
+                        var depot='<div class="item active">'+
+                                        '<img id="limage" src="../'+data[1]+'" alt="item0">'+
+                                        '<div class="carousel-caption">'+
+                                        '</div>'+
+                                    '</div>';
+                       var data_length = data.length;
+                       for (var i = 2; i < data_length; i++) {
+                         depot+='<div class="item">'+
+                                        '<img id="limage'+i+'" src="../'+data[i]+'" alt="item0">'+
+                                        '<div class="carousel-caption">'+
+                                        '</div>'+
+                                    '</div>';
+                       }    
+                        $("#elemCareoussel" ).html(depot);
+                        $("#loading-div").hide();
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+            }
+        );
+    }

@@ -5,7 +5,7 @@
 */
 	define("USERNAME", "root");
 	define("PASSWORD", "root");
-	define("BASENAME", "scolarcontrol"); 
+	define("BASENAME", "scolarcontrol");
 	define("HOSTNAME", "localhost");
 
 ?>

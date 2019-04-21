@@ -85,58 +85,40 @@
 
                                                                <!--Debut du formulaire d'inscription-->
                                                                <form role="form">
-                                                                   <div class="form-group input-group">
-                                                                       <span class="input-group-addon">Id</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Identifiant" required name="numDossier" id="numDossier" value="'.$user['numDossier'].'">';?>
-                                                                   </div>
+
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Nom</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomPatient" id="nomPatient" value="'.$user['nom'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomPatient" id="nomPatient" value="'.$userEnVue[0]['nomUser'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Prénom</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Prénom" required id="prenomPatient" name="prenomPatient" value="'.$user['prenom'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="'.$user['prenom'].'" required id="prenomPatient" name="prenomPatient" value="'.$userEnVue[0]['prenomUser'].'">';?>
+                                                                   </div>
+                                                                   <div class="form-group input-group">
+                                                                       <span class="input-group-addon">Naissance</span>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="'.$user['prenom'].'" required id="prenomPatient" name="prenomPatient" value="'.$userEnVue[0]['naissanceUser'].'">';?>
+                                                                   </div>
+                                                                   <div class="form-group input-group">
+                                                                       <span class="input-group-addon">Lieu</span>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Lieu de naissance" required id="lieuNaissancePatient" name="lieuNaissancePatient" value="'.$userEnVue[0]['lieuNaissance'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Adresse</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Adresse" required id="adressePatient" name="adressePatient" value="'.$user['adresse'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Adresse" required id="adressePatient" name="adressePatient" value="'.$userEnVue[0]['adresseUser'].'">';?>
                                                                    </div>
+
+
                                                                    <div class="form-group input-group">
-                                                                       <span class="input-group-addon">Profession</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Profession" required id="professionPatient" name="professionPatient" value="'.$user['profession'].'">';?>
-                                                                   </div>
-                                                                   <div class="form-group input-group">
-                                                                       <span class="input-group-addon">annee-mois-jour</i></span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Date de naissance" id="naissancePatient" name="naissancePatient" value="'.$user['naissance'].'">';?>
+                                                                       <span class="input-group-addon">Téléphone</span>
+                                                                       <?php echo'<input type="num" class="form-control" placeholder="Telephone" required id="contactPatient" name="contactPatient" value="'.$userEnVue[0]['contactUser'].'">';?>
                                                                    </div>
 
                                                                    <div class="form-group input-group">
-                                                                       <span class="input-group-addon">Lieu</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Lieu de naissance" required id="lieuNaissancePatient" name="lieuNaissancePatient" value="'.$user['lieuNaissance'].'">';?>
-                                                                   </div>
-
-                                                                   <div class="form-group input-group">
-                                                                       <span class="input-group-addon">contact</span>
-                                                                       <?php echo'<input type="num" class="form-control" placeholder="Telephone" required id="contactPatient" name="contactPatient" value="'.$user['contact'].'">';?>
-                                                                   </div>
-
-                                                                   <div class="form-group input-group">
-                                                                       <span class="input-group-addon">Côté dominant</span>
-                                                                       <select class="form-control" required id="CotePatient" name="CotePatient">
-                                                                           <?php echo'<option value="'.$user['coteDominant'].'" >'.$user['coteDominant'].'</option>';?>
-                                                                           <option value="droit" >Droit</option>
-                                                                           <option value="gauche" >Gauche</option>
-                                                                           <option value="ambidextre" >Ambidextre</option>
-                                                                       </select>
-
-
-                                                                   </div>
-
-                                                                   <div class="form-group input-group">
+                                                                     <span class="input-group-addon"> sexe </span>
                                                                        <select class="form-control" required id="sexePatient" name="sexePatient">
-                                                                           <?php echo'<option value="'.$user['sexe'].'" >'.$user['sexe'].'</option>';?>
-                                                                             <option value="M" >Masculin</option>
-                                                                             <option value="F" >Feminin</option>
+                                                                          <?php echo'<option value="'.$user['sexe'].'" >'.$userEnVue[0]['sexeUser'].'</option>';?>
+                                                                          <option value="M" >Masculin</option>
+                                                                          <option value="F" >Feminin</option>
                                                                        </select>
                                                                    </div>
 
@@ -146,8 +128,8 @@
                                                              </div><!-- fin modal body -->
                                                              <div class="modal-footer">
                                                                      <button type="button" id="boutModifInfosPatient" class="btn btn-default" data-dismiss="modal" onclick="envoieModifPatient()" >Modifier</button>
-                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>  
-                                                         
+                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+
                                                        </div><!-- /.modal-content -->
                                                      </div><!-- /.modal-dialog -->
                                                    </div><!-- /.modal -->
@@ -169,12 +151,12 @@
                              <div class="panel-body bio-graph-info">
                                 <div class="form-group">
                                  <a href="../admin/index.php?road=notes" > <button type="button" class="btn btn-outline btn-info btn-lg btn-block">Etat des notes</button> </a>
-                                </div> 
-                                 
-                                <div class="form-group" > 
+                                </div>
+
+                                <div class="form-group" >
                                  <a href="../admin/index.php?road=notes" ><button type="submit" class="btn btn-outline btn-info btn-lg btn-block">Etat de la ponctualité</button></a>
-                                </div> 
-                                 
+                                </div>
+
                              </div>
                        </section>
                        </div>
