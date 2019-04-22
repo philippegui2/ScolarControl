@@ -155,6 +155,14 @@ if(0)
                 include_once("vues/matiere.php");//On recharge la page
             }
             break;
+            case "LISTERsupprimer":{
+                $req->delUser($_REQUEST);
+                $lister=active;
+                $users=$req->getUser();
+                $statuts=$req->getStatut();
+                include_once("vues/lister.php");//On recharge la page
+            }
+            break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
         }
