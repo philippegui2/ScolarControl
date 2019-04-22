@@ -97,24 +97,3 @@
         <!-- /.panel -->
     </div>
 </div><!--/.row-->
-<script type="text/javascript">
-    
-{
-	$(function()
-	{   
-            //zone d'initialisation
-                $("#eleve").hide();
-            //fin zone d'initialisation
-            $("#statut").click(function(){
-                if($("#statut").prop('selected',true).val()==2){
-                    $("#eleve").show();
-                }else{
-                    $("#eleve").hide();
-                }
-                    
-            }
-            );
-            
-	});
-}
-</script>

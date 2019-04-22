@@ -78,12 +78,12 @@ Class Requetes
     //fin méthodes secondaires
     //méthodes de recupération dans la base de données
         public function getUser(){//récupère les utilisateurs
-            $req= "SELECT * FROM `users` order by prenomUser";
+            $req= "SELECT * FROM `users` where supprimer=0 order by prenomUser";
             return $this->select($req,$params);
         }
     
         public function getUserByid($id){//récupère les utilisateurs en fonction de l'id
-            $req= "SELECT * FROM `users` WHERE matUser=:matUser";
+            $req= "SELECT * FROM `users` WHERE matUser=:matUser and supprimer=0";
             $params = array(
                     "matUser" => $id
             );
@@ -124,7 +124,7 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getNoteByUser($idEleve){
+        public function getNoteByUser($idEleve){//Récupération de la note d'un utilisateur en fonction de son matricule 
             //$req="SELECT n.idMatiere idMatiere, n.noteControle noteControle, n.noteTP noteTP, n.noteExamen noteExamen, m.libelle libelleMatiere, m.coefficient coefMatiere from matiere m, note n where n.idMatiere=m.id and n.matUser=:matUser";
             $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle, m.coefficient  from notes n INNER JOIN matiere m ON n.idMatiere=m.id where matUser=:matUser";
             $params = array(
@@ -227,6 +227,15 @@ Class Requetes
     
     //fin méthodes de mise à jour dans la base de données
     
+    //méthodes de suppression dans la base de données
+    public function delUser($donnees){
+            $req = "UPDATE `users` SET `supprimer` = 1 WHERE `users`.`matUser` = :matUser";
+            $params = array(
+             "matUser" => $donnees["matUser"]
+            );
+            return $this->delete($req,$params);
+        }
+    //fin méthodes de suppression dans la base de données  
 
 }
 
