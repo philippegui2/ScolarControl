@@ -13,8 +13,8 @@ gestion scolaire
         * Association d'une bibliothèque numérique
 ##Taches à réaliser #
 * Developpement:
-        * - [x] Modification des informations des élèves (Korka)
-        * - [x] Supresion des utilisateurs, avec ajout de popup-modal pour confirmation (Tidiane)
+        * - [x] Modification des informations des élèves (Tidiane & Mamci)[Se baser sur le code de la suppression]
+        * - [x] Supresion des utilisateurs, avec ajout de popup-modal pour confirmation
 	* - [x] Choix des langages de programmation
 	* - [x] Développement des IHM
 	* - [x] Authentification des utilisateurs lors de la connexion
