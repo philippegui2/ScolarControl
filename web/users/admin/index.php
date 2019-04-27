@@ -85,6 +85,14 @@ if(0)
                     $classesDpt=$req->getClasseDepartement();
                     }
                     break;
+                case "users":{
+                    
+                    }
+                    break;
+                case "userEnseignant":{
+                    
+                    }
+                    break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -117,6 +125,8 @@ if(0)
                 }
                 if($_REQUEST["statutProfil"]==2){
                     $req->setEleve($_REQUEST);
+                }elseif($_REQUEST["statutProfil"]==3){
+                    $req->setFormateur($_REQUEST);
                 }
                 include_once("vues/ajouter.php");//On recharge la page
             }

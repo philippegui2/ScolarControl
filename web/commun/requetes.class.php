@@ -146,8 +146,13 @@ Class Requetes
             ;  
         }
         
-        public function getClasseDepartement(){
+        public function getClasseDepartement(){//récupération des lasses et leur département 
             $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id";
+            return $this->select($req,$params);
+        }
+        
+        public function getClasseByEnseignant($matEnseignant){
+            $req="SELECT ";
             return $this->select($req,$params);
         }
     //fin méthodes de recupération dans la base de données
@@ -170,6 +175,32 @@ Class Requetes
                     "photo" => $photo,
                     "supprimer" => 0,
                     "statutUser" => $donnees["statutProfil"]
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setEleve($donnees){//ajout d'un élève
+            $req = "INSERT INTO `eleve` (`matUser`, `idClasse`) VALUES (:matUser, :idClasse)";
+            $params = array(
+             "matUser" => $donnees["matUser"],
+             "idClasse" => $donnees["classeEleve"]
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setFormateur($donnees){//ajout d'un enseignat
+            $req = "INSERT INTO `formateur` (`matUser`) VALUES (:matUser)";
+            $params = array(
+             "matUser" => $donnees["matUser"]
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setFormateurClasse($donnees){//Affection d'une classe à un formateur
+            $req = "INSERT INTO `formateur_classe` (`matUser`, `idClasse`) VALUES (:matUser,:idClasse)";
+            $params = array(
+             "matUser" => $donnees["matUser"],
+             "idClasse" => $donnees["idClasse"] 
             );
             return $this->insert($req,$params);
         }
@@ -210,16 +241,6 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
-
-        public function setEleve($donnees){
-            $req = "INSERT INTO `eleve` (`matUser`, `idClasse`) VALUES (:matUser, :idClasse)";
-            $params = array(
-             "matUser" => $donnees["matUser"],
-             "idClasse" => $donnees["classeEleve"]
-            );
-            return $this->insert($req,$params);
-        }
-                
 
         //fin méthodes d'enregistement dans la base de données
     
