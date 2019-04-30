@@ -127,11 +127,19 @@
 
                                                              </div><!-- fin modal body -->
                                                              <div class="modal-footer">
-                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-default" data-dismiss="modal" onclick="envoieModifPatient()" >Modifier</button>
-                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-danger" data-dismiss="modal" onclick="envoieModifPatient()" >Modifier</button>
+                                                                     <button type="button" class="btn btn-info" data-dismiss="modal">Fermer</button>
+
 
                                                        </div><!-- /.modal-content -->
+
                                                      </div><!-- /.modal-dialog -->
+
+
+                                                
+
+
+
                                                    </div><!-- /.modal -->
                                                  <!--"Fin ce qui apparait quand on clique sur le bouton "modifier" de voir profile-->
                                                </div>
