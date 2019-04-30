@@ -36,6 +36,14 @@
                             <i class="fa fa-file-text-o fa-5x"></i>
                     </div>
                 </div>
+                <a href="../admin/index.php?road=users">
+                <div class="col-lg-3">
+                    <div class="well">
+                        <h4>Utilisateurs</h4>
+                            <i class="fa fa-users fa-5x"></i>
+                    </div>
+                </div>
+                </a>
 
             </div>
             <!-- /.panel-body -->
