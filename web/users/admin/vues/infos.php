@@ -127,7 +127,7 @@
 
                                                              </div><!-- fin modal body -->
                                                              <div class="modal-footer">
-                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-infos">Modifier</button>
+                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-info">Modifier</button>
                                                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
 
                                                        </div><!-- /.modal-content -->
