@@ -86,23 +86,23 @@ if(0)
                     }
                     break;
                 case "users":{
-                    
+
                     }
                     break;
                 case "userEnseignant":{
-                    
+
                     }
                     break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            
+
             include_once("vues/".$_REQUEST["road"].".php");
         }
         else{
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
-            switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages 
+            switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "infos":{
                     $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     //$statuts=$req->getStatut();
@@ -112,10 +112,10 @@ if(0)
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            
+
             include_once("vues/".$route.".php");
         }
-        
+
     }else if(isset($_REQUEST["action"])){ //zone de traitement des clics
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
@@ -171,6 +171,12 @@ if(0)
                 $users=$req->getUser();
                 $statuts=$req->getStatut();
                 include_once("vues/lister.php");//On recharge la page
+            }
+            break;
+            case "INFOSmodifier":{
+                $req->updateUser($_REQUEST);
+                $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["matUser"]);
+                include_once("vues/infos.php");//On recharge la page
             }
             break;
             default:

@@ -39,7 +39,7 @@
                             ?>
                         </tbody>
                     </table>
-                    
+
                     <!-- Modal -->
                     <div class="modal fade" id="modifInfosUser" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -59,7 +59,7 @@
                                     <form method="POST" action="../admin/index.php">
                                       <input id="nouiID" type="hidden" name="matUser" value="">
                                       <button type="submit" class="btn btn-danger" name="action" value="LISTERsupprimer">OUI</button>
-                                      <button type="button" class="btn btn-info" data-dismiss="modal">NON</button>  
+                                      <button type="button" class="btn btn-info" data-dismiss="modal">NON</button>
                                     </form>
                                 </div><!-- /.modal-content -->
 

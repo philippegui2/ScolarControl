@@ -80,15 +80,11 @@
                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                            <?php echo'<h4 class="modal-title" id="ModalLabel">'.$user['prenom'].' '.$user['nom'].' | Modifier les infos du patient</h4>';?>
                                                          </div> <!-- fin modal header -->
-
+                                                          <form method="POST" action="../admin/index.php">
                                                              <div class="modal-body">
-
-                                                               <!--Debut du formulaire d'inscription-->
-                                                               <form role="form">
-
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Nom</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomPatient" id="nomUser" value="'.$userEnVue[0]['nomUser'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomUser" id="nomUser" value="'.$userEnVue[0]['nomUser'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Prénom</span>
@@ -106,8 +102,6 @@
                                                                        <span class="input-group-addon">Adresse</span>
                                                                        <?php echo'<input type="text" class="form-control" placeholder="Adresse" required id="adresseUser" name="adresseUser" value="'.$userEnVue[0]['adresseUser'].'">';?>
                                                                    </div>
-
-
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Téléphone</span>
                                                                        <?php echo'<input type="num" class="form-control" placeholder="Téléphone" required id="contactUser" name="contactUser" value="'.$userEnVue[0]['contactUser'].'">';?>
@@ -117,31 +111,26 @@
                                                                      <span class="input-group-addon"> sexe </span>
                                                                        <select class="form-control" required id="sexeUser" name="sexeUser">
                                                                           <?php echo'<option value="'.$user['sexe'].'" >'.$userEnVue[0]['sexeUser'].'</option>';?>
-                                                                          <option value="M" >Masculin</option>
-                                                                          <option value="F" >Feminin</option>
+                                                                          <option value="Masculin" >Masculin</option>
+                                                                          <option value="Feminin" >Feminin</option>
                                                                        </select>
                                                                    </div>
 
-                                                               </form>
+
                                                                <!--Fin du formulaire d'inscription-->
 
                                                              </div><!-- fin modal body -->
                                                              <div class="modal-footer">
-<<<<<<< HEAD
-                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-danger" data-dismiss="modal" onclick="envoieModifPatient()" >Modifier</button>
-                                                                     <button type="button" class="btn btn-info" data-dismiss="modal">Fermer</button>
-
-=======
-                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-info">Modifier</button>
+                                                                     <input type="hidden" name="matUser" value="<?php echo $userEnVue[0]['matUser'] ?>">
+                                                                     <button type="submit" id="boutModifInfosPatient" class="btn btn-info" name="action" value="INFOSmodifier">Modifier</button>
                                                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
->>>>>>> master
 
-                                                       </div><!-- /.modal-content -->
-
+                                                            </div><!-- /.modal-content -->
+                                                        </form>
                                                      </div><!-- /.modal-dialog -->
 
 
-                                                
+
 
 
 
