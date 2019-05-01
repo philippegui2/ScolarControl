@@ -35,7 +35,7 @@ gestion scolaire
         * - [x] Fonction ajout de classe
         * - [x] Fonction ajout de Matière
 	* - [ ] Début de developpement de la vue enseignant
-        * - [ ] Possibilité d'ajout des enseignats aux classes
+        * - [ ] Possibilité d'affectation des classes aux enseignants
 	* - [ ] Début de developpement de la vue gardien
         * - [ ] Ajouter la possibilité de fabriquer des requètes avec des cases à cocher (ex. effectif de tous les DUT1)
         * - [ ] Ajouter la gestion des presences en module paramètrable (par API optionnel)

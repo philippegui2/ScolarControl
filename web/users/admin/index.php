@@ -49,7 +49,7 @@ if(0)
                     $infos=active;
                     $userEnVue=$req->getUser();
                     $statuts=$req->getStatut();
-                    print_r($userEnVue);
+                    //print_r($userEnVue);
                     }
                     break;
                 case "parametrage":{
@@ -116,7 +116,7 @@ if(0)
             include_once("vues/".$route.".php");
         }
         
-    }else if(isset($_REQUEST["action"])){ //zone de traitement des clics
+    }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
                 $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre

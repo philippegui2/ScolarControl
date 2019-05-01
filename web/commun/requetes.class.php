@@ -90,6 +90,14 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+        public function getUserByStatut($statutUser){//récupère les utilisateurs par statut
+            $req= "SELECT * FROM `users` where supprimer=0 and statutUser=:statutUser order by prenomUser";
+            $params = array(
+                    "statutUser" => $statutUser,
+            );
+            return $this->select($req,$params);
+        }
+        
         public function getStatut(){//récupère les statuts
             $req= "SELECT * FROM `statut`";
             return $this->select($req,$params);
@@ -102,6 +110,16 @@ Class Requetes
         
         public function getClasse(){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
+            return $this->select($req,$params);
+        }
+        
+        public function getClasseDepartement(){//récupération des classes et leur département 
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id";
+            return $this->select($req,$params);
+        }
+        
+        public function getClasseByEnseignant($matEnseignant){ //Récupération des classes par enseignant
+            $req="SELECT ";
             return $this->select($req,$params);
         }
         
@@ -146,15 +164,7 @@ Class Requetes
             ;  
         }
         
-        public function getClasseDepartement(){//récupération des lasses et leur département 
-            $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id";
-            return $this->select($req,$params);
-        }
         
-        public function getClasseByEnseignant($matEnseignant){
-            $req="SELECT ";
-            return $this->select($req,$params);
-        }
     //fin méthodes de recupération dans la base de données
     
     //méthodes d'enregistement dans la base de données
@@ -246,7 +256,7 @@ Class Requetes
     
     //méthodes de mise à jour dans la base de données
         public function updateUser($donnees){
-            $req = "UPDATE `users` SET `prenomUser` = :prenomUser,`nomUser` = :nomUser,`naissanceUser` = :naissanceUser,`lieuNaissance` = :lieuNaissance,`adresseUser` = :adresseUser, `contactUser` = :contactUser,`sexeUser` = :sexeUser, WHERE `users`.`matUser` = :matUser";
+            $req = "UPDATE `users` SET `prenomUser` = :prenomUser,`nomUser` = :nomUser,`naissanceUser` = :naissanceUser,`lieuNaissance` = :lieuNaissance,`adresseUser` = :adresseUser, `contactUser` = :contactUser,`sexeUser` = :sexeUser WHERE `users`.`matUser` = :matUser";
             $params = array(
              "prenomUser" => $donnees["prenomUser"],
              "nomUser" => $donnees["nomUser"],
@@ -257,7 +267,7 @@ Class Requetes
              "sexeUser" => $donnees["sexeUser"],
              "matUser" => $donnees["matUser"]
             );
-            return $this->delete($req,$params);
+            return $this->update($req,$params);
         }
     //fin méthodes de mise à jour dans la base de données
     
