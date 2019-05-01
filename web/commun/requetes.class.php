@@ -245,11 +245,25 @@ Class Requetes
         //fin méthodes d'enregistement dans la base de données
     
     //méthodes de mise à jour dans la base de données
-    
+        public function updateUser($donnees){
+            $req = "UPDATE `users` SET `prenomUser` = :prenomUser,`nomUser` = :nomUser,`naissanceUser` = :naissanceUser,`lieuNaissance` = :lieuNaissance,`adresseUser` = :adresseUser, `contactUser` = :contactUser,`sexeUser` = :sexeUser, WHERE `users`.`matUser` = :matUser";
+            $params = array(
+             "prenomUser" => $donnees["prenomUser"],
+             "nomUser" => $donnees["nomUser"],
+             "naissanceUser" => $donnees["naissanceUser"],
+             "lieuNaissance" => $donnees["lieuNaissance"],
+             "adresseUser" => $donnees["adresseUser"],
+             "contactUser" => $donnees["contactUser"],
+             "sexeUser" => $donnees["sexeUser"],
+             "matUser" => $donnees["matUser"]
+            );
+            return $this->delete($req,$params);
+        }
     //fin méthodes de mise à jour dans la base de données
     
+        
     //méthodes de suppression dans la base de données
-    public function delUser($donnees){
+        public function delUser($donnees){
             $req = "UPDATE `users` SET `supprimer` = 1 WHERE `users`.`matUser` = :matUser";
             $params = array(
              "matUser" => $donnees["matUser"]
