@@ -88,7 +88,7 @@
 
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Nom</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomPatient" id="nomUser" value="'.$userEnVue[0]['nomUser'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomUser" id="nomUser" value="'.$userEnVue[0]['nomUser'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Prénom</span>
