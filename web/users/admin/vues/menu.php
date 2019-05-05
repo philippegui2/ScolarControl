@@ -33,13 +33,6 @@
     <link href="../../css/style-responsive.css" rel="stylesheet" />
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-    <script src="../../js/jquery.js"></script>
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
-    <!--[if lt IE 9]>
-      <script src="../../js/html5shiv.js"></script>
-      <script src="../../js/respond.min.js"></script>
-      <script src="../../js/lte-ie7.js"></script>
-    <![endif]-->
   </head>
 
   <body>

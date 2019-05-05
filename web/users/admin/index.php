@@ -49,7 +49,7 @@ if(0)
                     $infos=active;
                     $userEnVue=$req->getUser();
                     $statuts=$req->getStatut();
-                    print_r($userEnVue);
+                    //print_r($userEnVue);
                     }
                     break;
                 case "parametrage":{
@@ -85,16 +85,24 @@ if(0)
                     $classesDpt=$req->getClasseDepartement();
                     }
                     break;
+                case "users":{
+
+                    }
+                    break;
+                case "userEnseignant":{
+
+                    }
+                    break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            
+
             include_once("vues/".$_REQUEST["road"].".php");
         }
         else{
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
-            switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages 
+            switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "infos":{
                     $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     //$statuts=$req->getStatut();
@@ -104,11 +112,11 @@ if(0)
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            
+
             include_once("vues/".$route.".php");
         }
-        
-    }else if(isset($_REQUEST["action"])){ //zone de traitement des clics
+
+    }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
                 $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
@@ -117,6 +125,8 @@ if(0)
                 }
                 if($_REQUEST["statutProfil"]==2){
                     $req->setEleve($_REQUEST);
+                }elseif($_REQUEST["statutProfil"]==3){
+                    $req->setFormateur($_REQUEST);
                 }
                 include_once("vues/ajouter.php");//On recharge la page
             }
@@ -153,6 +163,20 @@ if(0)
                 $matieres=$req->getMatiereClasseDepartement();
                 $classesDpt=$req->getClasseDepartement();
                 include_once("vues/matiere.php");//On recharge la page
+            }
+            break;
+            case "LISTERsupprimer":{
+                $req->delUser($_REQUEST);
+                $lister=active;
+                $users=$req->getUser();
+                $statuts=$req->getStatut();
+                include_once("vues/lister.php");//On recharge la page
+            }
+            break;
+            case "INFOSmodifier":{
+                $req->updateUser($_REQUEST);
+                $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["matUser"]);
+                include_once("vues/infos.php");//On recharge la page
             }
             break;
             default:
