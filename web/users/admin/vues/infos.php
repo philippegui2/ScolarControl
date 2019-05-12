@@ -110,7 +110,7 @@
                                                                    <div class="form-group input-group">
                                                                      <span class="input-group-addon"> sexe </span>
                                                                        <select class="form-control" required id="sexeUser" name="sexeUser">
-                                                                          <?php echo'<option value="'.$user['sexe'].'" >'.$userEnVue[0]['sexeUser'].'</option>';?>
+                                                                          <?php echo'<option value="'.$userEnVue[0]['sexeUser'].'" >'.$userEnVue[0]['sexeUser'].'</option>';?>
                                                                           <option value="Masculin" >Masculin</option>
                                                                           <option value="Feminin" >Feminin</option>
                                                                        </select>

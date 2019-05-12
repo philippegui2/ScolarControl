@@ -128,16 +128,43 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getMatiereClasseDepartement(){
-            $req="SELECT m.id idMatiere, m.libelle libelleMatiere, m.coefficient coefMatiere, c.id idClasse, c.libelle libelleClasse, d.id idDepartement,d.libelle libelleDepartement from matiere m, classe c, departement d where m.idClasse=c.id and c.departement=d.id";
+        public function getMatiereClasseDepartement(){//récupère les matières leur classe et départements
+            #$req="SELECT m.id idMatiere, m.libelle libelleMatiere, m.coefficient coefMatiere, c.id idClasse, c.libelle libelleClasse, d.id idDepartement,d.libelle libelleDepartement from matiere m, classe c, departement d where m.idClasse=c.id and c.departement=d.id";
+            $req="SELECT matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id";
             return $this->select($req,$params);
         }
 
 
-        public function getMatiereByClasse($idClasse){
+        public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
             $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from matiere_classe mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
             $params = array(
                     "idClasse" => $idClasse,
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getMatiereByEnseignant($idEnseignant){//récupère la liste des matières enseignées par un enseignant donné
+            $req="select matUser, idMatiere, idClasse, matiere.id, matiere.libelle libMatiere, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse,classe.departement from cours,classe,departement,matiere WHERE idMatiere=matiere.id and idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser";
+            $params = array(
+                "matUser" => $idEnseignant
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getIDMatiereByEnseignant($idEnseignant){//récupère la liste des matières enseignées par un enseignant donné ainsi que leur classe
+            $req="select * from cours where `matUser` = :matUser";
+            $params = array(
+                "matUser" => $idEnseignant
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getCoursByEnseignantMatiereClasse($idEnseignant,$idMatiere,$idClasse){//récupère la liste des matières enseignées par un enseignant donné
+            $req="SELECT * FROM `cours` where `matUser` = :matUser and idMatiere = :idMatiere and idClasse = :idClasse";
+            $params = array(
+                "matUser" => $idEnseignant,
+                "idMatiere" => $idMatiere,
+                "idClasse" => $idClasse
             );
             return $this->select($req,$params);
         }
@@ -163,6 +190,8 @@ Class Requetes
         public function getEleveById($idEleve){
             ;
         }
+        
+        
 
 
     //fin méthodes de recupération dans la base de données
@@ -233,21 +262,29 @@ Class Requetes
         }
 
         public function setMatiere($donnees){//enregistrement des nouvelles matières
-            $req = "INSERT INTO `matiere` (`id`, `libelle`, `coefficient`, `idClasse`) VALUES (NULL, :designation, :coefficient, :idClasse)";
+            $req = "INSERT INTO `matiere` (`id`, `libelle`) VALUES (NULL, :libelle)";
             $params = array(
-                "designation" => $donnees["designation"],
-                "coefficient" => $donnees["coefMatiere"],
-                "idClasse" => $donnees["classeMatiere"]
+                "libelle" => $donnees["designation"]
             );
             return $this->insert($req,$params);
         }
 
         public function setClasseMatiere($classe,$matiere,$coefficient){//enregistrement des nouvelles classes
-            $req = "INSERT INTO `matiere_classe` (`idClasse`, `idMatiere`,`coefficient`) VALUES (:idClasse, :idMatiere,:coefficient)";
+            $req = "INSERT INTO `matiere-classe` (`idMatiere`,`idClasse`,`coefficient`) VALUES (:idMatiere,:idClasse,:coefficient)";
             $params = array(
-             "idClasse" => $classe,
              "idMatiere" => $matiere,
+             "idClasse" => $classe,
              "coefficient" => $coefficient,
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setCours($idEnseignant,$idMatiere,$idClasse){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `cours` (`matUser`, `idMatiere`,`idClasse`) VALUES (:matUser, :idMatiere, :idClasse)";
+            $params = array(
+                "matUser" => $idEnseignant,
+                "idMatiere" => $idMatiere,
+                "idClasse" => $idClasse
             );
             return $this->insert($req,$params);
         }
@@ -277,6 +314,14 @@ Class Requetes
             $req = "UPDATE `users` SET `supprimer` = 1 WHERE `users`.`matUser` = :matUser";
             $params = array(
              "matUser" => $donnees["matUser"]
+            );
+            return $this->delete($req,$params);
+        }
+        
+        public function delCoursByEnseignant($idEnseignant){
+            $req = "DELETE FROM `cours` WHERE `cours`.`matUser` = :matUser";
+            $params = array(
+             "matUser" => $idEnseignant
             );
             return $this->delete($req,$params);
         }

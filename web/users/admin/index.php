@@ -21,7 +21,8 @@ if(0)
     include_once("../../../server/baseConf.php");
     include_once("../../commun/fonctions.class.php");
     include_once("../../commun/requetes.class.php");
-    include_once("vues/menu.php");
+    if(isset($_REQUEST["road"]) or isset($_REQUEST["action"]))
+        include_once("vues/menu.php");
     $req=new Requetes(HOSTNAME, BASENAME, USERNAME, PASSWORD);
     $fonctions=new Fonctions();
 ?>
@@ -80,9 +81,8 @@ if(0)
                     }
                     break;
                 case "matiere":{
-                    //$matieres=$req->getMatiere();
-                    $matieres=$req->getMatiereClasseDepartement();
-                    $classesDpt=$req->getClasseDepartement();
+                        $matieres=$req->getMatiereClasseDepartement();
+                        $classesDpt=$req->getClasseDepartement();
                     }
                     break;
                 case "users":{
@@ -91,6 +91,11 @@ if(0)
                     break;
                 case "userEnseignant":{
 
+                    }
+                    break;
+                case "enseignantMatiere":{
+                        $enseignants=$req->getUserByStatut(3);
+                        $matieres=$req->getMatiereClasseDepartement();//récupération des matières, la classe et département
                     }
                     break;
                 default:
@@ -158,8 +163,11 @@ if(0)
             }
             break;
             case "MATIEREajouter":{
-                $req->setMatiere($_REQUEST);
-                //$matieres=$req->getMatiere();
+                $idMatiere=$req->setMatiere($_REQUEST);//ajout d'une matiere et recupération de son id
+                foreach ($_REQUEST["idClasse"] as $idClasse){//Pour cha classe où la matière sera enseignée, association de la classe
+                    $req->setClasseMatiere($idClasse,$idMatiere,$_REQUEST["coef".$idClasse]);
+                }
+                $matieres=$req->getMatiere();
                 $matieres=$req->getMatiereClasseDepartement();
                 $classesDpt=$req->getClasseDepartement();
                 include_once("vues/matiere.php");//On recharge la page
@@ -181,6 +189,27 @@ if(0)
             break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
+        }
+    }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
+        switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
+            case "ENSEIGNANTMATIEREensmatiere":{
+                    print_r(json_encode($req->getIDMatiereByEnseignant($_REQUEST["parametre"])));
+                    exit();
+                }
+                break;
+            case "ENSEIGNANTMATIEREenvoiematiere":{
+                    $donnees=json_decode(stripslashes($_REQUEST["parametre"]));
+                    $matUser=array_shift($donnees);//récupération du matricule de l'enseigant et retrait du matricule parmis les paramètres, il ne reste plus que les id des matières
+                    $req->delCoursByEnseignant($matUser);//Suppression de toutes les anciennes affectations
+                    foreach ($donnees as $donnee) {
+                        list($idMatiere, $idClasse) = explode("*", $donnee);
+                           $req->setCours($matUser,$idMatiere,$idClasse);//insertion des nouvelles affectations 
+                    }
+                    exit();
+                }
+                break;
+            default:
+               echo "requete A inconnue";
         }
     }else{ //zone de traitement des appuis de bouton
         echo "neutre";
