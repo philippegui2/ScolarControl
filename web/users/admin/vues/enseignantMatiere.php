@@ -39,7 +39,7 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <section class="panel">
             <header class="panel-heading">
-                Liste des enseignants
+                Liste des enseignants | Choisir un enseignant pour lui affecter des matières
             </header>
             <table class="table">
               <thead>
