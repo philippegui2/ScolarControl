@@ -91,7 +91,7 @@
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
-                                <a href="documentation.html"><i class="icon_key_alt"></i> Deconnexion</a>
+                                <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
                             </li>
                         </ul>
                     </li>
