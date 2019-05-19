@@ -14,7 +14,7 @@
                         </div>
                         <div class="modal-body" style="z-index: 3600;">
                                 <!--Debut du formulaire d'enregistrement-->
-                                    <form role="form" method="POST" action="../admin/index.php">
+                                    <form role="form" method="POST" action="../admin/">
                                         <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-university fa-fw"></i></span>
                                             <input type="text" class="form-control" placeholder="Ajouter le libellé de la nouvelle matière" name="designation">
