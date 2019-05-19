@@ -28,7 +28,11 @@
                 "sexeUser" => $user["sexeUser"], 
                 "naissanceUser" => $user["naissanceUser"]
             );
+<<<<<<< HEAD
         //$_SESSION["requete"]=$requete;
+=======
+        $_SESSION["requete"]=$requete;
+>>>>>>> origin/master
         //redirection dans le bon dossier
         if ($user["statutUser"]=='1')
           {
