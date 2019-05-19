@@ -7,12 +7,10 @@
             <?php
                 foreach ($classes as $key => $classe) {?>
             <div class="panel <?php print_r($couleur[$key]);?>">
-                  <div class="panel-heading"><?php print_r($classe['libClasse']); ?></div>
-                  <div class="panel-content"><?php print_r($classe['libDepartement']); ?></div>
+                  <div class="panel-heading"><?php echo $classe['libClasse']." | ".$classe['libDepartement']; ?></div>
+                  <div class="panel-content"><?php ?></div>
                 </div>   
                 <?php }?>
-            ?>
-            
         </div>
     </section>
 </div>
