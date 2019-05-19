@@ -118,8 +118,11 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasseByEnseignant($matEnseignant){ //Récupération des classes par enseignant
-            $req="SELECT ";
+        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes par enseignant
+            $req="SELECT cours.matUser, cours.idClasse, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse, classe.departement from cours,classe,departement where idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser GROUP BY idClasse";
+            $params = array(
+                "matUser" => $idEnseignant
+            );
             return $this->select($req,$params);
         }
 

@@ -51,7 +51,7 @@
             </div>
 
             <!--logo start-->
-            <a href="index.html" class="logo">Scolar<span class="lite">Control</span></a>
+            <a href="../enseignant/?road=accueil" class="logo">Scolar<span class="lite">Control</span></a>
             <!--logo end-->
 
             <div class="nav search-row" id="top_menu">
@@ -108,24 +108,22 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li class="active">
-                      <a class="" href="index.html">
+                      <a class="" href="../enseignant/?road=accueil">
                           <i class="icon_house_alt"></i>
                           <span>Accueil</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="widgets.html">
+                      <a class="" href="../enseignant/?road=accueil">
                           <i class="icon_genius"></i>
                           <span>Widgets</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="chart-chartjs.html">
+                      <a class="" href="../enseignant/?road=accueil">
                           <i class="icon_piechart"></i>
                           <span>Charts</span>
-
                       </a>
-
                   </li>
 
               </ul>

@@ -102,20 +102,20 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li>
-                      <a class="" href="../admin/index.php?road=ajouter">
+                      <a class="" href="../admin/?road=ajouter">
                           <i class="fa fa-edit fa-fw"></i>
                           <span>Ajouter utilisateur</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="../admin/index.php?road=lister">
+                      <a class="" href="../admin/?road=lister">
                           <i class="fa fa-table fa-fw"></i>
                           <span>Liste utilisateurs</span>
 
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=parametrage">
+                      <a class="" href="../admin/?road=parametrage">
                           <i class="fa fa-gears fa-fw"></i>
                           <span>Parametrage</span>
                       </a>
