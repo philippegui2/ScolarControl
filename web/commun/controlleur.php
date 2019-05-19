@@ -68,4 +68,18 @@
 
     }
 
+//Deconnexion 
+ if(isset($_GET['logout']))
+    {
+     // echo "deconnexion";
+
+        
+    session_start();
+    session_destroy();
+    header('location: ../index.php');
+    exit;
+
+    } 
+
+
 ?>
