@@ -31,21 +31,12 @@ if(0)
         if(!isset($_REQUEST["param"])){// si le paramètre de nom "parametre" n'est pas rnseigné
             switch ($_REQUEST["road"]) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "accueil":{
-<<<<<<< HEAD
-=======
-                        print_r($_SESSION["user"]); echo "ici";
->>>>>>> origin/master
                     }
                     break;
 
                 case "listeclasses":{
-<<<<<<< HEAD
                         $couleur=array('panel-primary','panel-success','panel-warning','panel-danger','panel-info');
                         $classes=$req->getClasseByEnseignant($_SESSION["user"]["matUser"]);
-=======
-                        print_r($_SESSION["user"]); echo "ici";
-                        print_r($req->getClasseByEnseignant($_SESSION["user"]["matUser"]));
->>>>>>> origin/master
                     }
                     break;
 
