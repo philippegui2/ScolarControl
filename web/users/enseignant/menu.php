@@ -116,13 +116,13 @@
                   <li>
                       <a class="" href="../enseignant/?road=accueil">
                           <i class="icon_genius"></i>
-                          <span>Widgets</span>
+                          <span>Informations</span>
                       </a>
                   </li>
                   <li>
                       <a class="" href="../enseignant/?road=accueil">
                           <i class="icon_piechart"></i>
-                          <span>Charts</span>
+                          <span>Parametrage</span>
                       </a>
                   </li>
 
