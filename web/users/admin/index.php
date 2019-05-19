@@ -109,8 +109,7 @@ if(0)
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
             switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "infos":{
-                    $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
-                    //$statuts=$req->getStatut();
+                        $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     }
                     break;
                 default:

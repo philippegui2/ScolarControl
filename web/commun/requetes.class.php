@@ -93,7 +93,15 @@ Class Requetes
         public function getUserByStatut($statutUser){//récupère les utilisateurs par statut
             $req= "SELECT * FROM `users` where supprimer=0 and statutUser=:statutUser order by prenomUser";
             $params = array(
-                    "statutUser" => $statutUser,
+                    "statutUser" => $statutUser
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getEleveByClasse($idClasse){//récupère les élèves inscris dans une classe données
+            $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve WHERE idClasse=:idClasse)";
+            $params = array(
+                    "idClasse" => 4//$idClasse
             );
             return $this->select($req,$params);
         }
@@ -141,7 +149,7 @@ Class Requetes
         public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
             $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from matiere_classe mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
             $params = array(
-                    "idClasse" => $idClasse,
+                    "idClasse" => $idClasse
             );
             return $this->select($req,$params);
         }
