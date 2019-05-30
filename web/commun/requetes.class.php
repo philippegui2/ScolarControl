@@ -330,4 +330,54 @@ Class Requetes
         }
     //fin méthodes de suppression dans la base de données
 
+    //mise a jour du password eleve
+    public function updatePassword($pseudo,$password){
+
+        $req = "update users set passwordUser= :password where pseudoUser=:pseudo";
+        $params = array(
+            "password"=>$password,
+            "pseudo"=>$pseudo
+        );
+        return $this->update($req,$params);
+    }
+
+    // recuperation de la liste des mmatieres d'un eleve
+    public function listeMatiere ($pseudo){
+
+        $req = "select matiere.libelle from eleve
+                inner join matiereClasse on matiereClasse.idClasse = eleve.idClasse
+                inner join matiere on matiereClasse.idMatiere = matiere.id
+                where matUser = :pseudo
+                ";
+        $params = array(
+            "pseudo"=>$pseudo
+        );
+
+        return $this->select($req,$params);
+    }
+
+    //recuperation des notes d'un etudiant
+    public function bulletin($pseudo){
+
+        $req = "select * from notes
+                 inner join matiere on matiere.id = notes.idmatiere
+                where matuser = :pseudo
+                " ;
+        $params = array(
+            "pseudo"=>$pseudo
+        );
+
+        return $this->select($req,$params);
+    }
+
+    // recuperation des infos d'un user
+    public function user ($pseudo){
+
+        $req = "select * from users where matUser = :pseudo Limit 1";
+        $params = array(
+            "pseudo"=>$pseudo
+        );
+
+        return $this->select($req,$params);
+    }
 }
