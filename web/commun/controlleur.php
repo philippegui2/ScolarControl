@@ -1,4 +1,5 @@
 <?php
+
 /*
 *contolleur frontal
 *Auteur Philippe K. GUILAVOGUI
@@ -14,15 +15,18 @@
       //on teste que cet utilisateur existe dans la base de données, si oui valeur vaudra 1
       $user=$requete->authentification($_REQUEST["login"],MD5($_REQUEST["password"]));
       //si l'utilisateur existe, création d'un objet utilisateur qui representera l'utilisateur
+
+
       if($user)
       {
         //création de la session
-        session_start();
       	//Instanciation de l'utilisateur
         $utilisateur = new User($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
         //creation de la session de l'utilisateur
+        session_start();
         $_SESSION["user"]=$utilisateur;
         $_SESSION["requete"]=$requete;
+
         //redirection dans le bon dossier
         if ($user["statutUser"]=='1')
           {
@@ -33,8 +37,19 @@
           else if($user["statutUser"]=='2')
           {
               //C'est un eleve
-              echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=accueil">';
-              exit();
+              // echo $_SESSION['user']->getMatricule();
+              // exit();
+             // s'il n'a pas personnalisé son mdpasse je le redirrige vers la page custom
+              if (md5($user['pseudoUser'])==$user['passwordUser']) {
+                # code...
+                header('Location: users/eleve/index.php?road=update&pseudo='.$user['pseudoUser']);
+                // echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=update">';
+                exit();
+              } else {
+                # code...
+                header('Location: users/eleve/index.php?road=accueil&pseudo='.$user['pseudoUser']);
+                // exit();
+              }   
           }
           else if($user["statutUser"]=='3')
           {

@@ -3,11 +3,13 @@
 <?php
     
     session_start();
+
     include_once("../../commun/requetes.class.php");
     include_once("../../../server/baseConf.php");
 
 
     $requete=new Requetes(HOSTNAME, BASENAME, USERNAME, PASSWORD);
+
 
     if(isset($_REQUEST["road"]) && $_REQUEST["road"]=="accueil"){
 
@@ -18,38 +20,82 @@
       include_once("vues/accueil.php");
     }
     
-    if (isset($_REQUEST['road']) && $_REQUEST['road']=="custom") {
+   /* if (isset($_REQUEST['road']) && $_REQUEST['road']=="custom") {
       # code...    
       $_SESSION['pseudo'] = $_GET['pseudo'];
       header("Location: vues/custom.php");
+    } */
+    if (isset($_REQUEST['road']) && $_REQUEST['road'] == 'profil'){
+
+      define("NOMPAGE", "Accueil");
+      define("ENTETEPAGE", "Entete");
+      include_once("menu.php");
+      //création des variables de session
+      $_SESSION['pseudo'] = $_GET['pseudo'];
+      $pseudo = $_GET['pseudo'];
+      include_once('vues/profil.php');  
+
+    }
+
+    if (isset($_REQUEST['road']) && $_REQUEST['road'] == "notes") {
+      # code...
+      define("NOMPAGE", "Accueil");
+      define("ENTETEPAGE", "Entete");
+      include_once("menu.php");
+      //création des variables de session
+      $_SESSION['pseudo'] = $_GET['pseudo'];
+      $pseudo = $_GET['pseudo'];
+      include_once('vues/note.php');   
+    }
+
+    if (isset($_REQUEST['road']) && $_REQUEST['road'] == "lister") {
+      # code...
+      define("NOMPAGE", "Accueil");
+      define("ENTETEPAGE", "Entete");
+      include_once("menu.php");
+      $_SESSION['pseudo'] = $_GET['pseudo'];
+      $pseudo = $_GET['pseudo'];
+      
+      include_once('vues/matiere.php');   
+
     }
 
     if (isset($_GET['road']) && $_GET['road'] == "update") {
       # code...
-      $password = $_POST['password'];
-      $password1 = $_POST['password1'];
+      
+      $_SESSION['pseudo'] = $_GET['pseudo'];
+      header("Location: vues/custom.php?pseudo=".$_SESSION['pseudo']);
 
-      if ($password == $password1) {
+    }
+    
+      if (isset($_GET['road']) && $_GET['road'] == "updated") {
         # code...
-        //j'insere dans la bdd
+        $password = $_POST['password'];
+        $password1 = $_POST['password1'];
+
+        if ($password == $password1) {
+          # code...
+          //j'insere dans la bdd   
+                 
+         $test = $requete->updatePassword($_SESSION['pseudo'],md5($password));
+          echo $_SESSION['pseudo'];
+          exit();
+         if($test){
+          echo '<meta http-equiv="Refresh" content="0;url=index.php?road=accueil">';
+          exit();
+
+        }else{
         
-       $test = $requete->updatePassword($_SESSION['pseudo'],md5($password));
-       echo '<meta http-equiv="Refresh" content="0;url=index.php?road=accueil">';
-       exit();       
-        
-      } else {
-        # code...
-        //je redirrige vers le formulaire de custom password
-        header("Location: vues/custom.php");
+          echo 'echec update password user';
+        }   
+          
+        }else{
+          echo '<meta http-equiv="Refresh" content="0;url=index.php?road=update&errolog=erreur">';
+          exit();
+        }
 
       }
       
-      
-    }
-
-  
-
-
 ?>
 
 

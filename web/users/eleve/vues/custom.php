@@ -1,3 +1,8 @@
+<?php
+        session_start();
+        $_SESSION['pseudo'] = $_GET['pseudo'];
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -25,7 +30,7 @@
 </head>
 <body>
     <div class="container">
-                <form class="login-form" method="POST" action="../index.php?road=update">
+                <form class="login-form" method="POST" action="../index.php?road=updated">
                     <div class="login-wrap">
                         <p class="login-img"><i class="icon_lock_alt"></i></p>
                         <?php

@@ -1,29 +1,32 @@
 
+
+
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=ajouter">
+            <a class="" href="../eleve/index.php?road=profil&pseudo=<?=$_GET['pseudo']?>">
 		<div class="info-box blue-bg">
 			<i class="fa fa-edit fa-fw"></i>
-			<div class="count">Ajout</div>
+			<div class="count">Consulter Mon Profil</div>
 			<div class="title">Ajouter des utilisateurs</div>
 		</div><!--/.info-box-->
             </a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=lister">
+            <a class="" href="../eleve/index.php?road=lister&pseudo=<?=$_GET['pseudo']?>">
 		<div class="info-box brown-bg">
 			<i class="fa fa-table fa-fw"></i>
-			<div class="count">listage</div>
-			<div class="title">Lister des utilisateurs</div>
+			<div class="count">Matières</div>
+			<div class="title">Lister mes matières</div>
 		</div><!--/.info-box-->
             </a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+		<a class="" href="../eleve/index.php?road=notes&pseudo=<?=$_GET['pseudo']?>">
 		<div class="info-box dark-bg">
 			<i class="fa fa-thumbs-o-up"></i>
-			<div class="count">Nombre de classes</div>
+			<div class="count">Notes</div>
 			<div class="title">Classes</div>
 		</div><!--/.info-box-->
 	</div><!--/.col-->
