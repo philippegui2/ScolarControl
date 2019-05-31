@@ -27,7 +27,7 @@ Class Requetes
                     $this->base = new PDO('mysql:host='.$this->hostName.';dbname='.$this->baseName.';charset=utf8',$this->userName,$this->password);
                     $this->base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }catch(Exception $e){
-                    echo $e;
+                    echo "Erreur de connexion à la base de données";
             }
         }
         //déconnection
@@ -101,7 +101,7 @@ Class Requetes
         public function getEleveByClasse($idClasse){//récupère les élèves inscris dans une classe données
             $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve WHERE idClasse=:idClasse)";
             $params = array(
-                    "idClasse" => 4//$idClasse
+                    "idClasse" => $idClasse
             );
             return $this->select($req,$params);
         }
@@ -122,7 +122,7 @@ Class Requetes
         }
 
         public function getClasseDepartement(){//récupération des classes et leur département
-            $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id";
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id ORDER BY classe.libelle";
             return $this->select($req,$params);
         }
 
