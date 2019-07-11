@@ -22,9 +22,15 @@
       	//Instanciation de l'utilisateur
         //$utilisateur = array($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
         //creation de la session de l'utilisateur
-        session_start();
-        $_SESSION["user"]=$utilisateur;
-        $_SESSION["requete"]=$requete;
+            $_SESSION['user']=array(
+                "matUser" => $user["matUser"],
+                "prenomUser" => $user["prenomUser"],
+                "nomUser" => $user["nomUser"],
+                "pseudoUser" => $user["pseudoUser"],
+                "sexeUser" => $user["sexeUser"], 
+                "naissanceUser" => $user["naissanceUser"]
+            );
+        //$_SESSION["requete"]=$requete;
 
         //redirection dans le bon dossier
         if ($user["statutUser"]=='1')
@@ -38,7 +44,7 @@
               //C'est un eleve
               // echo $_SESSION['user']->getMatricule();
               // exit();
-             // s'il n'a pas personnalisé son mdpasse je le redirrige vers la page custom
+             // s'il n'a pas personnalisé son mdpasse je le redirige vers la page custom
               if (md5($user['pseudoUser'])==$user['passwordUser']) {
                 # code...
                 header('Location: users/eleve/index.php?road=update&pseudo='.$user['pseudoUser']);
