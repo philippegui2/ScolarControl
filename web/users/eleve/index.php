@@ -79,10 +79,10 @@
                  
          $test = $requete->updatePassword($_SESSION['pseudo'],md5($password));
           echo $_SESSION['pseudo'];
-          exit();
+          // exit();
          if($test){
           echo '<meta http-equiv="Refresh" content="0;url=index.php?road=accueil">';
-          exit();
+        //  exit();
 
         }else{
         
