@@ -52,7 +52,7 @@ Class Requetes
                 return $this->base->lastInsertId();
                 }
             catch(Exception $e) {
-                exit('Erreur : ' . $e->getMessage());
+                exit('Erreur : ' . $e->getMessage());//à modifier pour éviter l'affichage des erreurs
             }
         }
         //updateur
