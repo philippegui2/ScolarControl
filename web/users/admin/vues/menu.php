@@ -70,7 +70,7 @@
                             <span class="profile-ava">
                                 <img alt="" src="../../img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Prenom nom</span>
+                            <span class="username"><?php echo $_SESSION['user']["prenomUser"]." ".$_SESSION['user']["nomUser"];?></span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -85,7 +85,7 @@
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
-                                <a href="documentation.html"><i class="icon_key_alt"></i> Deconnexion</a>
+                                <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
                             </li>
                         </ul>
                     </li>
@@ -102,20 +102,20 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li>
-                      <a class="" href="../admin/index.php?road=ajouter">
+                      <a class="" href="../admin/?road=ajouter">
                           <i class="fa fa-edit fa-fw"></i>
                           <span>Ajouter utilisateur</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="../admin/index.php?road=lister">
+                      <a class="" href="../admin/?road=lister">
                           <i class="fa fa-table fa-fw"></i>
                           <span>Liste utilisateurs</span>
 
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=parametrage">
+                      <a class="" href="../admin/?road=parametrage">
                           <i class="fa fa-gears fa-fw"></i>
                           <span>Parametrage</span>
                       </a>

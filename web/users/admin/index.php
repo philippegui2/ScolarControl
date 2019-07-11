@@ -21,7 +21,8 @@ if(0)
     include_once("../../../server/baseConf.php");
     include_once("../../commun/fonctions.class.php");
     include_once("../../commun/requetes.class.php");
-    include_once("vues/menu.php");
+    if(isset($_REQUEST["road"]) or isset($_REQUEST["action"]))
+        include_once("vues/menu.php");
     $req=new Requetes(HOSTNAME, BASENAME, USERNAME, PASSWORD);
     $fonctions=new Fonctions();
 ?>
@@ -49,7 +50,7 @@ if(0)
                     $infos=active;
                     $userEnVue=$req->getUser();
                     $statuts=$req->getStatut();
-                    print_r($userEnVue);
+                    //print_r($userEnVue);
                     }
                     break;
                 case "parametrage":{
@@ -80,43 +81,46 @@ if(0)
                     }
                     break;
                 case "matiere":{
-                    //$matieres=$req->getMatiere();
-                    $matieres=$req->getMatiereClasseDepartement();
-                    $classesDpt=$req->getClasseDepartement();
+                        $matieres=$req->getMatiereClasseDepartement();
+                        $classesDpt=$req->getClasseDepartement();
                     }
                     break;
                 case "users":{
-                    
+
                     }
                     break;
                 case "userEnseignant":{
-                    
+
+                    }
+                    break;
+                case "enseignantMatiere":{
+                        $enseignants=$req->getUserByStatut(3);
+                        $matieres=$req->getMatiereClasseDepartement();//récupération des matières, la classe et département
                     }
                     break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            
+
             include_once("vues/".$_REQUEST["road"].".php");
         }
         else{
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
-            switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages 
+            switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "infos":{
-                    $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
-                    //$statuts=$req->getStatut();
+                        $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     }
                     break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            
+
             include_once("vues/".$route.".php");
         }
-        
-    }else if(isset($_REQUEST["action"])){ //zone de traitement des clics
+
+    }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
                 $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
@@ -158,8 +162,11 @@ if(0)
             }
             break;
             case "MATIEREajouter":{
-                $req->setMatiere($_REQUEST);
-                //$matieres=$req->getMatiere();
+                $idMatiere=$req->setMatiere($_REQUEST);//ajout d'une matiere et recupération de son id
+                foreach ($_REQUEST["idClasse"] as $idClasse){//Pour cha classe où la matière sera enseignée, association de la classe
+                    $req->setClasseMatiere($idClasse,$idMatiere,$_REQUEST["coef".$idClasse]);
+                }
+                $matieres=$req->getMatiere();
                 $matieres=$req->getMatiereClasseDepartement();
                 $classesDpt=$req->getClasseDepartement();
                 include_once("vues/matiere.php");//On recharge la page
@@ -173,8 +180,35 @@ if(0)
                 include_once("vues/lister.php");//On recharge la page
             }
             break;
+            case "INFOSmodifier":{
+                $req->updateUser($_REQUEST);
+                $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["matUser"]);
+                include_once("vues/infos.php");//On recharge la page
+            }
+            break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
+        }
+    }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
+        switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
+            case "ENSEIGNANTMATIEREensmatiere":{
+                    print_r(json_encode($req->getIDMatiereByEnseignant($_REQUEST["parametre"])));
+                    exit();
+                }
+                break;
+            case "ENSEIGNANTMATIEREenvoiematiere":{
+                    $donnees=json_decode(stripslashes($_REQUEST["parametre"]));
+                    $matUser=array_shift($donnees);//récupération du matricule de l'enseigant et retrait du matricule parmis les paramètres, il ne reste plus que les id des matières
+                    $req->delCoursByEnseignant($matUser);//Suppression de toutes les anciennes affectations
+                    foreach ($donnees as $donnee) {
+                        list($idMatiere, $idClasse) = explode("*", $donnee);
+                           $req->setCours($matUser,$idMatiere,$idClasse);//insertion des nouvelles affectations 
+                    }
+                    exit();
+                }
+                break;
+            default:
+               echo "requete A inconnue";
         }
     }else{ //zone de traitement des appuis de bouton
         echo "neutre";

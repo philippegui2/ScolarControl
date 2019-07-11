@@ -80,58 +80,60 @@
                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                            <?php echo'<h4 class="modal-title" id="ModalLabel">'.$user['prenom'].' '.$user['nom'].' | Modifier les infos du patient</h4>';?>
                                                          </div> <!-- fin modal header -->
-
+                                                          <form method="POST" action="../admin/index.php">
                                                              <div class="modal-body">
-
-                                                               <!--Debut du formulaire d'inscription-->
-                                                               <form role="form">
-
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Nom</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomPatient" id="nomPatient" value="'.$userEnVue[0]['nomUser'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Nom" required name="nomUser" id="nomUser" value="'.$userEnVue[0]['nomUser'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Prénom</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="'.$user['prenom'].'" required id="prenomPatient" name="prenomPatient" value="'.$userEnVue[0]['prenomUser'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Prenom" required id="prenomUser" name="prenomUser" value="'.$userEnVue[0]['prenomUser'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Naissance</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="'.$user['prenom'].'" required id="prenomPatient" name="prenomPatient" value="'.$userEnVue[0]['naissanceUser'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Date de naissance" required id="naissanceUser" name="naissanceUser" value="'.$userEnVue[0]['naissanceUser'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Lieu</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Lieu de naissance" required id="lieuNaissancePatient" name="lieuNaissancePatient" value="'.$userEnVue[0]['lieuNaissance'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Lieu de naissance" required id="lieuNaissance" name="lieuNaissance" value="'.$userEnVue[0]['lieuNaissance'].'">';?>
                                                                    </div>
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Adresse</span>
-                                                                       <?php echo'<input type="text" class="form-control" placeholder="Adresse" required id="adressePatient" name="adressePatient" value="'.$userEnVue[0]['adresseUser'].'">';?>
+                                                                       <?php echo'<input type="text" class="form-control" placeholder="Adresse" required id="adresseUser" name="adresseUser" value="'.$userEnVue[0]['adresseUser'].'">';?>
                                                                    </div>
-
-
                                                                    <div class="form-group input-group">
                                                                        <span class="input-group-addon">Téléphone</span>
-                                                                       <?php echo'<input type="num" class="form-control" placeholder="Telephone" required id="contactPatient" name="contactPatient" value="'.$userEnVue[0]['contactUser'].'">';?>
+                                                                       <?php echo'<input type="num" class="form-control" placeholder="Téléphone" required id="contactUser" name="contactUser" value="'.$userEnVue[0]['contactUser'].'">';?>
                                                                    </div>
 
                                                                    <div class="form-group input-group">
                                                                      <span class="input-group-addon"> sexe </span>
-                                                                       <select class="form-control" required id="sexePatient" name="sexePatient">
-                                                                          <?php echo'<option value="'.$user['sexe'].'" >'.$userEnVue[0]['sexeUser'].'</option>';?>
-                                                                          <option value="M" >Masculin</option>
-                                                                          <option value="F" >Feminin</option>
+                                                                       <select class="form-control" required id="sexeUser" name="sexeUser">
+                                                                          <?php echo'<option value="'.$userEnVue[0]['sexeUser'].'" >'.$userEnVue[0]['sexeUser'].'</option>';?>
+                                                                          <option value="Masculin" >Masculin</option>
+                                                                          <option value="Feminin" >Feminin</option>
                                                                        </select>
                                                                    </div>
 
-                                                               </form>
+
                                                                <!--Fin du formulaire d'inscription-->
 
                                                              </div><!-- fin modal body -->
                                                              <div class="modal-footer">
-                                                                     <button type="button" id="boutModifInfosPatient" class="btn btn-default" data-dismiss="modal" onclick="envoieModifPatient()" >Modifier</button>
-                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                                     <input type="hidden" name="matUser" value="<?php echo $userEnVue[0]['matUser'] ?>">
+                                                                     <button type="submit" id="boutModifInfosPatient" class="btn btn-info" name="action" value="INFOSmodifier">Modifier</button>
+                                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
 
-                                                       </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-content -->
+                                                        </form>
                                                      </div><!-- /.modal-dialog -->
+
+
+
+
+
+
                                                    </div><!-- /.modal -->
                                                  <!--"Fin ce qui apparait quand on clique sur le bouton "modifier" de voir profile-->
                                                </div>

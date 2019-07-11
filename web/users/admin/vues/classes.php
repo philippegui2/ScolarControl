@@ -55,7 +55,7 @@
                                 <th><i class="fa fa-list-ol fa-fw"></i></th>
                                 <th><i class="fa fa-cube fa-fw"></i>Classe</th>
                                 <th><i class="fa fa-cube fa-fw"></i>Département</th>
-                                <th><i class="fa fa-wrench fa-fw"></i>Action</th>
+                                <th> <i class="fa fa-table fa-fw"></i>Calendrier</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,55 +68,9 @@
                                 </td>
                                 <td><?php echo $classeDpt["libelleDepartement"] ;?></td>
                                 <td>
-                                    <button type="button" data-toggle="modal" data-target="<?php echo '#asMat'.$classeDpt["idClasse"]?>" title="Associer une matière" id="" style="display:inline;" class="btn btn-default pull-right btn-minimize" ><i class="fa fa-chain"></i></button>
+                                    <button type="button"> <i class="fa fa-table fa-fw"></i></button>
                                     <!-- Modal zone-->
-                                        <div class="modal fade" id="<?php echo'lesMat'.$classeDpt["idClasse"]?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                        <h4 class="modal-title" id="myModalLabel">Liste des matières enseignées</h4>
-                                                    </div>
-                                                    <div class="modal-body" style="z-index: 3600;">
-                                                            <!--Debut du tableau des matières-->
-                                                                
-                                                                    <table class=" bobo table table-striped table-bordered table-hover" id="dataTables-example">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th><i class="fa fa-list-ol fa-fw"></i></th>
-                                                                                <th><i class="fa fa-cube fa-fw"></i>Libellé</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <?php
-                                                                                foreach ($matClasses as $key => $matClasse){ 
-                                                                                    if($classeDpt["idClasse"]==$matClasse["idClasse"]){?>
-                                                                                    <tr>
-                                                                                        <td><?php echo intval($key+1);?></td>
-                                                                                        <td>
-                                                                                            <?php 
-
-                                                                                                    print_r($nouvelle[$matClasse["idMatiere"]]);
-
-                                                                                                
-                                                                                            ?>
-
-                                                                                        </td>
-                                                                                    </tr>                                
-                                                                            <?php        
-                                                                                }}
-                                                                            ?>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                    <button type="submit" class="btn btn-info" name="action" value="CLASSEassocier">Associer</button>
-        
-                                                            <!-- fin du tableau des matières-->
-                                                    </div>
-                                                    <!--Fin du formulaire d'inscription-->
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div>
+                                   
                                     <!-- /.modal -->
                                 </td>
                             </tr>                                

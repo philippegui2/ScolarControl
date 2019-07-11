@@ -40,7 +40,7 @@
         <div class="login-wrap">
             <p class="login-img"><i class="icon_lock_alt"></i></p>
             <?php
-                if ($_REQUEST["errolog"]=="erreur") {?>
+                if (isset($_REQUEST['errolog'])) {?>
                   <div class="alert alert-block alert-danger fade in">
                       <button data-dismiss="alert" class="close close-sm" type="button">
                           <i class="icon-remove"></i>

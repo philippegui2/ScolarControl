@@ -26,12 +26,12 @@
         $(document).ready(function () {
 
             $('#dateP').datepicker({
-                format: "dd/mm/yyyy"
+                format: "dd/mm/yyyy",
             });  
 
         });
         
-        function transfertInfo(valeur){
+        function transfertInfo(valeur){//Page LISTER Récupération des informations de l'utilisateur cliqué pour suppression
             var valeur=valeur.split('*');
             $(function(){  
                 $("#noui").html(valeur[1]+" "+valeur[2]);
@@ -39,8 +39,10 @@
             });
         }
         
-        $(function()
-	{   
+        $(function(){
+            //prise en compte dans la page matiere
+            $(".MATIEREdoou").hide();
+            //Fin prise en compte dans la page matiere
             //zone d'initialisation
                 $("#eleve").hide();
             //fin zone d'initialisation
@@ -52,7 +54,68 @@
                 }
                     
             }
-            );
-            
+            );  
 	});
+        
+        function MATIEREApparution(id){
+            $(function(){
+                if($("."+id).prop('checked'))
+                    $("#coef"+id).show();
+                else
+                    $("#coef"+id).hide();
+            });
+        }
+        
+        function ENSEIGNANTMATIEREaffTableau(idPub){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+        $("#loading-div").show();
+        $("#ensEnVue").attr('value',idPub);
+            $(function(){  
+                    var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere&parametre="+idPub;
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            var data2=JSON.parse(data);
+                            $("input").prop('checked', false);//décocher tout au départ
+                            var data_length = data2.length;
+                            $('#corpsEnseignantMatiere tr input').each(function(index){
+                                for (var i = 0; i < data_length; i++) {
+                                    if(data2[i].idMatiere === $(this).attr("identifiant")){
+                                        $(this).prop('checked', true);
+                                    }
+                                }
+                            });
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
+        
+        function ENSEIGNANTMATIEREenvoieEnsMat(){
+            $(function(){
+                var checkbox_val = [$("#ensEnVue").val()];
+                $('#corpsEnseignantMatiere tr input:checked').each(function(index){
+                    checkbox_val.push(this.value);
+                });
+                var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREenvoiematiere&parametre="+JSON.stringify(checkbox_val);
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
     </script>

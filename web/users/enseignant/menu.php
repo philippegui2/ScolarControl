@@ -51,7 +51,7 @@
             </div>
 
             <!--logo start-->
-            <a href="index.html" class="logo">Scolar<span class="lite">Control</span></a>
+            <a href="../enseignant/?road=accueil" class="logo">Scolar<span class="lite">Control</span></a>
             <!--logo end-->
 
             <div class="nav search-row" id="top_menu">
@@ -76,13 +76,13 @@
                             <span class="profile-ava">
                                 <img alt="" src="../../img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Prenom nom</span>
+                            <span class="username"><?php echo $_SESSION['user']["prenomUser"]." ".$_SESSION['user']["nomUser"];?></span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
                             <li class="eborder-top">
-                                <a href="#"><i class="icon_profile"></i> Mon Profile</a>
+                                <a href="../enseignant/?road=monProfile"><i class="icon_profile"></i> Mon Profile</a>
                             </li>
                             <li>
                                 <a href="#"><i class="icon_mail_alt"></i> Messagerie</a>
@@ -91,7 +91,7 @@
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
-                                <a href="documentation.html"><i class="icon_key_alt"></i> Deconnexion</a>
+                                <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
                             </li>
                         </ul>
                     </li>
@@ -108,24 +108,22 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li class="active">
-                      <a class="" href="index.html">
-                          <i class="icon_house_alt"></i>
+                      <a class="" href="../enseignant/?road=accueil">
+                          <i class="fa fa-home fa-fw"></i>
                           <span>Accueil</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="widgets.html">
-                          <i class="icon_genius"></i>
-                          <span>Widgets</span>
+                      <a class="" href="../enseignant/?road=accueil">
+                          <i class="fa fa-info-circle fa-fw"></i>
+                          <span>Informations</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="chart-chartjs.html">
-                          <i class="icon_piechart"></i>
-                          <span>Charts</span>
-
+                      <a class="" href="../enseignant/?road=accueil">
+                          <i class="fa fa-gears fa-fw"></i>
+                          <span>Parametrage</span>
                       </a>
-
                   </li>
 
               </ul>

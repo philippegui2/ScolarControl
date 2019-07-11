@@ -1,4 +1,4 @@
-<?php
+<?php session_start(); ob_start();
 /*
 *contolleur frontal
 *Auteur Philippe K. GUILAVOGUI
@@ -14,38 +14,58 @@
       //on teste que cet utilisateur existe dans la base de données, si oui valeur vaudra 1
       $user=$requete->authentification($_REQUEST["login"],MD5($_REQUEST["password"]));
       //si l'utilisateur existe, création d'un objet utilisateur qui representera l'utilisateur
+
+
       if($user)
       {
         //création de la session
-        session_start();
       	//Instanciation de l'utilisateur
-        $utilisateur = new User($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
+        //$utilisateur = array($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
         //creation de la session de l'utilisateur
-        $_SESSION["user"]=$utilisateur;
-        $_SESSION["requete"]=$requete;
+            $_SESSION['user']=array(
+                "matUser" => $user["matUser"],
+                "prenomUser" => $user["prenomUser"],
+                "nomUser" => $user["nomUser"],
+                "pseudoUser" => $user["pseudoUser"],
+                "sexeUser" => $user["sexeUser"], 
+                "naissanceUser" => $user["naissanceUser"]
+            );
+        //$_SESSION["requete"]=$requete;
+
         //redirection dans le bon dossier
         if ($user["statutUser"]=='1')
           {
               //C'est un admin
-              echo '<meta http-equiv="Refresh" content="0;url=users/admin/index.php?road=accueil">';
+              echo '<meta http-equiv="Refresh" content="0;url=users/admin/?road=accueil">';
               exit();
           }
           else if($user["statutUser"]=='2')
           {
               //C'est un eleve
-              echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=accueil">';
-              exit();
+              // echo $_SESSION['user']->getMatricule();
+              // exit();
+             // s'il n'a pas personnalisé son mdpasse je le redirige vers la page custom
+              if (md5($user['pseudoUser'])==$user['passwordUser']) {
+                # code...
+                header('Location: users/eleve/index.php?road=update&pseudo='.$user['pseudoUser']);
+                // echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=update">';
+                exit();
+              } else {
+                # code...
+                header('Location: users/eleve/index.php?road=accueil&pseudo='.$user['pseudoUser']);
+                // exit();
+              }   
           }
           else if($user["statutUser"]=='3')
           {
               //C'est un enseignant
-              echo '<meta http-equiv="Refresh" content="0;url=users/enseignant/index.php?road=accueil">';
+              echo '<meta http-equiv="Refresh" content="0;url=users/enseignant/?road=accueil">';
               exit();
           }
           else if($user["statutUser"]=='4')
           {
               //C'est un gardien
-              echo '<meta http-equiv="Refresh" content="0;url=users/gardien/index.php?road=accueil">';
+              echo '<meta http-equiv="Refresh" content="0;url=users/gardien/?road=accueil">';
               exit();
           }
           else if($user["statutUser"]=='5')
@@ -61,5 +81,19 @@
       }
 
     }
+
+//Deconnexion 
+ if(isset($_GET['logout']))
+    {
+     // echo "deconnexion";
+
+        
+    session_start();
+    session_destroy();
+    header('location: ../index.php');
+    exit;
+
+    } 
+
 
 ?>

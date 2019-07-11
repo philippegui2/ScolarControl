@@ -14,44 +14,48 @@
                         </div>
                         <div class="modal-body" style="z-index: 3600;">
                                 <!--Debut du formulaire d'enregistrement-->
-                                    <form role="form" method="POST" action="../admin/index.php">
+                                    <form role="form" method="POST" action="../admin/">
                                         <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-university fa-fw"></i></span>
                                             <input type="text" class="form-control" placeholder="Ajouter le libellé de la nouvelle matière" name="designation">
                                         </div>
                                         
-                                        <div class="form-group input-group">
-                                            <select class="form-control" required name="coefMatiere">
-                                                <option value="0">Choisir le coefficient de la matiere</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="form-group input-group">
-                                            <select class="form-control" required name="classeMatiere">
-                                                <option value="0">choisir la classe</option>
-                                                <?php 
-                                                    foreach ($classesDpt as $classeDpt) 
-                                                    {
-                                                        echo '<option value="'.$classeDpt['idClasse'].'">'.$classeDpt['libelleClasse']." ".$classeDpt['libelleDepartement'].'</option>';
-                                                    }                                                   
-                                                ?>
-                                            </select>
-                                        </div>
-                                        
-                                        
-                                        
-                                                                 
-                                        <button type="submit" class="btn btn-info" name="action" value="MATIEREajouter">Créer</button>
+                                        <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th><i class="fa fa-check-circle fa-fw"></i></th>
+                                                <th>Classe</th>
+                                                <th>Département</th>
+                                                <th>Coefficient</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody id="corpsEnseignantMatiere">
+                                             <?php foreach($classesDpt as $classe){?>
+                                                  <tr class="active">
+                                                      
+                                                      <td><input identifiant="<?php  echo $classe["idClasse"];?>" class="<?php  echo $classe["idClasse"];?>" type="checkbox" name="idClasse[]" value='<?php  echo $classe["idClasse"];?>' onclick="MATIEREApparution(this.getAttribute('identifiant'))"/></td>
+                                                      <td><?php echo $classe["libelleClasse"];?></td>
+                                                      <td><?php echo $classe["libelleDepartement"];?></td>
+                                                      <td id="<?php echo "coef".$classe["idClasse"];?>" class="MATIEREdoou">
+                                                          <select class="form-control" required name="<?php echo "coef".$classe["idClasse"];?>">
+                                                            <option value="1">Choisir le coefficient de la matiere</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                        </select>
+                                                      </td>
+                                                  </tr>
+                                              <?php } ?>       
+                                            </tbody>
+                                        </table>                       
+                                        <button type="submit" class="btn btn-info" name="action" value="MATIEREajouter">Ajouter</button>
                                     </form>
                                 <!-- fin du formulaire d'enregistrement-->
                         </div>
