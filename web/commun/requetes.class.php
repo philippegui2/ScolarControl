@@ -105,6 +105,30 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
+        
+        public function getEnseignantByClasse($idClasse){//récupère les formateurs qui enseignent dans une classe données
+            $req="SELECT * FROM `users` where matUser in (SELECT cours.matUser from cours INNER JOIN `matiere-classe` ON cours.idClasse=`matiere-classe`.idClasse INNER JOIN classe ON `matiere-classe`.idClasse=classe.id where classe.id=:idClasse)";
+            $params = array(
+                    "idClasse" => intval($idClasse) 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getAllChefsAndAdjoint(){//récupère les chefs de classe de tous les départements et leur adjoint
+            $req="SELECT users.matUser matUser, users.nomUser nomUser, users.prenomUser prenomUser, eleve.role role, classe.libelle libClasse, departement.libelle libDepartement FROM users INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE role=2 or role=3 ORDER BY classe.libelle";
+            $params = array(
+                    //"idClasse" => intval($idClasse) 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getEnseignantByDepartement($idDepartement){//récupère les formateurs qui enseignent dans un département donné
+            $req="SELECT * FROM `users` where matUser in (SELECT cours.matUser from cours INNER JOIN `matiere-classe` ON cours.idClasse=`matiere-classe`.idClasse INNER JOIN classe ON `matiere-classe`.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where departement.id=:idDepartement)";
+            $params = array(
+                    "idDepartement" => intval($idDepartement) 
+            );
+            return $this->select($req,$params);
+        }
 
         public function getStatut(){//récupère les statuts
             $req= "SELECT * FROM `statut`";
@@ -122,7 +146,7 @@ Class Requetes
         }
 
         public function getClasseDepartement(){//récupération des classes et leur département
-            $req="select classe.id as idClasse, classe.libelle as libelleClasse, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id ORDER BY classe.libelle";
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id ORDER BY classe.libelle";
             return $this->select($req,$params);
         }
 
@@ -140,7 +164,6 @@ Class Requetes
         }
 
         public function getMatiereClasseDepartement(){//récupère les matières leur classe et départements
-            #$req="SELECT m.id idMatiere, m.libelle libelleMatiere, m.coefficient coefMatiere, c.id idClasse, c.libelle libelleClasse, d.id idDepartement,d.libelle libelleDepartement from matiere m, classe c, departement d where m.idClasse=c.id and c.departement=d.id";
             $req="SELECT matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id";
             return $this->select($req,$params);
         }
@@ -181,7 +204,6 @@ Class Requetes
         }
 
         public function getNoteByUser($idEleve){//Récupération de la note d'un utilisateur en fonction de son matricule
-            //$req="SELECT n.idMatiere idMatiere, n.noteControle noteControle, n.noteTP noteTP, n.noteExamen noteExamen, m.libelle libelleMatiere, m.coefficient coefMatiere from matiere m, note n where n.idMatiere=m.id and n.matUser=:matUser";
             $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle, m.coefficient  from notes n INNER JOIN matiere m ON n.idMatiere=m.id where matUser=:matUser";
             $params = array(
                 "matUser" => $idEleve
@@ -213,7 +235,7 @@ Class Requetes
             $params = array(
                     "matUser" => $donnees["matUser"],
                     "prenomUser" => $donnees["prenomUser"],
-                    "nomUser" => $donnees["nomUser"],
+                    "nomUser" => mb_strtoupper($donnees["nomUser"]),
                     "pseudoUser" => $donnees["matUser"],
                     "sexeUser" => $donnees["sexeUser"],
                     "naissanceUser" => implode("-",array_reverse(explode("/",$donnees["naissanceUser"]))),
@@ -340,7 +362,6 @@ Class Requetes
 
     //mise a jour du password eleve
     public function updatePassword($pseudo,$password){
-
         $req = "update users set passwordUser= :password where pseudoUser=:pseudo";
         $params = array(
             "password"=>$password,
@@ -348,7 +369,106 @@ Class Requetes
         );
         return $this->update($req,$params);
     }
+    
+    public function updateChef($donnees){//Choix d'un chef
+        $req = "update eleve set role= 2 where matUser=:pseudo";
+        $params = array(
+            "pseudo"=> explode("|", $donnees["chefClasse"])[0]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateReinitChef($donnees){//Enlève l'ancien chef de classe
+        $req ="update eleve set role= 1 where role=2 and idClasse=:idClasse";
+        $params = array(
+            "idClasse"=>$donnees["idClasse"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateChefClasse($donnees){//Ajouter le chef au niveau de la table classe
+        $req = "update classe set chefClasse=:pseudo WHERE id=:idClasse";
+        $params = array(
+            "pseudo"=>$donnees["chefClasse"],
+            "idClasse"=>$donnees["idClasse"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateAdjoint($donnees){//Choix d'un chef de classe
+        $req = "update eleve set role= 3 where matUser=:pseudo";
+        $params = array(
+            "pseudo"=>explode("|", $donnees["adjointChef"])[0]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateReinitAdjoint($donnees){//Enlève l'ancien chef de classe
+        $req = "update eleve set role= 1 WHERE role=3 and idClasse=:idClasse";
+        $params = array(
+            "idClasse"=>$donnees["idClasse"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateAdjointClasse($donnees){//Ajouter l'adjoint eu niveau de la table classe
+        $req = "update classe set adjointChef=:pseudo WHERE id=:idClasse";
+        $params = array(
+            "pseudo"=>$donnees["adjointChef"],
+            "idClasse"=>$donnees["idClasse"]
+        );
+        return $this->update($req,$params);
+    }
 
+    public function updateEnseignantResponsable($donnees){//Ajouter le role de responsable à un enseigant 
+        $req = "update formateur set role= 2 where matUser=:pseudo";
+        $params = array(
+            "pseudo"=>explode("|", $donnees["respClasse"])[0]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateReinitResponsable($donnees){//Enlève l'ancien chef de classe
+        $req = "update formateur set role= 1 WHERE role=2 and matUser=:pseudo";
+        $params = array(
+            "pseudo"=>$donnees["idProf"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateResponsableClasse($donnees){//Affecter un prof responsable à une classe 
+        $req = "update classe set profResponsable=:pseudo WHERE id=:idClasse";
+        $params = array(
+            "pseudo"=>$donnees["respClasse"],
+            "idClasse"=>$donnees["idClasse"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateReinitResponsableDepartement($donnees){//Enlève l'ancien responsable du département
+        $req = "update formateur set role= 1 WHERE role=3";
+        $params = array(
+            "idClasse"=>$donnees["idDepartement"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateEnseignantResponsableDepartement($donnees){//Ajouter le role de responsable à un enseigant 
+        $req = "update formateur set role= 3 where matUser=:pseudo";
+        $params = array(
+            "pseudo"=>explode("|", $donnees["respDepartement"])[0]
+        );
+        return $this->update($req,$params);
+    } 
+    
+    public function updateResponsableDepartement($donnees){//Affecter un prof responsable à une classe
+        $req = "UPDATE `departement` SET `responsable` = :pseudo WHERE `departement`.`id` = :idDepartement";
+        $params = array(
+            "pseudo"=>$donnees["respDepartement"],
+            "idDepartement"=>$donnees["idDepartement"]
+        );
+        return $this->update($req,$params);
+    }
     // recuperation de la liste des mmatieres d'un eleve
     public function listeMatiere ($pseudo){
 
@@ -379,13 +499,11 @@ Class Requetes
     }
 
     // recuperation des infos d'un user
-    public function user ($pseudo){
-
+    public function user($pseudo){
         $req = "select * from users where matUser = :pseudo Limit 1";
         $params = array(
             "pseudo"=>$pseudo
         );
-
         return $this->select($req,$params);
     }
 }

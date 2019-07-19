@@ -40,16 +40,26 @@
                             <tr>
                                 <th><i class="fa fa-list-ol fa-fw"></i></th>
                                 <th><i class="fa fa-cube fa-fw"></i>Libellé</th>
-                                <th><i class="fa fa-wrench fa-fw"></i>Action</th>
+                                <th><i class="fa fa-user fa-fw"></i>Responsable</th>
+                                <th>modifier</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 foreach ($departements as $key => $departement) {?>
                             <tr>
-                                <td><?php echo intval($key+1);?></td>
-                                <td><?php echo $departement["libelle"];?></td>
-                                <td></td>
+                                <td>
+                                    <?php echo intval($key+1);?>
+                                </td>
+                                <td>
+                                    <?php echo $departement["libelle"];?>
+                                </td>
+                                <td>
+                                    <?php echo $departement["responsable"];?>
+                                </td>
+                                <td>
+                                    <a href="../admin/index.php?road=modifDepartement&param=<?php echo $departement["id"];?>"><i class="fa fa-pencil-square-o fa-fw"></i></a>
+                                </td>
                             </tr>                                
                             <?php        
                                 }

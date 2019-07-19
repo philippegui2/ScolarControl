@@ -118,4 +118,29 @@
                 
             });
         }
+        
+        function USERCHEFSCLASSEenvoyer(option){
+            $(function(){
+                if(option=="email"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerEmail&parametre="+$('#message').val();
+                }else if(option=="sms"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerSMS&parametre="+$('#message').val();
+                }else if(option=="notif"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerNotif&parametre="+$('#message').val();
+                }
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        alert(data);
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
     </script>

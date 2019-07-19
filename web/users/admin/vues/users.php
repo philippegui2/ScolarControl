@@ -10,11 +10,11 @@
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=...">
+            <a class="" href="../admin/index.php?road=userChefsClasse">
 		<div class="info-box brown-bg">
-			<i class="fa fa-table fa-fw"></i>
-			<div class="count">...</div>
-			<div class="title">...</div>
+			<i class="fa fa-users fa-fw"></i>
+			<div class="count">Chefs classe</div>
+			<div class="title">Chefs de classe et adjoints</div>
 		</div><!--/.info-box-->
             </a>
 	</div><!--/.col-->

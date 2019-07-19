@@ -1,3 +1,4 @@
+@@ -1,69 +0,0 @@
 # ScolarControl
 gestion scolaire
 ## Objectifs #

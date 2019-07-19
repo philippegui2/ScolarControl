@@ -1,8 +1,8 @@
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-10">
         <div class="panel panel-default">
             <div class="panel-heading">
-                liste des classes <button type="button" data-toggle="modal" data-target="#ajClasse" title="Ajouter un département" id="" style="display:inline;" class="btn btn-default pull-right btn-minimize" ><i class="fa fa-plus"></i></button>
+                liste des classes <button type="button" data-toggle="modal" data-target="#ajClasse" title="Ajouter une classe" id="" style="display:inline;" class="btn btn-default pull-right btn-minimize" ><i class="fa fa-plus"></i></button>
             </div>
             <!-- Modal zone-->
             <div class="modal fade" id="ajClasse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -56,12 +56,15 @@
                                 <th><i class="fa fa-cube fa-fw"></i>Classe</th>
                                 <th><i class="fa fa-cube fa-fw"></i>Département</th>
                                 <th> <i class="fa fa-table fa-fw"></i>Calendrier</th>
+                                <th> <i class="fa fa-user fa-fw"></i>Chef</th>
+                                <th> <i class="fa fa-user fa-fw"></i>Adjoint</th>
+                                <th> <i class="fa fa-user fa-fw"></i>Responsable</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 foreach ($classesDpt as $key => $classeDpt) {?>
-                            <tr>
+                            <tr href="#">
                                 <td><?php echo intval($key+1);?></td>
                                 <td data-toggle="modal" data-target="<?php echo '#lesMat'.$classeDpt["idClasse"]?>">
                                     <?php echo $classeDpt["libelleClasse"];?>
@@ -73,6 +76,18 @@
                                    
                                     <!-- /.modal -->
                                 </td>
+                                <td>
+                                    <?php echo $classeDpt["chefClasse"] ;?>
+                                </td>
+                                <td>
+                                    <?php echo $classeDpt["adjointChef"] ;?>
+                                </td>
+                                <td>
+                                    <?php echo $classeDpt["profResponsable"] ;?>
+                                </td>
+                                <td>
+                                    <a href="../admin/index.php?road=modifClasse&param=<?php echo $classeDpt["idClasse"];?>&param2=<?php echo $classeDpt["profResponsable"];?>"><i class="fa fa-pencil-square-o fa-fw"></i></a>
+                                </td>
                             </tr>                                
                             <?php        
                                 }
@@ -80,18 +95,11 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.table-responsive -->
-                
-                
-                
-                                                     
+                <!-- /.table-responsive -->                                  
             </div>
             <!-- /.panel-body -->
-            
-           
         </div>
         <!-- /.panel -->
     </div>
-    
 </div><!--/.row-->
 
