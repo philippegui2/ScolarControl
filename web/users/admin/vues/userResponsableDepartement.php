@@ -2,7 +2,7 @@
     <div class="col-lg-8 col-md-8 col-sm-8">
         <section class="panel">
             <header class="panel-heading">
-                Liste des chefs de classe et leurs adjoints
+                Liste des chefs de département
                  <button type="button" data-toggle="modal" data-target="#EnvoieTexto" title="Envoyer un texto à tous" id="" style="display:inline;" class="btn btn-info pull-right btn-minimize" >Écrire à tous</button>
             </header>
             <!--//----- debut zone modal-->
@@ -25,9 +25,9 @@
                                         <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
                                         <textarea class="form-control" rows="3" id="message" placeholder="Ecrire le message ici" style=""></textarea>
                                     </div>
-                                    <button type="button" class="btn btn-info" name="action" value="USERCHEFSCLASSEenvoyerEmail" onclick="USERCHEFSCLASSEenvoyer('email')">Envoyer email</button>
-                                    <button type="button" class="btn btn-primary" name="action" value="USERCHEFSCLASSEenvoyerSMS" onclick="USERCHEFSCLASSEenvoyer('sms')">Envoyer SMS</button>
-                                    <button type="button" class="btn btn-success" name="action" value="USERCHEFSCLASSEenvoyerNotif" onclick="USERCHEFSCLASSEenvoyer('notif')">Envoyer Texto</button>
+                                    <button type="button" class="btn btn-info" name="action" value="USERCHEFSCLASSEenvoyerEmail" onclick="envoyerEmail('respoDepartement')">Envoyer email</button>
+                                    <button type="button" class="btn btn-primary" name="action" value="USERCHEFSCLASSEenvoyerSMS" onclick="envoyerSMS('respoDepartement')">Envoyer SMS</button>
+                                    <button type="button" class="btn btn-success" name="action" value="USERCHEFSCLASSEenvoyerNotif" onclick="envoyerNotif('respoDepartement')">Envoyer Texto</button>
                                 </form>
                             <!-- fin du formulaire d'enregistrement-->
                         </div>
@@ -40,28 +40,18 @@
               <thead>
                 <tr>
                     <th>Matricule</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Classe</th>
+                    <th>Responsable</th>
                     <th>Département</th>
-                    <th>Role</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach($chefsAndAdjoints as $chefsAndAdjoint){?>
+                <?php foreach($chefsRespoDepartements as $chefsRespoDepartement){
+                    
+                    ?>
                      <tr class="active">
-                         <td><?php echo $chefsAndAdjoint["matUser"];?></td>
-                         <td><?php echo $chefsAndAdjoint["prenomUser"];?></td>
-                         <td><?php echo $chefsAndAdjoint["nomUser"];?></td>
-                         <td><?php echo $chefsAndAdjoint["libClasse"];?></td>
-                         <td><?php echo $chefsAndAdjoint["libDepartement"];?></td>
-                         <td>
-                             <?php if($chefsAndAdjoint["role"]=="2") 
-                                        echo "Chef";
-                                   else
-                                        echo "Adjoint";
-                             ?>
-                         </td>
+                         <td><?php echo explode("|", $chefsRespoDepartement["responsable"])[0];?></td>
+                         <td><?php echo explode("|", $chefsRespoDepartement["responsable"])[1];?></td>
+                         <td><?php echo $chefsRespoDepartement["libDepartement"];?></td>
                      </tr>
                 <?php } ?>       
               </tbody>
