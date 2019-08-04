@@ -79,7 +79,7 @@
                                 <a href="#"><i class="icon_profile"></i> Mon Profile</a>
                             </li>
                             <li>
-                                <a href="#"><i class="icon_mail_alt"></i> Messagerie</a>
+                                <a href="../admin/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>

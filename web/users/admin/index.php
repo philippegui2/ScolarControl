@@ -337,7 +337,7 @@ if(0)
                             $req->setMessage($tousEleve["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
                         }
                     }else if($_REQUEST["parametre3"]=="tousEnseignant"){
-                        $tousEnseignants=$req->getUserByStatut(3);;
+                        $tousEnseignants=$req->getUserByStatut(3);
                         foreach($tousEnseignants as $tousEnseignant){
                             $req->setMessage($tousEnseignant["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
                         }

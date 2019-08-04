@@ -98,6 +98,11 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+        public function getAllEleve(){
+            $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve)";
+            return $this->select($req,$params);
+        }
+        
         public function getEleveByClasse($idClasse){//récupère les élèves inscris dans une classe données
             $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve WHERE idClasse=:idClasse)";
             $params = array(
@@ -115,9 +120,40 @@ Class Requetes
         }
         
         public function getAllChefsAndAdjoint(){//récupère les chefs de classe de tous les départements et leur adjoint
-            $req="SELECT users.matUser matUser, users.nomUser nomUser, users.prenomUser prenomUser, eleve.role role, classe.libelle libClasse, departement.libelle libDepartement FROM users INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE role=2 or role=3 ORDER BY classe.libelle";
+            $req="SELECT users.matUser matUser, users.nomUser nomUser, users.prenomUser prenomUser, users.emailUser emailUser, eleve.role role, classe.libelle libClasse, departement.libelle libDepartement FROM users INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE role=2 or role=3 ORDER BY classe.libelle";
+            $params = array( 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getAllRespoAndAdjoint(){//récupère les chefs de classe de tous les départements et leur adjoint
+            $req="SELECT classe.profResponsable, classe.libelle libClasse, departement.libelle libDepartement from classe INNER JOIN departement ON classe.departement=departement.id";
             $params = array(
                     //"idClasse" => intval($idClasse) 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getInfoRespoAndAdjoint(){//récupère les informations des chefs de classe de tous les départements et leur adjoint
+            $req="SELECT users.matUser matUser, users.contactUser contactUser from users INNER JOIN formateur ON users.matUser=formateur.matUser WHERE formateur.role=2";
+            $params = array(
+                   
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getAllRespoDepartement(){//récupère les chefs de classe de tous les départements et leur adjoint
+            $req="SELECT departement.responsable, departement.libelle libDepartement from departement";
+            $params = array(
+ 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getInfoRespoDepartement(){//récupère les informations des chefs de classe de tous les départements et leur adjoint
+            $req="SELECT users.matUser matUser, users.contactUser contactUser from users INNER JOIN formateur ON users.matUser=formateur.matUser WHERE formateur.role=3";
+            $params = array(
+                   
             );
             return $this->select($req,$params);
         }
@@ -137,6 +173,14 @@ Class Requetes
 
         public function getDepartement(){//récupère les départements
             $req= "SELECT * FROM `departement`";
+            return $this->select($req,$params);
+        }
+        
+        public function getDepartementByClasse($idClasse){//récupère les départements
+            $req= "SELECT departement FROM `classe` WHERE id=idClasse";
+            $params = array(
+                "idClasse" => $idClasse
+            );
             return $this->select($req,$params);
         }
 
@@ -219,12 +263,14 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
-
-        public function getEleveById($idEleve){
-            ;
+        
+        public function getMessagesByUser($matUser){
+            $req="SELECT * from message where correspondant=:matUser and supprime=0 ORDER BY idMessage desc";
+            $params = array(
+                "matUser" => $matUser,
+            );
+            return $this->select($req,$params);
         }
-        
-        
 
 
     //fin méthodes de recupération dans la base de données
@@ -318,6 +364,17 @@ Class Requetes
                 "matUser" => $idEnseignant,
                 "idMatiere" => $idMatiere,
                 "idClasse" => $idClasse
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setMessage($correspondant,$expediteur,$message,$objet){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `message` (`idMessage`,`objetMessage`,`expediteurMessage`,`correspondant`,`contenuMessage`) VALUES (NULL,:objetMessage,:expediteurMessage,:correspondant,:contenuMessage)";
+            $params = array(
+                "objetMessage" => $objet,
+                "expediteurMessage" => $expediteur,
+                "correspondant" => $correspondant,
+                "contenuMessage" => $message
             );
             return $this->insert($req,$params);
         }
@@ -428,7 +485,7 @@ Class Requetes
         return $this->update($req,$params);
     }
     
-    public function updateReinitResponsable($donnees){//Enlève l'ancien chef de classe
+    public function updateReinitResponsable($donnees){//Enlève l'ancien responsable de classe
         $req = "update formateur set role= 1 WHERE role=2 and matUser=:pseudo";
         $params = array(
             "pseudo"=>$donnees["idProf"]
@@ -445,10 +502,19 @@ Class Requetes
         return $this->update($req,$params);
     }
     
-    public function updateReinitResponsableDepartement($donnees){//Enlève l'ancien responsable du département
-        $req = "update formateur set role= 1 WHERE role=3";
+    public function updateEraseResponsableClasse($donnees){//Affecter un prof responsable à une classe 
+        $req = "update classe set profResponsable=:pseudo WHERE `profResponsable` LIKE :user";
         $params = array(
-            "idClasse"=>$donnees["idDepartement"]
+            "pseudo"=>" ",
+            "user"=>"%".$donnees["respDepartement"]."%"
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateReinitResponsableDepartement($donnees){//Enlève l'ancien responsable du département
+        $req = "update formateur set role= 1 WHERE role=3 and matuser=:matUser";
+        $params = array(
+            "matUser"=>explode("|", $donnees["respDepartement"])[0]
         );
         return $this->update($req,$params);
     }
@@ -466,6 +532,14 @@ Class Requetes
         $params = array(
             "pseudo"=>$donnees["respDepartement"],
             "idDepartement"=>$donnees["idDepartement"]
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateEraseResponsableDepartement($donnees){//Affecter un prof responsable à une classe
+        $req = "UPDATE `departement` SET `responsable` = '' WHERE `responsable` LIKE :user";
+        $params = array(
+            "user"=>"%".$donnees["respClasse"]."%"
         );
         return $this->update($req,$params);
     }

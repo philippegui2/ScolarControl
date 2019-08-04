@@ -30,6 +30,12 @@ if(0)
     if(isset($_REQUEST["road"])){ //zone de traitement des liens
         if(!isset($_REQUEST["param"])){// si le paramètre de nom "parametre" n'est pas rnseigné
             switch ($_REQUEST["road"]) {//zone de recupération de toutes les variables nécessaires aux pages
+                case "notifications":{
+                        $messages=$req->getMessagesByUser($_SESSION["user"]["matUser"]);//05R22
+                        include_once("../../commun/vues/".$_REQUEST["road"].".php");
+                        exit();
+                    }
+                    break;
                 case "accueil":{
                     }
                     break;
