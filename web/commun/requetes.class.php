@@ -222,7 +222,7 @@ Class Requetes
 
 
         public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
-            $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from matiere_classe mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
+            $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
             $params = array(
                     "idClasse" => $idClasse
             );
