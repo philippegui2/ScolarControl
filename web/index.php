@@ -51,18 +51,17 @@
             ?>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon_profile"></i></span>
-              <input type="text" class="form-control" name="login" placeholder="Login" autofocus>
+              <input type="text" class="form-control" name="login" placeholder="Login" id="saisie1" autofocus data-validation="length alphanumeric" data-validation-length="min4">
             </div>
             <div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+                <input type="password" class="form-control" name="password" placeholder="Mot de passe" id="saisie2">
             </div>
             <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Se souvenir de moi
+                <!-- input type="checkbox" value="remember-me"> Se souvenir de moi -->
                 <span class="pull-right"> <a href="#"> Mot de passe oublié?</a></span>
             </label>
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Valider</button>
-            <button class="btn btn-info btn-lg btn-block" type="button">S'inscrire</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="ajout">Valider</button>
         </div>
       </form>
 
@@ -71,12 +70,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2017 ScolarControl | By : TeGuiLab
+                    &copy; 2018 ScolarControl | By : TeGuiLab
                 </div>
 
             </div>
         </div>
     </footer>
-
+    <script src="js2/jquery.js"></script>
+    <!--script src="js2/jquery.validate.min.js"></script-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    <script src="js2/contoleEntree.js"></script>
+    <script>
+        $.validate({
+          lang: 'fr'
+        });
+    </script>
   </body>
 </html>

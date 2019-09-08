@@ -176,7 +176,7 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getDepartementByClasse($idClasse){//récupère les départements
+        public function getDepartementByClasse($idClasse){//récupère le département dans lequel se trouve une classe donnée
             $req= "SELECT departement FROM `classe` WHERE id=idClasse";
             $params = array(
                 "idClasse" => $idClasse
@@ -184,8 +184,16 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasse(){//récupère les classes
+        public function getClasse($idClasse){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
+            return $this->select($req,$params);
+        }
+        
+        public function getClasseById($idClasse){//récupère les classes
+            $req= "SELECT * FROM `classe` WHERE id=:idClasse order by libelle";
+            $params = array(
+                "idClasse" => $idClasse
+            );
             return $this->select($req,$params);
         }
 
@@ -194,7 +202,7 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes par enseignant
+        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes dans lesquelles enseignat un enseignant donné
             $req="SELECT cours.matUser, cours.idClasse, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse, classe.departement from cours,classe,departement where idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser GROUP BY idClasse";
             $params = array(
                 "matUser" => $idEnseignant
