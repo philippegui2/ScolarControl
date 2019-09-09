@@ -84,7 +84,16 @@ if(0)
                     }
                     break;
                 case "matieres":{
-                        echo $_REQUEST["param"];
+                        //param=idClasse
+                        $classe=$req->getClasseById($_REQUEST["param"])[0];
+                        //récupération des matières enseignées par un enseignant donné dans une classe donnée
+                        $matieres=$req->getMatiereByEnseignantAndClasse($_REQUEST["param"],$_SESSION["user"]["matUser"]);
+                    }
+                    break;
+                case "allnotes":{
+                        //récupération de toutes les notes de tous les élèves d'une classe données dans une matière donnée
+                            //param=ID de la matière   param2=id de la classe
+                        $notes=$req->getAllEleveAndNoteByClasse($_REQUEST["param2"],$_REQUEST["param"]);
                     }
                     break;
                 default:
