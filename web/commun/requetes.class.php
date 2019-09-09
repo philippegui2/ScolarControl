@@ -111,6 +111,15 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+        public function getAllEleveAndNoteByClasse($idClasse,$idMatiere){//récupère toutes les notes de tous les élèves d'une classe données dans une matière donnée
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser, notes.*, matiere.libelle from `users` INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN notes ON eleve.matUser=notes.matUser INNER JOIN matiere ON notes.idMatiere=matiere.id WHERE eleve.idClasse=:idClasse and notes.idMatiere=:idMatiere";
+            $params = array(
+                "idClasse" => $idClasse,
+                "idMatiere" => $idMatiere
+            );
+            return $this->select($req,$params);
+        }
+        
         public function getEnseignantByClasse($idClasse){//récupère les formateurs qui enseignent dans une classe données
             $req="SELECT * FROM `users` where matUser in (SELECT cours.matUser from cours INNER JOIN `matiere-classe` ON cours.idClasse=`matiere-classe`.idClasse INNER JOIN classe ON `matiere-classe`.idClasse=classe.id where classe.id=:idClasse)";
             $params = array(
@@ -190,7 +199,7 @@ Class Requetes
         }
         
         public function getClasseById($idClasse){//récupère les classes
-            $req= "SELECT * FROM `classe` WHERE id=:idClasse order by libelle";
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id and classe.id=:idClasse ORDER BY classe.libelle";
             $params = array(
                 "idClasse" => $idClasse
             );
@@ -220,9 +229,8 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-
         public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
-            $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from matiere_classe mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
+            $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
             $params = array(
                     "idClasse" => $idClasse
             );
@@ -230,9 +238,18 @@ Class Requetes
         }
         
         public function getMatiereByEnseignant($idEnseignant){//récupère la liste des matières enseignées par un enseignant donné
-            $req="select matUser, idMatiere, idClasse, matiere.id, matiere.libelle libMatiere, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse,classe.departement from cours,classe,departement,matiere WHERE idMatiere=matiere.id and idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser";
+            $req="select matUser, idMatiere, idClasse, matiere.id, matiere.libelle libMatiere, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse,classe.departement from cours, classe, departement, matiere WHERE idMatiere=matiere.id and idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser";
             $params = array(
                 "matUser" => $idEnseignant
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getMatiereByEnseignantAndClasse($idClasse,$idUser){//récupère la liste des matières enseignées par un enseignant donné dans une classe donnée
+            $req="SELECT m.id idMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
+            $params = array(
+                    "idClasse" => $idClasse,
+                    "idUser"   => $idUser
             );
             return $this->select($req,$params);
         }
