@@ -38,21 +38,32 @@ if(0)
                     }
                     break;
                 case "accueil":{
+                        $nomPage="Accueil";
 
                     }
                     break;
                 case "ajouter":{
+                        $nomPage="Ajouter utilisateur";
+                        $navig3="Ajouter utilisateur";
+                        //-------------------
                         $classesDpt=$req->getClasseDepartement();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "lister":{
+                        $nomPage="Ajouter utilisateur";
+                        $navig3="Lister utilisateur";
+                        //-------------------
+                        $nomPage="Liste des utilisateurs";
                         $lister=active;
                         $users=$req->getUser();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "infos":{
+                        $nomPage="Ajouter utilisateur";
+                        $navig3="Infos utilisateur";
+                        //-------------------
                         $infos=active;
                         $userEnVue=$req->getUser();
                         $statuts=$req->getStatut();
@@ -64,8 +75,7 @@ if(0)
                     }
                     break;
                 case "notes":{//pas fini
-                        //$matieres=$req->getMatiereByClasse(4);//recuperation des matières en fonction de la classe
-                        $notes=$req->getNoteByUser("T4WR");
+                        $notes=$req->getNoteByUser($_SESSION["userEnVue"][0]["matUser"]);
                     }
                     break;
                 case "departements":{
@@ -75,10 +85,6 @@ if(0)
                 case "classes":{
                         $classesDpt=$req->getClasseDepartement();
                         $departements=$req->getDepartement();
-                        //$responsables=array();
-                        //foreach ($classesDpt as $key => $classe) {
-                            
-                        //}
                     }
                     break;
                 case "matiere":{
@@ -121,12 +127,16 @@ if(0)
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                     }
                     break;
+                case "test":{//récupération de tous les enseignants
+                        
+                    }
+                    break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-
-            include_once("vues/".$_REQUEST["road"].".php");
+            include_once("vues/navigation.php");//insertion de la zone de navigation
+            include_once("vues/".$_REQUEST["road"].".php");//insertionn de la vue
         }
         else{//s'il y a un paramètre envoyé
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
@@ -164,7 +174,8 @@ if(0)
                 }elseif($_REQUEST["statutProfil"]==3){
                     $req->setFormateur($_REQUEST);
                 }
-                include_once("vues/ajouter.php");//On recharge la page
+                header("Location:index.php?road=ajouter&alert=ok");
+                exit();
             }
             break;
             case "DEPARTEMENTajouter":{

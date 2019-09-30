@@ -55,6 +55,13 @@ if(0)
                     }
                     break;
                 case "monProfile":{
+
+                    }
+                case "notes":{
+                        $notes=$req->getNoteByUser($_SESSION["userEnVue"][0]["matUser"]);
+                        include_once("../../commun/vues/".$_REQUEST["road"].".php");
+                        include_once("menuBas.php");
+                        exit();
                     }
                     break;
                 default:
@@ -79,7 +86,7 @@ if(0)
                         $eleves=$req->getEleveByClasse($_REQUEST["param"]);
                     }
                     break;
-                case "infosEleves":{
+                case "infosEleves":{//Affichage des informations sur les élèves
                         $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     }
                     break;
@@ -93,6 +100,7 @@ if(0)
                 case "allnotes":{
                         //récupération de toutes les notes de tous les élèves d'une classe données dans une matière donnée
                             //param=ID de la matière   param2=id de la classe
+                        $eleves=$req->getEleveByClasse($_REQUEST["param2"]);
                         $notes=$req->getAllEleveAndNoteByClasse($_REQUEST["param2"],$_REQUEST["param"]);
                     }
                     break;
@@ -106,8 +114,20 @@ if(0)
 
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
-            case "AJOUTERajouter":{
-
+            case "ALLNOTESmodifNote":{
+                    print_r($_REQUEST);
+                $test=$req->getNoteByUserandMatiere($_REQUEST['identifiant'],$_REQUEST['idMatiere']);//vérification de l'existance du champ d'entrée de la note
+                if($test){
+                    $req->updateNote($_REQUEST);
+                }else{
+                    $req->setNote($_REQUEST);
+                }
+                if(isset($_REQUEST["redirect"])){
+                    header("Location:index.php?road=".$_REQUEST["redirect"]."&alert=ok");
+                    exit();
+                }
+                header("Location:index.php?road=allnotes&param=".$_REQUEST['idMatiere']."&param2=4&alert=ok");
+                exit();
             }
             break;
             

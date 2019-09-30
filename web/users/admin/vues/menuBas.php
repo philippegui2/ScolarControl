@@ -14,6 +14,8 @@
       <script src="../../js/respond.min.js"></script>
       <script src="../../js/lte-ie7.js"></script>
     <![endif]-->
+    <script src="../../bSelect/dist/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <!-- nice scroll -->
     <script src="../../js/jquery.scrollTo.min.js"></script>
@@ -23,6 +25,16 @@
     <script type="text/javascript" src="../../js2/datePicker.js"></script>
     <script type="text/javascript" src="../../js2/scolarcontrol.js"></script>
     <script type="text/javascript">
+        $(document).ready( function () {
+            $('#table_list').DataTable();
+        } );
+        function disparaitAlertOK(){
+            $(function(){
+                $('#alertOK:even').hide(4000);
+            });
+        }
+         disparaitAlertOK();
+         
         $(document).ready(function () {
 
             $('#dateP').datepicker({

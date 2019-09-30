@@ -112,7 +112,7 @@ Class Requetes
         }
         
         public function getAllEleveAndNoteByClasse($idClasse,$idMatiere){//récupère toutes les notes de tous les élèves d'une classe données dans une matière donnée
-            $req= "SELECT users.matUser, users.prenomUser, users.nomUser, notes.*, matiere.libelle from `users` INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN notes ON eleve.matUser=notes.matUser INNER JOIN matiere ON notes.idMatiere=matiere.id WHERE eleve.idClasse=:idClasse and notes.idMatiere=:idMatiere";
+            $req="SELECT users.matUser, users.prenomUser, users.nomUser, notes.*, matiere.libelle from `users` INNER JOIN eleve ON users.matUser=eleve.matUser RIGHT JOIN notes ON eleve.matUser=notes.matUser INNER JOIN matiere ON notes.idMatiere=matiere.id WHERE eleve.idClasse=:idClasse and notes.idMatiere=:idMatiere";
             $params = array(
                 "idClasse" => $idClasse,
                 "idMatiere" => $idMatiere
@@ -273,14 +273,14 @@ Class Requetes
         }
 
         public function getNoteByUser($idEleve){//Récupération de la note d'un utilisateur en fonction de son matricule
-            $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle, m.coefficient  from notes n INNER JOIN matiere m ON n.idMatiere=m.id where matUser=:matUser";
+            $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle from notes n INNER JOIN matiere m ON n.idMatiere=m.id where n.matUser=:matUser";
             $params = array(
                 "matUser" => $idEleve
             );
             return $this->select($req,$params);
         }
 
-        public function getNoteByUserandMatiere($idEleve,$idMatiere){
+        public function getNoteByUserandMatiere($idEleve,$idMatiere){//récupération des notes en fonction de l'utilisateur et de la matière
             $req="SELECT * from notes where matUser=:matUser and idMatiere=:idMatiere";
             $params = array(
                 "matUser" => $idEleve,
@@ -403,6 +403,18 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
+        
+        public function setNote($donnees){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `notes` (`matUser`, `idMatiere`,`noteControle`,`noteTP`,`noteExamen`) VALUES (:matUser, :idMatiere, :noteControle, :noteTP, :noteExamen)";
+            $params = array(
+                "matUser" => $donnees["identifiant"],
+                "idMatiere" => $donnees["idMatiere"],
+                "noteControle" => $donnees["noteControle"],
+                "noteTP" => $donnees["noteTP"],
+                "noteExamen" => $donnees["noteExamen"]
+            );
+            return $this->insert($req,$params);
+        }
 
         //fin méthodes d'enregistement dans la base de données
 
@@ -418,6 +430,18 @@ Class Requetes
              "contactUser" => $donnees["contactUser"],
              "sexeUser" => $donnees["sexeUser"],
              "matUser" => $donnees["matUser"]
+            );
+            return $this->update($req,$params);
+        }
+        
+        public function updateNote($donnees){
+            $req = "UPDATE `notes` SET `noteControle` = :noteControle, `noteTP` = :noteTP, `noteExamen`=:noteExamen WHERE `notes`.`matUser` = :matUser AND `notes`.`idMatiere` = :idMatiere";
+            $params = array(
+                "matUser" => $donnees["identifiant"],
+                "idMatiere" => $donnees["idMatiere"],
+                "noteControle" => $donnees["noteControle"],
+                "noteTP" => $donnees["noteTP"],
+                "noteExamen" => $donnees["noteExamen"]
             );
             return $this->update($req,$params);
         }
