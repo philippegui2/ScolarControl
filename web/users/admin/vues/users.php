@@ -61,11 +61,11 @@
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=...">
+            <a class="" href="../admin/index.php?road=test">
 		<div class="info-box green-bg">
 			<i class="fa fa-users"></i>
-			<div class="count">...</div>
-			<div class="title">...</div>
+			<div class="count">Test</div>
+			<div class="title">Zone de test</div>
 		</div><!--/.info-box-->
             </a>
 	</div><!--/.col-->
