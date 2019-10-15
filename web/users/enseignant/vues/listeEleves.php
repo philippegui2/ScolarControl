@@ -2,7 +2,9 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
+
                 Liste des élèves de <span class="label label-info"><?php echo $_REQUEST["param2"];?></span>
+
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
