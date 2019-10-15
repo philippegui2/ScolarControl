@@ -78,7 +78,7 @@
                                             <?php 
                                                 foreach ($classesDpt as $classeDpt) 
                                                 {
-                                                    echo '<option value="'.$classeDpt['idClasse'].'">'.$classeDpt['idClasse']."".$classeDpt['libelleClasse']." ".$classeDpt['libelleDepartement'].'</option>';
+                                                    echo '<option value="'.$classeDpt['idClasse'].'">'.$classeDpt['libelleClasse']." ".$classeDpt['libelleDepartement'].'</option>';
                                                 }                                                   
                                             ?>
                                         </select>

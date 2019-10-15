@@ -14,13 +14,15 @@
       //on teste que cet utilisateur existe dans la base de données, si oui valeur vaudra 1
       $user=$requete->authentification($_REQUEST["login"],MD5($_REQUEST["password"]));
       //si l'utilisateur existe, création d'un objet utilisateur qui representera l'utilisateur
+
+
       if($user)
       {
         //création de la session
       	//Instanciation de l'utilisateur
         //$utilisateur = array($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
         //creation de la session de l'utilisateur
-        $_SESSION['user']=array(
+            $_SESSION['user']=array(
                 "matUser" => $user["matUser"],
                 "prenomUser" => $user["prenomUser"],
                 "nomUser" => $user["nomUser"],
@@ -29,6 +31,7 @@
                 "naissanceUser" => $user["naissanceUser"]
             );
         //$_SESSION["requete"]=$requete;
+
         //redirection dans le bon dossier
         if ($user["statutUser"]=='1')
           {
@@ -39,8 +42,19 @@
           else if($user["statutUser"]=='2')
           {
               //C'est un eleve
-              echo '<meta http-equiv="Refresh" content="0;url=users/eleve/?road=accueil">';
-              exit();
+              // echo $_SESSION['user']->getMatricule();
+              // exit();
+             // s'il n'a pas personnalisé son mdpasse je le redirige vers la page custom
+              if (md5($user['pseudoUser'])==$user['passwordUser']) {
+                # code...
+                header('Location: users/eleve/index.php?road=update&pseudo='.$user['pseudoUser']);
+                // echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=update">';
+                exit();
+              } else {
+                # code...
+                header('Location: users/eleve/index.php?road=accueil&pseudo='.$user['pseudoUser']);
+                // exit();
+              }   
           }
           else if($user["statutUser"]=='3')
           {
@@ -67,5 +81,19 @@
       }
 
     }
+
+//Deconnexion 
+ if(isset($_GET['logout']))
+    {
+     // echo "deconnexion";
+
+        
+    session_start();
+    session_destroy();
+    header('location: ../index.php');
+    exit;
+
+    } 
+
 
 ?>

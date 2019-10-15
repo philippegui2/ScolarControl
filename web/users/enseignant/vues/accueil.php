@@ -12,26 +12,18 @@
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <a class="" href="../enseignant/?road=lister">
 		<div class="info-box brown-bg">
-			<i class="fa fa-table fa-fw"></i>
-			<div class="count">listage</div>
-			<div class="title">Lister des utilisateurs</div>
+			<i class="fa fa-info-circle fa-fw"></i>
+			<div class="count">Informations </div>
+			<div class="title">Information sur l'école</div>
 		</div><!--/.info-box-->
             </a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 		<div class="info-box dark-bg">
-			<i class="fa fa-thumbs-o-up"></i>
-			<div class="count">Nombre de classes</div>
-			<div class="title">Classes</div>
-		</div><!--/.info-box-->
-	</div><!--/.col-->
-
-	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-		<div class="info-box green-bg">
-			<i class="fa fa-cubes"></i>
-			<div class="count">1.426</div>
-			<div class="title">Emplois de temps</div>
+			<i class="fa fa-gears"></i>
+			<div class="count">Parametrage</div>
+			<div class="title">Parametrage de mes tâches</div>
 		</div><!--/.info-box-->
 	</div><!--/.col-->
 </div><!--/.row-->

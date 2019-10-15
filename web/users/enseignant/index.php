@@ -33,13 +33,24 @@ if(0)
                 case "accueil":{
                     }
                     break;
-
                 case "listeclasses":{
                         $couleur=array('panel-primary','panel-success','panel-warning','panel-danger','panel-info');
                         $classes=$req->getClasseByEnseignant($_SESSION["user"]["matUser"]);
                     }
                     break;
-
+                case "evaluations":{
+                    echo $_REQUEST["idClasse"];
+                    }
+                    break;
+                case "listeEleves":{
+                    }
+                    break;
+                case "matieres":{
+                    }
+                    break;
+                case "monProfile":{
+                    }
+                    break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -54,9 +65,24 @@ if(0)
                     $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     //$statuts=$req->getStatut();
                     }
+                case "evaluations":{
+                    
+                    }
+                    break;
+                case "listeEleves":{
+                        $eleves=$req->getEleveByClasse($_REQUEST["param"]);
+                    }
+                    break;
+                case "infosEleves":{
+                        $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
+                    }
+                    break;
+                case "matieres":{
+                        echo $_REQUEST["param"];
+                    }
                     break;
                 default:
-                    echo "la page recherchée n'existe pas ou est en construction";
+                    echo "la page recherchée n'existe pas ou est en construction param";
                     break;
             }
 

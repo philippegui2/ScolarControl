@@ -7,12 +7,16 @@
             <?php
                 foreach ($classes as $key => $classe) {?>
             <div class="panel <?php print_r($couleur[$key]);?>">
-                  <div class="panel-heading"><?php print_r($classe['libClasse']); ?></div>
-                  <div class="panel-content"><?php print_r($classe['libDepartement']); ?></div>
+                  <div class="panel-heading"><?php echo $classe['libClasse']." | ".$classe['libDepartement']; ?></div>
+                  <div class="panel-content">
+                    <div class="btn-group btn-group-justified">
+                        <a class="btn btn-primary" href="../enseignant/index.php?road=listeEleves&param=<?php echo $classe['idClasse'];?>">Liste des élèves</a>
+                        <a class="btn btn-success" href="../enseignant/index.php?road=evaluations&param=<?php echo $classe['idClasse'];?>">Evaluation</a>
+                        <a class="btn btn-info" href="../enseignant/index.php?road=matieres&param=<?php echo $classe['idClasse'];?>">Matières</a>
+                    </div>
+                  </div>
                 </div>   
                 <?php }?>
-            ?>
-            
         </div>
     </section>
 </div>

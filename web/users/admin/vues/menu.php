@@ -33,6 +33,31 @@
     <link href="../../css/style-responsive.css" rel="stylesheet" />
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
+    
+    <link rel="stylesheet" href="../../bSelect/dist/css/bootstrap-select.css">
+    
+    <script type='text/javascript' src='../../bootstrapSelect/jquery-1.8.3.js'></script>
+
+    <script type='text/javascript' src="../../bootstrapSelect/bootstrap.min.js.css"></script>
+
+    <script type='text/javascript' src="../../bootstrapSelect/bootstrap-select.js.css"></script>
+
+    <style type='text/css'>
+    @import url('../../bootstrapSelect/bootstrap.css');
+
+    @import
+    url('../../bootstrapSelect/bootstrap-select.css');
+
+    </style>
+
+    <script type='text/javascript'>//<![CDATA[
+        $(window).load(function(){
+            $( ".selectpicker" ).selectpicker();
+        });//]]>
+    </script>
+   
   </head>
 
   <body>
@@ -70,7 +95,7 @@
                             <span class="profile-ava">
                                 <img alt="" src="../../img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Prenom nom</span>
+                            <span class="username"><?php echo $_SESSION['user']["prenomUser"]." ".$_SESSION['user']["nomUser"];?></span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -79,13 +104,13 @@
                                 <a href="#"><i class="icon_profile"></i> Mon Profile</a>
                             </li>
                             <li>
-                                <a href="#"><i class="icon_mail_alt"></i> Messagerie</a>
+                                <a href="../admin/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
-                                <a href="documentation.html"><i class="icon_key_alt"></i> Deconnexion</a>
+                                <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
                             </li>
                         </ul>
                     </li>

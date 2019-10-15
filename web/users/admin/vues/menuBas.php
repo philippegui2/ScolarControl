@@ -14,6 +14,8 @@
       <script src="../../js/respond.min.js"></script>
       <script src="../../js/lte-ie7.js"></script>
     <![endif]-->
+    <script src="../../bSelect/dist/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <!-- nice scroll -->
     <script src="../../js/jquery.scrollTo.min.js"></script>
@@ -23,10 +25,20 @@
     <script type="text/javascript" src="../../js2/datePicker.js"></script>
     <script type="text/javascript" src="../../js2/scolarcontrol.js"></script>
     <script type="text/javascript">
+        $(document).ready( function () {
+            $('#table_list').DataTable();
+        } );
+        function disparaitAlertOK(){
+            $(function(){
+                $('#alertOK:even').hide(4000);
+            });
+        }
+         disparaitAlertOK();
+         
         $(document).ready(function () {
 
             $('#dateP').datepicker({
-                format: "dd/mm/yyyy"
+                format: "dd/mm/yyyy",
             });  
 
         });
@@ -110,6 +122,100 @@
                     cache: true,
                     success: function(data){
                         
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function USERCHEFSCLASSEenvoyer(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                if(option=="email"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerEmail&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val();
+                }else if(option=="sms"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerSMS&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val();
+                }else if(option=="notif"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerNotif&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val();
+                }
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        $('#message').attr('style','');//disparution du loading
+                        $('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(5000,'swing');
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function envoyerEmail(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                
+                var param="../admin/index.php?reqajax=envoyerEmail&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val()+"&parametre3="+option;
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        //$('#message').attr('style','');//disparution du loading
+                        //$('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(2000,'swing');
+                        alert(data);
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function envoyerSMS(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                
+                var param="../admin/index.php?reqajax=envoyerSMS&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val()+"&parametre3="+option;
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        $('#message').attr('style','');//disparution du loading
+                        $('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(2000,'swing');
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function envoyerNotif(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                
+                var param="../admin/index.php?reqajax=envoyerNotif&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val()+"&parametre3="+option;
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        $('#message').attr('style','');//disparution du loading
+                        $('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(2000,'swing');
                     }, 
                     error: function() {
                         alert('Erreur de connexion'); 
