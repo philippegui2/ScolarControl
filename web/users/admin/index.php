@@ -150,10 +150,9 @@ if(0)
                     break;
 
                         print_r($chefsAndAdjoint);
-                    }
-                    break;
+                 
                 
-                break;
+                
 
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
