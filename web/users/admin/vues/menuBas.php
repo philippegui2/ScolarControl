@@ -91,10 +91,11 @@
                         success: function(data){
                             var data2=JSON.parse(data);
                             $("input").prop('checked', false);//décocher tout au départ
-                            var data_length = data2.length;
-                            $('#corpsEnseignantMatiere tr input').each(function(index){
+                            var data_length = data2.length;//nombre de matières enseignées
+                            //alert(data_length);
+                            $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
                                 for (var i = 0; i < data_length; i++) {
-                                    if(data2[i].idMatiere === $(this).attr("identifiant")){
+                                    if(data2[i].idMatiere === $(this).attr("identifiant") && data2[i].idClasse === $(this).attr("identclasse")){
                                         $(this).prop('checked', true);
                                     }
                                 }

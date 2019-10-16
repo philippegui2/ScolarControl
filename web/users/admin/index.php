@@ -320,6 +320,7 @@ if(0)
     }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
         switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
             case "ENSEIGNANTMATIEREensmatiere":{
+                    //récupération de la liste des matières enseignées par un enseignant donné ainsi que leur classe
                     print_r(json_encode($req->getIDMatiereByEnseignant($_REQUEST["parametre"])));
                     exit();
                 }

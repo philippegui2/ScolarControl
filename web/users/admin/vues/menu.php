@@ -34,13 +34,6 @@
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
     
-    
-    
-    
-    
-    
-    
-    
     <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
     
     <link rel="stylesheet" href="../../bSelect/dist/css/bootstrap-select.css">
@@ -64,12 +57,6 @@
             $( ".selectpicker" ).selectpicker();
         });//]]>
     </script>
-   
-    
-    
-    
-    
-    
   </head>
 
   <body>

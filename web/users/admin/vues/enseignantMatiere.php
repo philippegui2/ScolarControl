@@ -20,7 +20,7 @@
                     <tbody id="corpsEnseignantMatiere">
                      <?php foreach($matieres as $matiere){?>
                           <tr class="active">
-                              <td><input identifiant="<?php  echo $matiere["idMatiere"];?>" type="checkbox" name="<?php echo 'enMat'.$matUser?>" id="" value='<?php  echo $matiere["idMatiere"]."*".$matiere["idClasse"];?>'/></td>
+                              <td><input identifiant="<?php  echo $matiere["idMatiere"];?>" identclasse="<?php  echo $matiere["idClasse"];?>" type="checkbox" name="<?php echo 'enMat'.$matUser?>" id="" value='<?php  echo $matiere["idMatiere"]."*".$matiere["idClasse"];?>'/></td>
                               <td><?php echo $matiere["libelleMatiere"];?></td>
                               <td><?php echo $matiere["libelleClasse"];?></td>
                               <td><?php echo $matiere["libelleDepartement"];?></td>
@@ -39,7 +39,7 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <section class="panel">
             <header class="panel-heading">
-                Liste des enseignants | Choisir un enseignant pour lui affecter des matières
+                Liste des enseignants | Cliquer sur l'enseignant pour lui affecter des matières
             </header>
             <table class="table">
               <thead>
