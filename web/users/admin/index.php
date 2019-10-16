@@ -31,25 +31,51 @@ if(0)
     if(isset($_REQUEST["road"])){ //zone de traitement des liens
         if(!isset($_REQUEST["param"])){// si le paramètre de nom "parametre" n'est pas renseigné
             switch ($_REQUEST["road"]) {//zone de recupération de toutes les variables nécessaires aux pages
+                case "notifications":{
+                        $messages=$req->getMessagesByUser($_SESSION["user"]["matUser"]);//05R22
+                        include_once("../../commun/vues/".$_REQUEST["road"].".php");
+                        exit();
+                    }
+                    break;
                 case "accueil":{
+                        $nomPage="Accueil";
 
                     }
                     break;
                 case "ajouter":{
+
+                        $nomPage="Ajouter utilisateur";
+                        $navig3="Ajouter utilisateur";
+                        //-------------------
+
                         $classesDpt=$req->getClasseDepartement();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "lister":{
+
+                        $nomPage="Ajouter utilisateur";
+                        $navig3="Lister utilisateur";
+                        //-------------------
+                        $nomPage="Liste des utilisateurs";
+
+
                         $lister=active;
                         $users=$req->getUser();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "infos":{
+
+                        $nomPage="Ajouter utilisateur";
+                        $navig3="Infos utilisateur";
+                        //-------------------
                         $infos=active;
                         $userEnVue=$req->getUser();
                         $statuts=$req->getStatut();
+                        //print_r($userEnVue);
+
+
                     }
                     break;
                 case "parametrage":{
@@ -57,8 +83,12 @@ if(0)
                     }
                     break;
                 case "notes":{//pas fini
+
+                        $notes=$req->getNoteByUser($_SESSION["userEnVue"][0]["matUser"]);
+
                         //$matieres=$req->getMatiereByClasse(4);//recuperation des matières en fonction de la classe
-                        $notes=$req->getNoteByUser("T4WR");
+                        
+
                     }
                     break;
                 case "departements":{
@@ -68,10 +98,9 @@ if(0)
                 case "classes":{
                         $classesDpt=$req->getClasseDepartement();
                         $departements=$req->getDepartement();
-                        //$responsables=array();
-                        //foreach ($classesDpt as $key => $classe) {
-                            
-                        //}
+
+                        
+
                     }
                     break;
                 case "matiere":{
@@ -80,11 +109,9 @@ if(0)
                     }
                     break;
                 case "users":{
-
                     }
                     break;
                 case "userEnseignant":{
-
                     }
                     break; 
                 case "enseignantMatiere":{
@@ -94,17 +121,46 @@ if(0)
                     break;
                 case "userChefsClasse":{
                         $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints de tous les départements
+
+                    }
+                    break;
+                case "userResponsableClasse":{//récupération de tous les profs responsables de classe
+                        $chefsRespoClasses=$req->getAllRespoAndAdjoint();
+                    }
+                    break;
+                case "userResponsableDepartement":{//récupération de tous les responsables de département
+                        $chefsRespoDepartements=$req->getAllRespoDepartement();
+                    }
+                    break;
+                case "userTous":{//récupération de tous les responsables de département
+                        $usersTous=$req->getUser();
+                    }
+                    break;
+                case "userEleves":{//récupération de tous les élèves
+                        $usersEleves=$req->getAllEleve();
+                    }
+                    break;
+                case "enseignantMessage":{//récupération de tous les enseignants
+                        $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
+                    }
+                    break;
+                case "test":{//récupération de tous les enseignants
+                        
+                    }
+                    break;
+
                         print_r($chefsAndAdjoint);
                     }
                     break;
                 
                 break;
+
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-
-            include_once("vues/".$_REQUEST["road"].".php");
+            include_once("vues/navigation.php");//insertion de la zone de navigation
+            include_once("vues/".$_REQUEST["road"].".php");//insertionn de la vue
         }
         else{//s'il y a un paramètre envoyé
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
@@ -116,12 +172,15 @@ if(0)
                 case "modifClasse":{
                         $eleves=$req->getEleveByClasse($_REQUEST["param"]);//récupération des élèves d'une classe donnée (paramètre idClasse)
                         $enseignants=$req->getEnseignantByClasse($_REQUEST["param"]);//récupération des enseignants d'une classe donnée (paramètre idClasse)
+
                     }
                     break;
                 case "modifDepartement":{
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
+
                     }
                     break;
+                
                     
                 case "emploi":{
                  
@@ -151,7 +210,8 @@ if(0)
                 }elseif($_REQUEST["statutProfil"]==3){
                     $req->setFormateur($_REQUEST);
                 }
-                include_once("vues/ajouter.php");//On recharge la page
+                header("Location:index.php?road=ajouter&alert=ok");
+                exit();
             }
             break;
             case "DEPARTEMENTajouter":{
@@ -244,10 +304,18 @@ if(0)
                     $req->updateAdjointClasse($_REQUEST);
                 }
                 if($_REQUEST["respClasse"]!="vide"){//Insertion du responsable de classe
-                    $req->updateReinitResponsable($_REQUEST);
+
+                    $req->updateReinitResponsable($_REQUEST);//modification de l'ancienne responsabilité de responsable de classe
+                    //$req->updateReinitResponsableDepartement($_REQUEST);//--modification de l'ancienne responsabilité de responsable de département
                     $req->updateEnseignantResponsable($_REQUEST);//affectation du rôle de responsable à une classe
+                    //$req->updateEnseignantResponsableDepartement($_REQUEST);//affectation du rôle de responsable à une classe
                     $req->updateResponsableClasse($_REQUEST);//affectation d'un prof reponsable à une classe
+                    //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement 
+                    $req->updateEraseResponsableDepartement($_REQUEST);
+
+                   
                     //print_r($_REQUEST);
+
                 }
                 header("Location:index.php?road=classes");
                 exit();
@@ -255,10 +323,18 @@ if(0)
             break;
             case "MODIFDEPARTEMENTresponsable":{
                 if($_REQUEST["respDepartement"]!="vide"){//Insertion du responsable de classe
-                    $req->updateReinitResponsableDepartement($_REQUEST);
+
+                    $req->updateReinitResponsableDepartement($_REQUEST);//--modification de l'ancienne responsabilité de responsable de département
+                    //$req->updateReinitResponsable($_REQUEST);//modification de l'ancienne responsabilité de responsable de classe
                     $req->updateEnseignantResponsableDepartement($_REQUEST);//affectation du rôle de responsable à une classe
+                    //$req->updateEnseignantResponsable($_REQUEST);//affectation du rôle de responsable à une classe
                     $req->updateResponsableDepartement($_REQUEST);//affectation d'un prof reponsable à une classe
-                    print_r($_REQUEST);
+                    //$req->updateEraseResponsableClasse($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement
+                    $req->updateEraseResponsableClasse($_REQUEST);
+
+                    
+                   // print_r($_REQUEST);
+
                 }
                 header("Location:index.php?road=departements");
                 exit();
@@ -286,18 +362,83 @@ if(0)
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerEmail":{
+
+                    $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints
+                    foreach($chefsAndAdjoints as $chefsAndAdjoint){
+                        
+                    }
+                    $fonctions->envoieMail($email,$prenom,$message,$alternative);
+
                     //print_r($_REQUEST["parametre"]);
                     print_r("email");
+
                     exit();
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerSMS":{
+
+                    print_r($_SESSION["user"]["matUser"]);
+                    
+
                     print_r("SMS");
+
                     exit();
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerNotif":{
+
+                    $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints
+                    foreach($chefsAndAdjoints as $chefsAndAdjoint){
+                        $req->setMessage($chefsAndAdjoint["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
+                    }
+                    exit();
+                }
+                break;
+            case "envoyerEmail":{
+                if($_REQUEST["parametre3"]=="respoClasse"){
+                    $respoClasse=$req->getInfoRespoAndAdjoint();
+                }else if($_REQUEST["parametre3"]=="respoDepartement"){
+                    
+                }
+                    exit();
+                }
+                break;
+            case "envoyerSMS":{
+                    print_r($_REQUEST["parametre3"]);
+                    
+                    exit();
+                }
+                break;
+            case "envoyerNotif":{
+                    if($_REQUEST["parametre3"]=="respoClasse"){
+                        $respoClasses=$req->getInfoRespoAndAdjoint();
+                        foreach($respoClasses as $respoClasse){
+                            $req->setMessage($respoClasse["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
+                        }
+                    }else if($_REQUEST["parametre3"]=="respoDepartement"){
+                        $respoClasses=$req->getInfoRespoDepartement();
+                        foreach($respoClasses as $respoClasse){
+                            $req->setMessage($respoClasse["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
+                        }
+                    }else if($_REQUEST["parametre3"]=="tous"){
+                        $tous=$req->getUser();
+                        foreach($tous as $tou){
+                            $req->setMessage($tou["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
+                        }
+                    }else if($_REQUEST["parametre3"]=="tousEleve"){
+                        $tousEleves=$req->getAllEleve();
+                        foreach($tousEleves as $tousEleve){
+                            $req->setMessage($tousEleve["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
+                        }
+                    }else if($_REQUEST["parametre3"]=="tousEnseignant"){
+                        $tousEnseignants=$req->getUserByStatut(3);
+                        foreach($tousEnseignants as $tousEnseignant){
+                            $req->setMessage($tousEnseignant["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
+                        }
+                    }
+
                     print_r("Notif");
+
                     exit();
                 }
                 break;

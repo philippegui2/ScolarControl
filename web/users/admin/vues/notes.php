@@ -13,13 +13,13 @@
                     <th><i class=""></i>Note TP</th>
                     <th><i class=""></i>Note Examens</th>
                     <th><i class=""></i>moyenne</th>
-                    <?php if($_SESSION["userEnVue"]["0"]["statutUser"]==3)
+                    <?php if($_SESSION["user"]["statutUser"]==3)
                          echo '<th><i class=""></i>action</th>';
                     ?>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($notes as $key => $note) {?>
+                <?php foreach ($notes as $key => $note){?>
                     <tr>
                         <td><?php echo $note["libelle"];?></td>
                         <td><?php echo $note["coefficient"];?></td>

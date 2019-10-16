@@ -55,7 +55,9 @@
                                 <th><i class="fa fa-list-ol fa-fw"></i></th>
                                 <th><i class="fa fa-cube fa-fw"></i>Classe</th>
                                 <th><i class="fa fa-cube fa-fw"></i>Département</th>
+
                                 <th> <i class="fa fa-calendar fa-fw"></i>Calendrier</th>
+
                                 <th> <i class="fa fa-user fa-fw"></i>Chef</th>
                                 <th> <i class="fa fa-user fa-fw"></i>Adjoint</th>
                                 <th> <i class="fa fa-user fa-fw"></i>Responsable</th>
@@ -71,8 +73,10 @@
                                 </td>
                                 <td><?php echo $classeDpt["libelleDepartement"] ;?></td>
                                 <td>
+
                                     <a href="../admin/index.php?road=emploi&param=<?php echo $classeDpt["idClasse"];?>" >
                                       <i class="fa fa-calendar fa-fw" ></i></a>
+
                                     <!-- Modal zone-->
                                    
                                     <!-- /.modal -->

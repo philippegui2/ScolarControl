@@ -15,6 +15,9 @@
     <!-- bootstrap theme -->
     <link href="../../css/bootstrap-theme.css" rel="stylesheet">
     <!--external css-->
+    
+    
+    <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
     <!-- font icon -->
     <link href="../../css/elegant-icons-style.css" rel="stylesheet" />
     <link href="../../css/font-awesome.min.css" rel="stylesheet" />
@@ -85,7 +88,7 @@
                                 <a href="../enseignant/?road=monProfile"><i class="icon_profile"></i> Mon Profile</a>
                             </li>
                             <li>
-                                <a href="#"><i class="icon_mail_alt"></i> Messagerie</a>
+                                <a href="../enseignant/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>

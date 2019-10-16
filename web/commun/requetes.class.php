@@ -98,6 +98,14 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+
+        public function getAllEleve(){
+            $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve)";
+            return $this->select($req,$params);
+        }
+        
+
+
         public function getEleveByClasse($idClasse){//récupère les élèves inscris dans une classe données
             $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve WHERE idClasse=:idClasse)";
             $params = array(
@@ -106,6 +114,17 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+
+        public function getAllEleveAndNoteByClasse($idClasse,$idMatiere){//récupère toutes les notes de tous les élèves d'une classe données dans une matière donnée
+            $req="SELECT users.matUser, users.prenomUser, users.nomUser, notes.*, matiere.libelle from `users` INNER JOIN eleve ON users.matUser=eleve.matUser RIGHT JOIN notes ON eleve.matUser=notes.matUser INNER JOIN matiere ON notes.idMatiere=matiere.id WHERE eleve.idClasse=:idClasse and notes.idMatiere=:idMatiere";
+            $params = array(
+                "idClasse" => $idClasse,
+                "idMatiere" => $idMatiere
+            );
+            return $this->select($req,$params);
+        }
+        
+
         public function getEnseignantByClasse($idClasse){//récupère les formateurs qui enseignent dans une classe données
             $req="SELECT * FROM `users` where matUser in (SELECT cours.matUser from cours INNER JOIN `matiere-classe` ON cours.idClasse=`matiere-classe`.idClasse INNER JOIN classe ON `matiere-classe`.idClasse=classe.id where classe.id=:idClasse)";
             $params = array(
@@ -115,13 +134,50 @@ Class Requetes
         }
         
         public function getAllChefsAndAdjoint(){//récupère les chefs de classe de tous les départements et leur adjoint
+
+            $req="SELECT users.matUser matUser, users.nomUser nomUser, users.prenomUser prenomUser, users.emailUser emailUser, eleve.role role, classe.libelle libClasse, departement.libelle libDepartement FROM users INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE role=2 or role=3 ORDER BY classe.libelle";
+            $params = array( 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getAllRespoAndAdjoint(){//récupère les chefs de classe de tous les départements et leur adjoint
+            $req="SELECT classe.profResponsable, classe.libelle libClasse, departement.libelle libDepartement from classe INNER JOIN departement ON classe.departement=departement.id";
+
             $req="SELECT users.matUser matUser, users.nomUser nomUser, users.prenomUser prenomUser, eleve.role role, classe.libelle libClasse, departement.libelle libDepartement FROM users INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE role=2 or role=3 ORDER BY classe.libelle";
+
             $params = array(
                     //"idClasse" => intval($idClasse) 
             );
             return $this->select($req,$params);
         }
         
+
+        public function getInfoRespoAndAdjoint(){//récupère les informations des chefs de classe de tous les départements et leur adjoint
+            $req="SELECT users.matUser matUser, users.contactUser contactUser from users INNER JOIN formateur ON users.matUser=formateur.matUser WHERE formateur.role=2";
+            $params = array(
+                   
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getAllRespoDepartement(){//récupère les chefs de classe de tous les départements et leur adjoint
+            $req="SELECT departement.responsable, departement.libelle libDepartement from departement";
+            $params = array(
+ 
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getInfoRespoDepartement(){//récupère les informations des chefs de classe de tous les départements et leur adjoint
+            $req="SELECT users.matUser matUser, users.contactUser contactUser from users INNER JOIN formateur ON users.matUser=formateur.matUser WHERE formateur.role=3";
+            $params = array(
+                   
+            );
+            return $this->select($req,$params);
+        }
+        
+
         public function getEnseignantByDepartement($idDepartement){//récupère les formateurs qui enseignent dans un département donné
             $req="SELECT * FROM `users` where matUser in (SELECT cours.matUser from cours INNER JOIN `matiere-classe` ON cours.idClasse=`matiere-classe`.idClasse INNER JOIN classe ON `matiere-classe`.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where departement.id=:idDepartement)";
             $params = array(
@@ -139,9 +195,25 @@ Class Requetes
             $req= "SELECT * FROM `departement`";
             return $this->select($req,$params);
         }
+        
+        public function getDepartementByClasse($idClasse){//récupère le département dans lequel se trouve une classe donnée
+            $req= "SELECT departement FROM `classe` WHERE id=idClasse";
+            $params = array(
+                "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
+        }
 
-        public function getClasse(){//récupère les classes
+        public function getClasse($idClasse){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
+            return $this->select($req,$params);
+        }
+        
+        public function getClasseById($idClasse){//récupère les classes
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id and classe.id=:idClasse ORDER BY classe.libelle";
+            $params = array(
+                "idClasse" => $idClasse
+            );
             return $this->select($req,$params);
         }
 
@@ -150,7 +222,7 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes par enseignant
+        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes dans lesquelles enseignat un enseignant donné
             $req="SELECT cours.matUser, cours.idClasse, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse, classe.departement from cours,classe,departement where idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser GROUP BY idClasse";
             $params = array(
                 "matUser" => $idEnseignant
@@ -168,7 +240,6 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-
         public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
             $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
             $params = array(
@@ -178,9 +249,18 @@ Class Requetes
         }
         
         public function getMatiereByEnseignant($idEnseignant){//récupère la liste des matières enseignées par un enseignant donné
-            $req="select matUser, idMatiere, idClasse, matiere.id, matiere.libelle libMatiere, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse,classe.departement from cours,classe,departement,matiere WHERE idMatiere=matiere.id and idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser";
+            $req="select matUser, idMatiere, idClasse, matiere.id, matiere.libelle libMatiere, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse,classe.departement from cours, classe, departement, matiere WHERE idMatiere=matiere.id and idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser";
             $params = array(
                 "matUser" => $idEnseignant
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getMatiereByEnseignantAndClasse($idClasse,$idUser){//récupère la liste des matières enseignées par un enseignant donné dans une classe donnée
+            $req="SELECT m.id idMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
+            $params = array(
+                    "idClasse" => $idClasse,
+                    "idUser"   => $idUser
             );
             return $this->select($req,$params);
         }
@@ -204,14 +284,17 @@ Class Requetes
         }
 
         public function getNoteByUser($idEleve){//Récupération de la note d'un utilisateur en fonction de son matricule
-            $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle, m.coefficient  from notes n INNER JOIN matiere m ON n.idMatiere=m.id where matUser=:matUser";
+
+            $req="SELECT n.idMatiere, n.noteControle, n.noteTP, n.noteExamen, m.libelle from notes n INNER JOIN matiere m ON n.idMatiere=m.id where n.matUser=:matUser";
+
+
             $params = array(
                 "matUser" => $idEleve
             );
             return $this->select($req,$params);
         }
 
-        public function getNoteByUserandMatiere($idEleve,$idMatiere){
+        public function getNoteByUserandMatiere($idEleve,$idMatiere){//récupération des notes en fonction de l'utilisateur et de la matière
             $req="SELECT * from notes where matUser=:matUser and idMatiere=:idMatiere";
             $params = array(
                 "matUser" => $idEleve,
@@ -219,6 +302,7 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
+
         //get Calendar by Id Classe
 
         public function getCalendarByIdClasse($idClasse){
@@ -235,7 +319,15 @@ Class Requetes
             ;
         }
         
+
         
+        public function getMessagesByUser($matUser){
+            $req="SELECT * from message where correspondant=:matUser and supprime=0 ORDER BY idMessage desc";
+            $params = array(
+                "matUser" => $matUser,
+            );
+            return $this->select($req,$params);
+        }
 
 
     //fin méthodes de recupération dans la base de données
@@ -372,6 +464,29 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
+        
+        public function setMessage($correspondant,$expediteur,$message,$objet){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `message` (`idMessage`,`objetMessage`,`expediteurMessage`,`correspondant`,`contenuMessage`) VALUES (NULL,:objetMessage,:expediteurMessage,:correspondant,:contenuMessage)";
+            $params = array(
+                "objetMessage" => $objet,
+                "expediteurMessage" => $expediteur,
+                "correspondant" => $correspondant,
+                "contenuMessage" => $message
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setNote($donnees){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `notes` (`matUser`, `idMatiere`,`noteControle`,`noteTP`,`noteExamen`) VALUES (:matUser, :idMatiere, :noteControle, :noteTP, :noteExamen)";
+            $params = array(
+                "matUser" => $donnees["identifiant"],
+                "idMatiere" => $donnees["idMatiere"],
+                "noteControle" => $donnees["noteControle"],
+                "noteTP" => $donnees["noteTP"],
+                "noteExamen" => $donnees["noteExamen"]
+            );
+            return $this->insert($req,$params);
+        }
 
         //fin méthodes d'enregistement dans la base de données
 
@@ -428,6 +543,18 @@ Class Requetes
              "contactUser" => $donnees["contactUser"],
              "sexeUser" => $donnees["sexeUser"],
              "matUser" => $donnees["matUser"]
+            );
+            return $this->update($req,$params);
+        }
+        
+        public function updateNote($donnees){
+            $req = "UPDATE `notes` SET `noteControle` = :noteControle, `noteTP` = :noteTP, `noteExamen`=:noteExamen WHERE `notes`.`matUser` = :matUser AND `notes`.`idMatiere` = :idMatiere";
+            $params = array(
+                "matUser" => $donnees["identifiant"],
+                "idMatiere" => $donnees["idMatiere"],
+                "noteControle" => $donnees["noteControle"],
+                "noteTP" => $donnees["noteTP"],
+                "noteExamen" => $donnees["noteExamen"]
             );
             return $this->update($req,$params);
         }
@@ -520,7 +647,11 @@ Class Requetes
         return $this->update($req,$params);
     }
     
-    public function updateReinitResponsable($donnees){//Enlève l'ancien chef de classe
+
+    public function updateReinitResponsable($donnees){//Enlève l'ancien responsable de classe
+
+   
+
         $req = "update formateur set role= 1 WHERE role=2 and matUser=:pseudo";
         $params = array(
             "pseudo"=>$donnees["idProf"]
@@ -537,10 +668,21 @@ Class Requetes
         return $this->update($req,$params);
     }
     
-    public function updateReinitResponsableDepartement($donnees){//Enlève l'ancien responsable du département
-        $req = "update formateur set role= 1 WHERE role=3";
+
+    public function updateEraseResponsableClasse($donnees){//Affecter un prof responsable à une classe 
+        $req = "update classe set profResponsable=:pseudo WHERE `profResponsable` LIKE :user";
         $params = array(
-            "idClasse"=>$donnees["idDepartement"]
+            "pseudo"=>" ",
+            "user"=>"%".$donnees["respDepartement"]."%"
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateReinitResponsableDepartement($donnees){//Enlève l'ancien responsable du département
+        $req = "update formateur set role= 1 WHERE role=3 and matuser=:matUser";
+        $params = array(
+            "matUser"=>explode("|", $donnees["respDepartement"])[0]
+
         );
         return $this->update($req,$params);
     }
@@ -561,6 +703,16 @@ Class Requetes
         );
         return $this->update($req,$params);
     }
+
+    
+    public function updateEraseResponsableDepartement($donnees){//Affecter un prof responsable à une classe
+        $req = "UPDATE `departement` SET `responsable` = '' WHERE `responsable` LIKE :user";
+        $params = array(
+            "user"=>"%".$donnees["respClasse"]."%"
+        );
+        return $this->update($req,$params);
+    }
+
     // recuperation de la liste des mmatieres d'un eleve
     public function listeMatiere ($pseudo){
 

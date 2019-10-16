@@ -2,7 +2,7 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                liste des départements <button type="button" data-toggle="modal" data-target="#ajDepartement" title="Ajouter un département" id="" style="display:inline;" class="btn btn-default pull-right btn-minimize" ><i class="fa fa-plus"></i></button>
+                liste des départements | Vous pouvez modifier le responsable de département <button type="button" data-toggle="modal" data-target="#ajDepartement" title="Ajouter un département" id="" style="display:inline;" class="btn btn-default pull-right btn-minimize" ><i class="fa fa-plus"></i></button>
             </div>
             <!-- Modal zone-->
             <div class="modal fade" id="ajDepartement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

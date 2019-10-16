@@ -27,6 +27,7 @@
                 "prenomUser" => $user["prenomUser"],
                 "nomUser" => $user["nomUser"],
                 "pseudoUser" => $user["pseudoUser"],
+                "statutUser" => $user["statutUser"],
                 "sexeUser" => $user["sexeUser"], 
                 "naissanceUser" => $user["naissanceUser"]
             );

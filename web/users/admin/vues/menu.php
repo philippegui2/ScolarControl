@@ -145,23 +145,37 @@
                           <span>Parametrage</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a class="" href="../admin/index.php?road=departements">
+                          <i class="fa fa-university fa-fw"></i>
+                          <span>Départements</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="../admin/index.php?road=classes">
+                          <i class="fa fa-graduation-cap fa-fw"></i>
+                          <span>Classes</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="../admin/index.php?road=matiere">
+                          <i class="fa fa-book fa-fw"></i>
+                          <span>Matières</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="../admin/index.php?road=users">
+                          <i class="fa fa-users fa-fw"></i>
+                          <span>Utilisateurs</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>
       </aside>
       <!--sidebar end-->
-
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-          <div class="row">
-                <div class="col-lg-12">
-                    <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
-                    <ol class="breadcrumb">
-                        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-                        <li><i class="fa fa-bars"></i>Pages</li>
-                        <li><i class="fa fa-square-o"></i>Pages</li>
-                    </ol>
-                </div>
-            </div>
-              <!-- debu contenu page -->
+            
+            <!-- debu contenu page -->

@@ -81,7 +81,11 @@
                        <section class="panel">
                              <div class="panel-body bio-graph-info">
                                 <div class="form-group">
+
+                                 <a href="index.php?road=notes" > <button type="button" class="btn btn-outline btn-info btn-lg btn-block">Etat des notes</button> </a>
+
                                  <a href="../admin/index.php?road=notes" > <button type="button" class="btn btn-outline btn-info btn-lg btn-block">Etat des notes</button> </a>
+
                                 </div>
 
                                 <div class="form-group" >

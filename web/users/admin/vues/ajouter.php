@@ -1,5 +1,15 @@
 <div class="row">
     <div class="col-lg-6">
+        <?php 
+            if(isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="ok"){?>
+            <div class="alert alert-success fade in" id="alertOK">
+                <button data-dismiss="alert" class="close close-sm" type="button">
+                    <i class="icon-remove"></i>
+                </button>
+                <strong>Super!</strong> utilisateur ajouté avec succès.
+            </div>            
+        <?php }
+        ?>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Nouvel Utilisateur
