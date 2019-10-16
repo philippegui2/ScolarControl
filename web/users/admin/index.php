@@ -43,30 +43,24 @@ if(0)
                     }
                     break;
                 case "ajouter":{
-
                         $nomPage="Ajouter utilisateur";
                         $navig3="Ajouter utilisateur";
                         //-------------------
-
                         $classesDpt=$req->getClasseDepartement();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "lister":{
-
                         $nomPage="Ajouter utilisateur";
                         $navig3="Lister utilisateur";
                         //-------------------
                         $nomPage="Liste des utilisateurs";
-
-
                         $lister=active;
                         $users=$req->getUser();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "infos":{
-
                         $nomPage="Ajouter utilisateur";
                         $navig3="Infos utilisateur";
                         //-------------------
@@ -74,8 +68,6 @@ if(0)
                         $userEnVue=$req->getUser();
                         $statuts=$req->getStatut();
                         //print_r($userEnVue);
-
-
                     }
                     break;
                 case "parametrage":{
@@ -83,12 +75,7 @@ if(0)
                     }
                     break;
                 case "notes":{//pas fini
-
                         $notes=$req->getNoteByUser($_SESSION["userEnVue"][0]["matUser"]);
-
-                        //$matieres=$req->getMatiereByClasse(4);//recuperation des matières en fonction de la classe
-                        
-
                     }
                     break;
                 case "departements":{
@@ -98,9 +85,6 @@ if(0)
                 case "classes":{
                         $classesDpt=$req->getClasseDepartement();
                         $departements=$req->getDepartement();
-
-                        
-
                     }
                     break;
                 case "matiere":{
@@ -121,7 +105,6 @@ if(0)
                     break;
                 case "userChefsClasse":{
                         $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints de tous les départements
-
                     }
                     break;
                 case "userResponsableClasse":{//récupération de tous les profs responsables de classe
@@ -148,13 +131,6 @@ if(0)
                         
                     }
                     break;
-
-                        print_r($chefsAndAdjoint);
-                    }
-                    break;
-                
-                break;
-
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -172,12 +148,10 @@ if(0)
                 case "modifClasse":{
                         $eleves=$req->getEleveByClasse($_REQUEST["param"]);//récupération des élèves d'une classe donnée (paramètre idClasse)
                         $enseignants=$req->getEnseignantByClasse($_REQUEST["param"]);//récupération des enseignants d'une classe donnée (paramètre idClasse)
-
                     }
                     break;
                 case "modifDepartement":{
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
-
                     }
                     break;
                 
