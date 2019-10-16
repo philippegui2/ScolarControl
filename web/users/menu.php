@@ -14,6 +14,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- bootstrap theme -->
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
+    
     <!--external css-->
     <!-- font icon -->
     <link href="../css/elegant-icons-style.css" rel="stylesheet" />
@@ -33,6 +34,12 @@
     <link href="../css/style-responsive.css" rel="stylesheet" />
     <link href="../css/xcharts.min.css" rel=" stylesheet"> 
     <link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+
+    <!-- bootstrapp select -->
+     <link rel="stylesheet" href="../bSelect/dist/css/bootstrap-select.css">
+
+
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>

@@ -154,6 +154,16 @@ if(0)
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
                     }
                     break;
+                
+                    
+                case "emploi":{
+                 
+                    $matieres = $req->getMatiereByClasse($_REQUEST["param"]);
+                    $DefaultMatieres = $req->getCalendarByIdClasse($_REQUEST["param"]);
+                    
+                }break;
+
+                   
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -215,6 +225,33 @@ if(0)
                 include_once("vues/matiere.php");//On recharge la page
             }
             break;
+
+            case "EMPLOIajouter":{
+                $DefaultMatieresValidation = $req->getCalendarByIdClasse($_REQUEST["idClasse"]);
+               // print_r($DefaultMatieresValidation );
+
+              if(empty($DefaultMatieresValidation))
+              {
+
+              
+              
+               $req->setEmploi($_REQUEST);
+               echo 'added';
+              }
+              else{
+                 $req->updateEmploi($_REQUEST);
+                    
+                echo 'updated';
+               
+              }
+              
+               
+               
+
+              
+            }
+            break;
+
             case "LISTERsupprimer":{
                 $req->delUser($_REQUEST);
                 $lister=active;
@@ -241,6 +278,7 @@ if(0)
                     $req->updateAdjointClasse($_REQUEST);
                 }
                 if($_REQUEST["respClasse"]!="vide"){//Insertion du responsable de classe
+
                     $req->updateReinitResponsable($_REQUEST);//modification de l'ancienne responsabilité de responsable de classe
                     //$req->updateReinitResponsableDepartement($_REQUEST);//--modification de l'ancienne responsabilité de responsable de département
                     $req->updateEnseignantResponsable($_REQUEST);//affectation du rôle de responsable à une classe
@@ -248,6 +286,10 @@ if(0)
                     $req->updateResponsableClasse($_REQUEST);//affectation d'un prof reponsable à une classe
                     //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement 
                     $req->updateEraseResponsableDepartement($_REQUEST);
+
+                   
+                    //print_r($_REQUEST);
+
                 }
                 header("Location:index.php?road=classes");
                 exit();
@@ -255,6 +297,7 @@ if(0)
             break;
             case "MODIFDEPARTEMENTresponsable":{
                 if($_REQUEST["respDepartement"]!="vide"){//Insertion du responsable de classe
+
                     $req->updateReinitResponsableDepartement($_REQUEST);//--modification de l'ancienne responsabilité de responsable de département
                     //$req->updateReinitResponsable($_REQUEST);//modification de l'ancienne responsabilité de responsable de classe
                     $req->updateEnseignantResponsableDepartement($_REQUEST);//affectation du rôle de responsable à une classe
@@ -262,6 +305,10 @@ if(0)
                     $req->updateResponsableDepartement($_REQUEST);//affectation d'un prof reponsable à une classe
                     //$req->updateEraseResponsableClasse($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement
                     $req->updateEraseResponsableClasse($_REQUEST);
+
+                    
+                   // print_r($_REQUEST);
+
                 }
                 header("Location:index.php?road=departements");
                 exit();
@@ -289,21 +336,31 @@ if(0)
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerEmail":{
+
                     $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints
                     foreach($chefsAndAdjoints as $chefsAndAdjoint){
                         
                     }
                     $fonctions->envoieMail($email,$prenom,$message,$alternative);
+
+                    //print_r($_REQUEST["parametre"]);
+                    print_r("email");
+
                     exit();
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerSMS":{
+
                     print_r($_SESSION["user"]["matUser"]);
                     
+
+                    print_r("SMS");
+
                     exit();
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerNotif":{
+
                     $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints
                     foreach($chefsAndAdjoints as $chefsAndAdjoint){
                         $req->setMessage($chefsAndAdjoint["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
@@ -353,6 +410,9 @@ if(0)
                             $req->setMessage($tousEnseignant["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
                         }
                     }
+
+                    print_r("Notif");
+
                     exit();
                 }
                 break;

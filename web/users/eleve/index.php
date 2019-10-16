@@ -83,7 +83,6 @@
          if($test){
           echo '<meta http-equiv="Refresh" content="0;url=index.php?road=accueil">';
           exit();
-
         }else{
         
           echo 'echec update password user';
