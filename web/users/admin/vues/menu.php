@@ -34,23 +34,30 @@
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
     
+    
+    
+    
+    
+    
+    
+    
     <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
     
     <link rel="stylesheet" href="../../bSelect/dist/css/bootstrap-select.css">
     
-    <script type='text/javascript' src='../../bootstrapSelect/jquery-1.8.3.js'></script>
+    <!--script type='text/javascript' src='../../bootstrapSelect/jquery-1.8.3.js'></script-->
 
-    <script type='text/javascript' src="../../bootstrapSelect/bootstrap.min.js.css"></script>
+    <!--script type='text/javascript' src="../../bootstrapSelect/bootstrap.min.js.css"></script-->
 
-    <script type='text/javascript' src="../../bootstrapSelect/bootstrap-select.js.css"></script>
+    <!--script type='text/javascript' src="../../bootstrapSelect/bootstrap-select.js.css"></script-->
 
-    <style type='text/css'>
+    <!--style type='text/css'>
     @import url('../../bootstrapSelect/bootstrap.css');
 
     @import
     url('../../bootstrapSelect/bootstrap-select.css');
 
-    </style>
+    </style -->
 
     <script type='text/javascript'>//<![CDATA[
         $(window).load(function(){
@@ -58,6 +65,11 @@
         });//]]>
     </script>
    
+    
+    
+    
+    
+    
   </head>
 
   <body>
