@@ -56,12 +56,14 @@ if(0)
                     break;
                 case "monProfile":{
 
+
                     }
                 case "notes":{
                         $notes=$req->getNoteByUser($_SESSION["userEnVue"][0]["matUser"]);
                         include_once("../../commun/vues/".$_REQUEST["road"].".php");
                         include_once("menuBas.php");
                         exit();
+
                     }
                     break;
                 default:
@@ -86,11 +88,16 @@ if(0)
                         $eleves=$req->getEleveByClasse($_REQUEST["param"]);
                     }
                     break;
+
                 case "infosEleves":{//Affichage des informations sur les élèves
+
+               
+
                         $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     }
                     break;
                 case "matieres":{
+
                         //param=idClasse
                         $classe=$req->getClasseById($_REQUEST["param"])[0];
                         //récupération des matières enseignées par un enseignant donné dans une classe donnée
@@ -102,6 +109,9 @@ if(0)
                             //param=ID de la matière   param2=id de la classe
                         $eleves=$req->getEleveByClasse($_REQUEST["param2"]);
                         $notes=$req->getAllEleveAndNoteByClasse($_REQUEST["param2"],$_REQUEST["param"]);
+
+                        echo $_REQUEST["param"];
+
                     }
                     break;
                 default:

@@ -137,6 +137,9 @@ Class Requetes
         
         public function getAllRespoAndAdjoint(){//récupère les chefs de classe de tous les départements et leur adjoint
             $req="SELECT classe.profResponsable, classe.libelle libClasse, departement.libelle libDepartement from classe INNER JOIN departement ON classe.departement=departement.id";
+
+            //$req="SELECT users.matUser matUser, users.nomUser nomUser, users.prenomUser prenomUser, eleve.role role, classe.libelle libClasse, departement.libelle libDepartement FROM users INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE role=2 or role=3 ORDER BY classe.libelle";
+
             $params = array(
                     //"idClasse" => intval($idClasse) 
             );
@@ -228,6 +231,11 @@ Class Requetes
             $req="SELECT matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id";
             return $this->select($req,$params);
         }
+        
+        public function getMatiereClasseDepartementEnseignant(){//récupère les matières leur classe et départements
+            $req="SELECT users.prenomUser,users.nomUser, matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id LEFT JOIN cours ON matcla.idMatiere=cours.idMatiere LEFT JOIN formateur ON cours.matUser=formateur.matUser LEFT JOIN users ON formateur.matUser=users.matUser";
+            return $this->select($req,$params);
+        }
 
         public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
             $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
@@ -261,6 +269,11 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
+        public function getCours(){//récupère la liste des matières enseignées par un enseignant donné
+            $req="SELECT cours.*, users.prenomUser, users.nomUser FROM `cours` INNER JOIN formateur ON cours.matUser=formateur.matUser INNER JOIN users ON formateur.matUser=users.matUser";
+            $params = array();
+            return $this->select($req,$params);
+        }
         
         public function getCoursByEnseignantMatiereClasse($idEnseignant,$idMatiere,$idClasse){//récupère la liste des matières enseignées par un enseignant donné
             $req="SELECT * FROM `cours` where `matUser` = :matUser and idMatiere = :idMatiere and idClasse = :idClasse";
@@ -288,6 +301,24 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
+
+        //get Calendar by Id Classe
+
+        public function getCalendarByIdClasse($idClasse){
+            $req="SELECT * from calendrier where idClasse=:idClasse";
+            $params = array(
+                "idClasse" => $idClasse
+                
+            );
+            return $this->select($req,$params);
+        }
+
+
+        public function getEleveById($idEleve){
+            ;
+        }
+        
+
         
         public function getMessagesByUser($matUser){
             $req="SELECT * from message where correspondant=:matUser and supprime=0 ORDER BY idMessage desc";
@@ -372,7 +403,47 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
+        /*  Insertion en Emploi du temps debut */
 
+
+        public function setEmploi($donnees){ // enregistrement pour 8h
+            $req = "INSERT INTO `calendrier` ( `idClasse`, `lundi`,`mardi`,`mercredi`,  `jeudi`,`vendredi`,`samedi`) VALUES (:idClasse , :lundi , :mardi , :mercredi,:jeudi,:vendredi, :samedi)";
+            $params = array(
+                "idClasse" => $donnees["idClasse"],
+                "lundi" =>       $donnees["lundi_8"].'*'.$donnees["lundi_9"].'*'.$donnees["lundi_10"].'*'       
+                                 .$donnees["lundi_11"].'*'.$donnees["lundi_12"].'*'.$donnees["lundi_13"].'*'
+                                 .$donnees["lundi_14"].'*'.$donnees["lundi_15"].'*'.$donnees["lundi_16"].'*'
+                                 .$donnees["lundi_17"].'*'.$donnees["lundi_18"].'*'.$donnees["lundi_19"],
+
+                "mardi" =>       $donnees["mardi_8"].'*'.$donnees["mardi_9"].'*'.$donnees["mardi_10"].'*'       
+                                 .$donnees["mardi_11"].'*'.$donnees["mardi_12"].'*'.$donnees["mardi_13"].'*'
+                                 .$donnees["mardi_14"].'*'.$donnees["mardi_15"].'*'.$donnees["mardi_16"].'*'
+                                 .$donnees["mardi_17"].'*'.$donnees["mardi_18"].'*'.$donnees["mardi_19"],
+
+                "mercredi" => $donnees["mercredi_8"].'*'.$donnees["mercredi_9"].'*'.$donnees["mercredi_10"].'*'       
+                                 .$donnees["mercredi_11"].'*'.$donnees["mercredi_12"].'*'.$donnees["mercredi_13"].'*'
+                                 .$donnees["mercredi_14"].'*'.$donnees["mercredi_15"].'*'.$donnees["mercredi_16"].'*'
+                                 .$donnees["mercredi_17"].'*'.$donnees["mercredi_18"].'*'.$donnees["mercredi_19"],
+
+                "jeudi" =>       $donnees["jeudi_8"].'*'.$donnees["jeudi_9"].'*'.$donnees["jeudi_10"].'*'       
+                                 .$donnees["jeudi_11"].'*'.$donnees["jeudi_12"].'*'.$donnees["jeudi_13"].'*'
+                                 .$donnees["jeudi_14"].'*'.$donnees["jeudi_15"].'*'.$donnees["jeudi_16"].'*'
+                                 .$donnees["jeudi_17"].'*'.$donnees["jeudi_18"].'*'.$donnees["jeudi_19"],
+
+                "vendredi" => $donnees["vendredi_8"].'*'.$donnees["vendredi_9"].'*'.$donnees["vendredi_10"].'*'       
+                                 .$donnees["vendredi_11"].'*'.$donnees["vendredi_12"].'*'.$donnees["vendredi_13"].'*'
+                                 .$donnees["vendredi_14"].'*'.$donnees["vendredi_15"].'*'.$donnees["vendredi_16"].'*'
+                                 .$donnees["vendredi_17"].'*'.$donnees["vendredi_18"].'*'.$donnees["vendredi_19"],
+                "samedi" => $donnees["samedi_8"].'*'.$donnees["samedi_9"].'*'.$donnees["samedi_10"].'*'       
+                                 .$donnees["samedi_11"].'*'.$donnees["samedi_12"].'*'.$donnees["samedi_13"].'*'
+                                 .$donnees["samedi_14"].'*'.$donnees["mardi_15"].'*'.$donnees["samedi_16"].'*'
+                                 .$donnees["samedi_17"].'*'.$donnees["samedi_18"].'*'.$donnees["samedi_19"]
+
+            );
+            return $this->insert($req,$params);
+        }
+        
+         /*  Insertion en Emploi du temps Fin */
         public function setClasseMatiere($classe,$matiere,$coefficient){//enregistrement des nouvelles classes
             $req = "INSERT INTO `matiere-classe` (`idMatiere`,`idClasse`,`coefficient`) VALUES (:idMatiere,:idClasse,:coefficient)";
             $params = array(
@@ -419,6 +490,47 @@ Class Requetes
         //fin méthodes d'enregistement dans la base de données
 
     //méthodes de mise à jour dans la base de données
+        
+
+        public function updateEmploi($donnees){ // enregistrement pour 8h
+            $req = "UPDATE `calendrier` SET `lundi` = :lundi,`mardi` = :mardi,`mercredi` = :mercredi,`jeudi` = :jeudi,`vendredi` = :vendredi, `samedi` = :samedi WHERE idClasse = :idClasse";
+            $params = array(
+                "idClasse" => $donnees["idClasse"],
+                "lundi" =>       $donnees["lundi_8"].'*'.$donnees["lundi_9"].'*'.$donnees["lundi_10"].'*'       
+                                 .$donnees["lundi_11"].'*'.$donnees["lundi_12"].'*'.$donnees["lundi_13"].'*'
+                                 .$donnees["lundi_14"].'*'.$donnees["lundi_15"].'*'.$donnees["lundi_16"].'*'
+                                 .$donnees["lundi_17"].'*'.$donnees["lundi_18"].'*'.$donnees["lundi_19"],
+
+                "mardi" =>       $donnees["mardi_8"].'*'.$donnees["mardi_9"].'*'.$donnees["mardi_10"].'*'       
+                                 .$donnees["mardi_11"].'*'.$donnees["mardi_12"].'*'.$donnees["mardi_13"].'*'
+                                 .$donnees["mardi_14"].'*'.$donnees["mardi_15"].'*'.$donnees["mardi_16"].'*'
+                                 .$donnees["mardi_17"].'*'.$donnees["mardi_18"].'*'.$donnees["mardi_19"],
+
+                "mercredi" => $donnees["mercredi_8"].'*'.$donnees["mercredi_9"].'*'.$donnees["mercredi_10"].'*'       
+                                 .$donnees["mercredi_11"].'*'.$donnees["mercredi_12"].'*'.$donnees["mercredi_13"].'*'
+                                 .$donnees["mercredi_14"].'*'.$donnees["mercredi_15"].'*'.$donnees["mercredi_16"].'*'
+                                 .$donnees["mercredi_17"].'*'.$donnees["mercredi_18"].'*'.$donnees["mercredi_19"],
+
+                "jeudi" =>       $donnees["jeudi_8"].'*'.$donnees["jeudi_9"].'*'.$donnees["jeudi_10"].'*'       
+                                 .$donnees["jeudi_11"].'*'.$donnees["jeudi_12"].'*'.$donnees["jeudi_13"].'*'
+                                 .$donnees["jeudi_14"].'*'.$donnees["jeudi_15"].'*'.$donnees["jeudi_16"].'*'
+                                 .$donnees["jeudi_17"].'*'.$donnees["jeudi_18"].'*'.$donnees["jeudi_19"],
+
+                "vendredi" => $donnees["vendredi_8"].'*'.$donnees["vendredi_9"].'*'.$donnees["vendredi_10"].'*'       
+                                 .$donnees["vendredi_11"].'*'.$donnees["vendredi_12"].'*'.$donnees["vendredi_13"].'*'
+                                 .$donnees["vendredi_14"].'*'.$donnees["vendredi_15"].'*'.$donnees["vendredi_16"].'*'
+                                 .$donnees["vendredi_17"].'*'.$donnees["vendredi_18"].'*'.$donnees["vendredi_19"],
+                "samedi" => $donnees["samedi_8"].'*'.$donnees["samedi_9"].'*'.$donnees["samedi_10"].'*'       
+                                 .$donnees["samedi_11"].'*'.$donnees["samedi_12"].'*'.$donnees["samedi_13"].'*'
+                                 .$donnees["samedi_14"].'*'.$donnees["mardi_15"].'*'.$donnees["samedi_16"].'*'
+                                 .$donnees["samedi_17"].'*'.$donnees["samedi_18"].'*'.$donnees["samedi_19"]
+
+            );
+            return $this->insert($req,$params);
+        }
+        
+
+
         public function updateUser($donnees){
             $req = "UPDATE `users` SET `prenomUser` = :prenomUser,`nomUser` = :nomUser,`naissanceUser` = :naissanceUser,`lieuNaissance` = :lieuNaissance,`adresseUser` = :adresseUser, `contactUser` = :contactUser,`sexeUser` = :sexeUser WHERE `users`.`matUser` = :matUser";
             $params = array(
@@ -584,7 +696,7 @@ Class Requetes
         );
         return $this->update($req,$params);
     }
-    
+
     public function updateEraseResponsableDepartement($donnees){//Affecter un prof responsable à une classe
         $req = "UPDATE `departement` SET `responsable` = '' WHERE `responsable` LIKE :user";
         $params = array(
@@ -609,6 +721,7 @@ Class Requetes
 
     //recuperation des notes d'un etudiant
     public function bulletin($pseudo){
+
         $req = "select * from notes
                  inner join matiere on matiere.id = notes.idmatiere
                 where matuser = :pseudo

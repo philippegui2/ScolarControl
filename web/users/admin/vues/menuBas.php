@@ -31,6 +31,7 @@
         function disparaitAlertOK(){
             $(function(){
                 $('#alertOK:even').hide(4000);
+                $("#leLoading").hide();
             });
         }
          disparaitAlertOK();
@@ -79,8 +80,8 @@
         }
         
         function ENSEIGNANTMATIEREaffTableau(idPub){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
-        $("#loading-div").show();
-        $("#ensEnVue").attr('value',idPub);
+            $("#ensEnVue").attr('value',idPub);
+            ENSEIGNANTMATIEREgestCaseAAcocher();/*
             $(function(){  
                     var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere&parametre="+idPub;
                     $.ajax({
@@ -91,14 +92,55 @@
                         success: function(data){
                             var data2=JSON.parse(data);
                             $("input").prop('checked', false);//décocher tout au départ
-                            var data_length = data2.length;
-                            $('#corpsEnseignantMatiere tr input').each(function(index){
+                            var data_length = data2.length;//nombre de matières enseignées
+                            //alert(data_length);
+                            $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
                                 for (var i = 0; i < data_length; i++) {
-                                    if(data2[i].idMatiere === $(this).attr("identifiant")){
+                                    if(data2[i].idMatiere === $(this).attr("identifiant") && data2[i].idClasse === $(this).attr("identclasse")){
+                                        $(this).attr('disabled', false);
                                         $(this).prop('checked', true);
                                     }
                                 }
                             });
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );*/
+        }
+        
+        function ENSEIGNANTMATIEREgestCaseAAcocher(){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $(function(){  
+                    var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere2";
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            alert(data);
+                            var data2=JSON.parse(data);
+                            $("input").prop('checked', false);//décocher tout au départ
+                            var data_length = data2.length;//nombre de matières enseignées
+                            $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
+                                $.each(data2,function(index,obj){//remplissage des lignes
+                                    alert(obj.idMatiere);
+                                });
+                            });
+                            
+                            /*/alert(data_length);
+                            $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
+                                for (var i = 0; i < data_length; i++) {
+                                    if(data2[i].idMatiere === $(this).attr("identifiant") && data2[i].idClasse === $(this).attr("identclasse")){
+                                        $(this).attr('disabled', false);
+                                        $(this).prop('checked', true);
+                                    }
+                                }
+                            });*/
+                            
+                            
                         }, 
                         error: function() {
                             alert('Erreur de connexion'); 
@@ -110,6 +152,7 @@
         
         function ENSEIGNANTMATIEREenvoieEnsMat(){
             $(function(){
+                $("#leLoading").show();
                 var checkbox_val = [$("#ensEnVue").val()];
                 $('#corpsEnseignantMatiere tr input:checked').each(function(index){
                     checkbox_val.push(this.value);
@@ -121,7 +164,7 @@
                     timeout: 5000,
                     cache: true,
                     success: function(data){
-                        
+                        document.location.reload(true);
                     }, 
                     error: function() {
                         alert('Erreur de connexion'); 
@@ -130,6 +173,100 @@
                 
             });
         }    
+        function USERCHEFSCLASSEenvoyer(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                if(option=="email"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerEmail&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val();
+                }else if(option=="sms"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerSMS&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val();
+                }else if(option=="notif"){
+                    var param="../admin/index.php?reqajax=USERCHEFSCLASSEenvoyerNotif&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val();
+                }
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        $('#message').attr('style','');//disparution du loading
+                        $('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(5000,'swing');
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function envoyerEmail(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                
+                var param="../admin/index.php?reqajax=envoyerEmail&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val()+"&parametre3="+option;
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        //$('#message').attr('style','');//disparution du loading
+                        //$('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(2000,'swing');
+                        alert(data);
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function envoyerSMS(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                
+                var param="../admin/index.php?reqajax=envoyerSMS&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val()+"&parametre3="+option;
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        $('#message').attr('style','');//disparution du loading
+                        $('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(2000,'swing');
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
+        function envoyerNotif(option){
+            $(function(){
+                $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
+                
+                var param="../admin/index.php?reqajax=envoyerNotif&parametre="+$('#message').val()+"&parametre2="+$('#objectMessage').val()+"&parametre3="+option;
+                $.ajax({
+                    type: 'GET',
+                    url: param, 
+                    timeout: 5000,
+                    cache: true,
+                    success: function(data){
+                        $('#message').attr('style','');//disparution du loading
+                        $('#messageNotice').html("<center>Message envoyé</center>").css('color','red').fadeOut(2000,'swing');
+                    }, 
+                    error: function() {
+                        alert('Erreur de connexion'); 
+                    } 
+                });
+                
+            });
+        }
+        
         function USERCHEFSCLASSEenvoyer(option){
             $(function(){
                 $('#message').attr('style','background: url(../../img/loading.gif) center no-repeat;z-index:-12000;');//apparution du loading
