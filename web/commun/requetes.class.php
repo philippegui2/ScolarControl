@@ -628,4 +628,8 @@ Class Requetes
         );
         return $this->select($req,$params);
     }
+
+    public function getClasseByDeptAndRespo(){
+        
+    }
 }
