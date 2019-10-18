@@ -231,6 +231,11 @@ Class Requetes
             $req="SELECT matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id";
             return $this->select($req,$params);
         }
+        
+        public function getMatiereClasseDepartementEnseignant(){//récupère les matières leur classe et départements
+            $req="SELECT users.prenomUser,users.nomUser, matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id LEFT JOIN cours ON matcla.idMatiere=cours.idMatiere LEFT JOIN formateur ON cours.matUser=formateur.matUser LEFT JOIN users ON formateur.matUser=users.matUser";
+            return $this->select($req,$params);
+        }
 
         public function getMatiereByClasse($idClasse){//récupère les matières en fonction de la classe
             $req="SELECT mc.idMatiere idMatiere, mc.coefficient coefMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id where mc.idClasse=:idClasse";
@@ -262,6 +267,11 @@ Class Requetes
             $params = array(
                 "matUser" => $idEnseignant
             );
+            return $this->select($req,$params);
+        }
+        public function getCours(){//récupère la liste des matières enseignées par un enseignant donné
+            $req="SELECT cours.*, users.prenomUser, users.nomUser FROM `cours` INNER JOIN formateur ON cours.matUser=formateur.matUser INNER JOIN users ON formateur.matUser=users.matUser";
+            $params = array();
             return $this->select($req,$params);
         }
         

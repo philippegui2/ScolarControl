@@ -31,6 +31,7 @@
         function disparaitAlertOK(){
             $(function(){
                 $('#alertOK:even').hide(4000);
+                $("#leLoading").hide();
             });
         }
          disparaitAlertOK();
@@ -79,8 +80,8 @@
         }
         
         function ENSEIGNANTMATIEREaffTableau(idPub){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
-        $("#loading-div").show();
-        $("#ensEnVue").attr('value',idPub);
+            $("#ensEnVue").attr('value',idPub);
+            ENSEIGNANTMATIEREgestCaseAAcocher();/*
             $(function(){  
                     var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere&parametre="+idPub;
                     $.ajax({
@@ -96,10 +97,50 @@
                             $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
                                 for (var i = 0; i < data_length; i++) {
                                     if(data2[i].idMatiere === $(this).attr("identifiant") && data2[i].idClasse === $(this).attr("identclasse")){
+                                        $(this).attr('disabled', false);
                                         $(this).prop('checked', true);
                                     }
                                 }
                             });
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );*/
+        }
+        
+        function ENSEIGNANTMATIEREgestCaseAAcocher(){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $(function(){  
+                    var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere2";
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            alert(data);
+                            var data2=JSON.parse(data);
+                            $("input").prop('checked', false);//décocher tout au départ
+                            var data_length = data2.length;//nombre de matières enseignées
+                            $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
+                                $.each(data2,function(index,obj){//remplissage des lignes
+                                    alert(obj.idMatiere);
+                                });
+                            });
+                            
+                            /*/alert(data_length);
+                            $('#corpsEnseignantMatiere tr input').each(function(index){//remplissage des lignes
+                                for (var i = 0; i < data_length; i++) {
+                                    if(data2[i].idMatiere === $(this).attr("identifiant") && data2[i].idClasse === $(this).attr("identclasse")){
+                                        $(this).attr('disabled', false);
+                                        $(this).prop('checked', true);
+                                    }
+                                }
+                            });*/
+                            
+                            
                         }, 
                         error: function() {
                             alert('Erreur de connexion'); 
@@ -111,6 +152,7 @@
         
         function ENSEIGNANTMATIEREenvoieEnsMat(){
             $(function(){
+                $("#leLoading").show();
                 var checkbox_val = [$("#ensEnVue").val()];
                 $('#corpsEnseignantMatiere tr input:checked').each(function(index){
                     checkbox_val.push(this.value);
@@ -122,7 +164,7 @@
                     timeout: 5000,
                     cache: true,
                     success: function(data){
-                        
+                        document.location.reload(true);
                     }, 
                     error: function() {
                         alert('Erreur de connexion'); 
