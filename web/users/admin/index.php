@@ -245,10 +245,6 @@ if(0)
                
               }
               
-               
-               
-
-              
             }
             break;
 
@@ -319,8 +315,9 @@ if(0)
         }
     }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
         switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
-            case "ENSEIGNANTMATIEREensmatiere":{
-                    print_r(json_encode($req->getIDMatiereByEnseignant($_REQUEST["parametre"])));
+            case "ENSEIGNANTMATIEREensmatiere2":{
+                //récupération de la liste des cours et les enseignants qui les donnent
+                    print_r(json_encode($req->getCours()));
                     exit();
                 }
                 break;

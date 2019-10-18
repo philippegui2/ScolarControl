@@ -31,6 +31,7 @@
         function disparaitAlertOK(){
             $(function(){
                 $('#alertOK:even').hide(4000);
+                $("#leLoading").hide();
             });
         }
          disparaitAlertOK();
@@ -78,11 +79,10 @@
             });
         }
         
-        function ENSEIGNANTMATIEREaffTableau(idPub){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
-        $("#loading-div").show();
-        $("#ensEnVue").attr('value',idPub);
+        function ENSEIGNANTMATIEREgestCaseAAcocher(idPub){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $("#ensEnVue").attr('value',idPub);
             $(function(){  
-                    var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere&parametre="+idPub;
+                    var param="../admin/index.php?reqajax=ENSEIGNANTMATIEREensmatiere2";
                     $.ajax({
                         type: 'GET',
                         url: param, 
@@ -91,14 +91,22 @@
                         success: function(data){
                             var data2=JSON.parse(data);
                             $("input").prop('checked', false);//décocher tout au départ
-                            var data_length = data2.length;
-                            $('#corpsEnseignantMatiere tr input').each(function(index){
-                                for (var i = 0; i < data_length; i++) {
-                                    if(data2[i].idMatiere === $(this).attr("identifiant")){
-                                        $(this).prop('checked', true);
+                            $('#corpsEnseignantMatiere tr').each(function(index){//remplissage des lignes
+                                var ligneTabNomPrenom=$(this).find("#nomPrenomEnseigant");
+                                var ligneTabInput=$(this).find("input");
+                                $.each(data2,function(index,obj){//recupération du contenu venu de la base de données
+                                    if(obj.idMatiere === ligneTabInput.attr("identifiant") && obj.idClasse === ligneTabInput.attr("identclasse")){
+                                      if(obj.matUser === idPub){
+                                          ligneTabInput.prop('checked', true);
+                                          ligneTabInput.attr('disabled', false);
+                                          ligneTabNomPrenom.html(obj.prenomUser+" "+obj.nomUser);
+                                      }else{
+                                          ligneTabNomPrenom.html(obj.prenomUser+" "+obj.nomUser);
+                                          ligneTabInput.attr('disabled', true);
+                                      }
                                     }
-                                }
-                            });
+                                });
+                            }); 
                         }, 
                         error: function() {
                             alert('Erreur de connexion'); 
@@ -110,6 +118,7 @@
         
         function ENSEIGNANTMATIEREenvoieEnsMat(){
             $(function(){
+                $("#leLoading").show();
                 var checkbox_val = [$("#ensEnVue").val()];
                 $('#corpsEnseignantMatiere tr input:checked').each(function(index){
                     checkbox_val.push(this.value);
@@ -121,7 +130,7 @@
                     timeout: 5000,
                     cache: true,
                     success: function(data){
-                        
+                        document.location.reload(true);
                     }, 
                     error: function() {
                         alert('Erreur de connexion'); 
