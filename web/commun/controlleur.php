@@ -1,4 +1,4 @@
-<?php session_start(); ob_start();
+<?php
 /*
 *contolleur frontal
 *Auteur Philippe K. GUILAVOGUI
@@ -23,8 +23,8 @@
         //$utilisateur = array($user["matUser"],$user["prenomUser"],$user["nomUser"],$user["pseudoUser"],$user["sexeUser"],$user["naissanceUser"]);
         //creation de la session de l'utilisateur
         session_start();
-        $_SESSION["user"]=$utilisateur;
-        $_SESSION["requete"]=$requete;
+        $_SESSION["user"]=$user;
+        // $_SESSION["requete"]=$requete;
 
         //redirection dans le bon dossier
         if ($user["statutUser"]=='1')
@@ -53,7 +53,10 @@
           else if($user["statutUser"]=='3')
           {
               //C'est un enseignant
-              echo '<meta http-equiv="Refresh" content="0;url=users/enseignant/?road=accueil">';
+             // echo '<meta http-equiv="Refresh" content="0;url=users/enseignant/?road=accueil">';
+            //  var_dump($_SESSION); exit();
+             header('Location: users/enseignant/index.php?road=accueil');
+
               exit();
           }
           else if($user["statutUser"]=='4')
