@@ -101,9 +101,6 @@ if(0)
                 case "enseignantMatiere":{
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                         $matieres=$req->getMatiereClasseDepartement();//récupération des matières, la classe et département
-                        $cours=$req->getCours();
-                        print_r($matieres); echo "<br/><br/>";
-                        print_r($cours); echo "<br/><br/>";
                     }
                     break;
                 case "userChefsClasse":{
@@ -248,10 +245,6 @@ if(0)
                
               }
               
-               
-               
-
-              
             }
             break;
 
@@ -322,13 +315,6 @@ if(0)
         }
     }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
         switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
-            case "ENSEIGNANTMATIEREensmatiere":{
-                //récupération de la liste des matières enseignées par un enseignant donné ainsi que leur classe
-                //parametre = matUser; (idEnseignant)
-                    print_r(json_encode($req->getIDMatiereByEnseignant($_REQUEST["parametre"])));
-                    exit();
-                }
-                break;
             case "ENSEIGNANTMATIEREensmatiere2":{
                 //récupération de la liste des cours et les enseignants qui les donnent
                     print_r(json_encode($req->getCours()));

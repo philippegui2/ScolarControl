@@ -1,4 +1,4 @@
-<?php
+<?php session_start(); ob_start();
 /*
 *contolleur frontal
 *Auteur Philippe K. GUILAVOGUI
@@ -54,21 +54,22 @@
              // s'il n'a pas personnalisé son mdpasse je le redirige vers la page custom
               if (md5($user['pseudoUser'])==$user['passwordUser']) {
                 # code...
-                header('Location: users/eleve/index.php?road=update&pseudo='.$user['pseudoUser']);
-                // echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=update">';
+               //header('Location: users/eleve/index.php?road=update&pseudo='.$user['pseudoUser']);
+                echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=update&pseudo='.$user['pseudoUser'].'">';
                 exit();
               } else {
                 # code...
-                header('Location: users/eleve/index.php?road=accueil&pseudo='.$user['pseudoUser']);
+                //header('Location: users/eleve/index.php?road=accueil&pseudo='.$user['pseudoUser']);
+                echo '<meta http-equiv="Refresh" content="0;url=users/eleve/index.php?road=accueil&pseudo='.$user['pseudoUser'].'">';
                 // exit();
               }   
           }
           else if($user["statutUser"]=='3')
           {
               //C'est un enseignant
-             // echo '<meta http-equiv="Refresh" content="0;url=users/enseignant/?road=accueil">';
+              echo '<meta http-equiv="Refresh" content="0;url=users/enseignant/?road=accueil">';
             //  var_dump($_SESSION); exit();
-             header('Location: users/enseignant/index.php?road=accueil');
+             //header('Location: users/enseignant/index.php?road=accueil');
 
               exit();
           }

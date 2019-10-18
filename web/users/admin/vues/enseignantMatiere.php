@@ -24,7 +24,7 @@
                             <td><?php echo $matiere["libelleMatiere"];?></td>
                             <td><?php echo $matiere["libelleClasse"];?></td>
                             <td><?php echo $matiere["libelleDepartement"];?></td>
-                            <td></td>
+                            <td id="nomPrenomEnseigant"></td>
                             <td><input identifiant="<?php  echo $matiere["idMatiere"];?>" identclasse="<?php  echo $matiere["idClasse"];?>" type="checkbox" name="<?php echo 'enMat'.$matUser?>" id="" value='<?php  echo $matiere["idMatiere"]."*".$matiere["idClasse"];?>'/></td>
                         </tr>
                     <?php } ?>       
@@ -53,7 +53,7 @@
               </thead>
               <tbody>
                <?php foreach($enseignants as $enseignant){?>
-                    <tr identifiant="<?php echo $enseignant["matUser"];?>" class="active" data-toggle="modal" data-target="#ajoutEnseignantClasse" onclick="ENSEIGNANTMATIEREaffTableau(this.getAttribute('identifiant'))">
+                    <tr identifiant="<?php echo $enseignant["matUser"];?>" class="active" data-toggle="modal" data-target="#ajoutEnseignantClasse" onclick="ENSEIGNANTMATIEREgestCaseAAcocher(this.getAttribute('identifiant'))">
                         <td><?php echo $enseignant["matUser"];?></td>
                         <td><?php echo $enseignant["prenomUser"]; ?></td>
                         <td><?php echo $enseignant["nomUser"];?></td>
