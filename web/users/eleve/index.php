@@ -64,7 +64,9 @@
       # code...
       
       $_SESSION['pseudo'] = $_GET['pseudo'];
-      header("Location: vues/custom.php?pseudo=".$_SESSION['pseudo']);
+      //header("Location: vues/custom.php?pseudo=".$_SESSION['pseudo']);
+      echo '<meta http-equiv="Refresh" content="0;url=vues/custom.php?pseudo="'.$_SESSION['pseudo'].'">';
+      exit();
 
     }
     

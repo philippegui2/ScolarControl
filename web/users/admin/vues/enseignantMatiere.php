@@ -1,5 +1,5 @@
 <div class="modal fade" id="ajoutEnseignantClasse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:70%;">
         <div class="modal-content">
             <div class="modal-header">
                 Liste des matières 
@@ -11,21 +11,23 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th><i class="fa fa-check-circle fa-fw"></i></th>
                         <th>Libellé</th>
                         <th>Classe</th>
                         <th>Département</th>
+                        <th>Enseignant</th>
+                        <th><i class="fa fa-check-circle fa-fw"></i></th>
                       </tr>
                     </thead>
                     <tbody id="corpsEnseignantMatiere">
-                     <?php foreach($matieres as $matiere){?>
-                          <tr class="active">
-                              <td><input identifiant="<?php  echo $matiere["idMatiere"];?>" type="checkbox" name="<?php echo 'enMat'.$matUser?>" id="" value='<?php  echo $matiere["idMatiere"]."*".$matiere["idClasse"];?>'/></td>
-                              <td><?php echo $matiere["libelleMatiere"];?></td>
-                              <td><?php echo $matiere["libelleClasse"];?></td>
-                              <td><?php echo $matiere["libelleDepartement"];?></td>
-                          </tr>
-                      <?php } ?>       
+                    <?php foreach($matieres as $matiere){?>
+                        <tr class="active">
+                            <td><?php echo $matiere["libelleMatiere"];?></td>
+                            <td><?php echo $matiere["libelleClasse"];?></td>
+                            <td><?php echo $matiere["libelleDepartement"];?></td>
+                            <td id="nomPrenomEnseigant"></td>
+                            <td><input identifiant="<?php  echo $matiere["idMatiere"];?>" identclasse="<?php  echo $matiere["idClasse"];?>" type="checkbox" name="<?php echo 'enMat'.$matUser?>" id="" value='<?php  echo $matiere["idMatiere"]."*".$matiere["idClasse"];?>'/></td>
+                        </tr>
+                    <?php } ?>       
                     </tbody>
                 </table>   
             </div>
@@ -34,12 +36,12 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-
+<div id="leLoading" class="loader" style="position:absolute;left:50%;z-index:200;"></div>
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6">
         <section class="panel">
             <header class="panel-heading">
-                Liste des enseignants | Choisir un enseignant pour lui affecter des matières
+                Liste des enseignants | Cliquer sur l'enseignant pour lui affecter des matières
             </header>
             <table class="table">
               <thead>
@@ -51,7 +53,7 @@
               </thead>
               <tbody>
                <?php foreach($enseignants as $enseignant){?>
-                    <tr identifiant="<?php echo $enseignant["matUser"];?>" class="active" data-toggle="modal" data-target="#ajoutEnseignantClasse" onclick="ENSEIGNANTMATIEREaffTableau(this.getAttribute('identifiant'))">
+                    <tr identifiant="<?php echo $enseignant["matUser"];?>" class="active" data-toggle="modal" data-target="#ajoutEnseignantClasse" onclick="ENSEIGNANTMATIEREgestCaseAAcocher(this.getAttribute('identifiant'))">
                         <td><?php echo $enseignant["matUser"];?></td>
                         <td><?php echo $enseignant["prenomUser"]; ?></td>
                         <td><?php echo $enseignant["nomUser"];?></td>
