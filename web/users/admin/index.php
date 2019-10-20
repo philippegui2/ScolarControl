@@ -131,6 +131,14 @@ if(0)
                         
                     }
                     break;
+
+
+                        print_r($chefsAndAdjoint);
+                 
+                
+                
+
+
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -232,18 +240,19 @@ if(0)
 
               if(empty($DefaultMatieresValidation))
               {
-
-              
               
                $req->setEmploi($_REQUEST);
-               echo 'added';
+               header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=add');
+              
               }
               else{
                  $req->updateEmploi($_REQUEST);
-                    
-                echo 'updated';
+                 header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=edit');
+               
                
               }
+
+             // header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse']);
               
             }
             break;

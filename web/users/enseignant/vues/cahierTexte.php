@@ -23,6 +23,7 @@
                                 <input type="hidden" name="idClasse" value="<?php echo $_REQUEST["param2"];//idClasse?>"/>
                                 <input type="hidden" id="partieEnVue" name="idPartie" value=""/>
                                 <p>Voulez-vous marquer cette partie du cours comme effectuée?</p>
+                                <input type="text" placeholder="Ajouter une observation?" name="observation" class="form-control"/>
                             </div>
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default" type="button">Fermer</button>
@@ -49,7 +50,7 @@
                             <?php foreach ($partieCours as $key => $partieCahier) {?>
                             <tr>
                                 <td><?php echo $partieCahier["nomPartie"];?></td>
-                                <td><?php echo $partieCahier["etatPartie"];?></td>
+                                <td><?php if($partieCahier["etatPartie"]==1) echo '<i class="fa fa-check-circle fa-fw"></i>';else echo '<i class="fa fa-times-circle fa-fw"></i>'?></td>
                                 <td><button identifiant="<?php echo $partieCahier["idPartie"];?>" type="button" data-toggle="modal" data-target="#ajPartie" onclick="document.getElementById('partieEnVue').value=this.getAttribute('identifiant')">valider</button></td>
                                 <td><?php echo $partieCahier["observation"];?></td>
                             </tr>                                
