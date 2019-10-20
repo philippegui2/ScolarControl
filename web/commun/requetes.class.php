@@ -328,7 +328,14 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-
+        public function getCahierTexte($idMatiere,$idClasse){
+            $req="SELECT cahiertexte.*, partiecours.nomPartie, partiecours.etatPartie, partiecours.observation from cahiertexte INNER JOIN partiecours ON cahiertexte.idPartie=partiecours.idPartie WHERE cahiertexte.idMatiere=:idMatiere AND cahiertexte.idClasse=:idClasse ORDER BY partiecours.idPartie ASC";
+            $params = array(
+                "idMatiere" => $idMatiere,
+                "idClasse" => $idClasse
+                );
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
 
     //méthodes d'enregistement dans la base de données
@@ -404,8 +411,6 @@ Class Requetes
             return $this->insert($req,$params);
         }
         /*  Insertion en Emploi du temps debut */
-
-
         public function setEmploi($donnees){ // enregistrement pour 8h
             $req = "INSERT INTO `calendrier` ( `idClasse`, `lundi`,`mardi`,`mercredi`,  `jeudi`,`vendredi`,`samedi`) VALUES (:idClasse , :lundi , :mardi , :mercredi,:jeudi,:vendredi, :samedi)";
             $params = array(
@@ -486,12 +491,30 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
+        
+        public function setCahierTexte($donnees,$idPartie){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `cahiertexte` (`idMatiere`,`idClasse`,`idPartie`) VALUES (:idMatiere, :idClasse, :idPartie)";
+            $params = array(
+                "idMatiere" => $donnees["idMatiere"],
+                "idClasse" => $donnees["idClasse"],
+                "idPartie" => $idPartie
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setPartieCours($donnees){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `partiecours` (`idPartie`,`nomPartie`,`etatPartie`,`observation`) VALUES (NULL,:nomPartie, :etatPartie, :observation)";
+            $params = array(
+                "nomPartie" => $donnees["nomPartieMatiere"],
+                "etatPartie" => 0,
+                "observation" => " "
+            );
+            return $this->insert($req,$params);
+        }
 
         //fin méthodes d'enregistement dans la base de données
 
     //méthodes de mise à jour dans la base de données
-        
-
         public function updateEmploi($donnees){ // enregistrement pour 8h
             $req = "UPDATE `calendrier` SET `lundi` = :lundi,`mardi` = :mardi,`mercredi` = :mercredi,`jeudi` = :jeudi,`vendredi` = :vendredi, `samedi` = :samedi WHERE idClasse = :idClasse";
             $params = array(
@@ -554,6 +577,14 @@ Class Requetes
                 "noteControle" => $donnees["noteControle"],
                 "noteTP" => $donnees["noteTP"],
                 "noteExamen" => $donnees["noteExamen"]
+            );
+            return $this->update($req,$params);
+        }
+        
+        public function updatePartieCours($donnees){
+            $req = "UPDATE `partiecours` SET `etatPartie` = 1 WHERE idPartie=:idPartie";
+            $params = array(
+                "idPartie" => $donnees["idPartie"]
             );
             return $this->update($req,$params);
         }

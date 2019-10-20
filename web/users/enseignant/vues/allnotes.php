@@ -37,21 +37,20 @@
     </div>
     
     <div class="col-lg-12">
-        <?php 
-            if(isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="ok"){?>
+        <?php if(isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="ok"){?>
             <div class="alert alert-success fade in" id="alertOK">
                 <button data-dismiss="alert" class="close close-sm" type="button">
                     <i class="icon-remove"></i>
                 </button>
                 <strong>Super!</strong> la modification a été effectuée avec succès.
             </div>            
-        <?php    }
-        ?>
+        <?php }?>
         
         
         <div class="panel panel-default">
             <div class="panel-heading">
-                Liste des notes en <span class="label label-info"><?php echo $notes[0]["libelle"];?></span> <span>cahier de texte</span>
+                Liste des notes en <span class="label label-info"><?php echo $notes[0]["libelle"];?></span> 
+                <a class="label label-primary pull-right" href="index.php?road=cahierTexte&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>"> Voir le cahier de texte</a>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
