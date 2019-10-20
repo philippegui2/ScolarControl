@@ -88,30 +88,30 @@ if(0)
                         $eleves=$req->getEleveByClasse($_REQUEST["param"]);
                     }
                     break;
-
                 case "infosEleves":{//Affichage des informations sur les élèves
-
-               
-
                         $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
                     }
                     break;
                 case "matieres":{
-
                         //param=idClasse
                         $classe=$req->getClasseById($_REQUEST["param"])[0];
                         //récupération des matières enseignées par un enseignant donné dans une classe donnée
                         $matieres=$req->getMatiereByEnseignantAndClasse($_REQUEST["param"],$_SESSION["user"]["matUser"]);
                     }
-                    break;
+                    break; 
                 case "allnotes":{
                         //récupération de toutes les notes de tous les élèves d'une classe données dans une matière donnée
-                            //param=ID de la matière   param2=id de la classe
+                            //param=id de la matière, param2=id de la classe
                         $eleves=$req->getEleveByClasse($_REQUEST["param2"]);
                         $notes=$req->getAllEleveAndNoteByClasse($_REQUEST["param2"],$_REQUEST["param"]);
-
-                        echo $_REQUEST["param"];
-
+                        //echo $_REQUEST["param"];
+                    }
+                    break;
+                case "cahierTexte":{
+                        //récupération de toutes les notes de tous les élèves d'une classe données dans une matière donnée
+                            //param=id de la matière , param2=id de la classe
+                            //param2= idClasse
+                        $partieCours=$req->getCahierTexte($_REQUEST["param"],$_REQUEST["param2"]);
                     }
                     break;
                 default:
@@ -125,7 +125,7 @@ if(0)
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "ALLNOTESmodifNote":{
-                    print_r($_REQUEST);
+                //print_r($_REQUEST);
                 $test=$req->getNoteByUserandMatiere($_REQUEST['identifiant'],$_REQUEST['idMatiere']);//vérification de l'existance du champ d'entrée de la note
                 if($test){
                     $req->updateNote($_REQUEST);
@@ -140,9 +140,32 @@ if(0)
                 exit();
             }
             break;
-            
+            case "CAHIERTEXTEajoutPartie":{
+                $req->setCahierTexte($_REQUEST,$req->setPartieCours($_REQUEST));
+                header("Location:index.php?road=cahierTexte&param=".$_REQUEST['idMatiere']."&param2=".$_REQUEST['idClasse']);
+                exit();
+            }
+            break;
+            case "CAHIERTEXTEconfirmEffectue":{
+                //récupération de la liste des cours et les enseignants qui les donnent
+                $req->updatePartieCours($_REQUEST);
+                header("Location:index.php?road=cahierTexte&param=".$_REQUEST['idMatiere']."&param2=".$_REQUEST['idClasse']);
+                exit();
+            }
             default:
                echo "requete A inconnue";
+        }
+    }else if(isset($_REQUEST["reqajax"])){
+        switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
+            case "CAHIERTEXTEconfirmEffectue":{
+                //récupération de la liste des cours et les enseignants qui les donnent
+                print_r(json_encode($req->getCours()));
+                exit();
+            }
+            break;
+            default:
+               echo "Cette requete est inconnue";
+    
         }
     }else{ //zone de traitement des appuis de bouton
         echo "neutre";

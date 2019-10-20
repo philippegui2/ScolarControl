@@ -37,5 +37,29 @@
          disparaitAlertOK();
     </script>
     <?php }?>
+    <script type="text/javascript">
+         function CAHIERTEXTEconfirmEffectue(idPartie){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            //$("#partieEnVue").attr('value',idPartie); 
+            alert(idPartie);
+            $(function(){  
+                    //var param="index.php?reqajax=CAHIERTEXTEconfirmEffectue&param="+idPartie;
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            //var data2=JSON.parse(data);
+                            //$("input").prop('checked', false);//décocher tout au départ
+ 
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
+    </script>
   </body>
 </html>
