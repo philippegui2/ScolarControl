@@ -582,9 +582,10 @@ Class Requetes
         }
         
         public function updatePartieCours($donnees){
-            $req = "UPDATE `partiecours` SET `etatPartie` = 1 WHERE idPartie=:idPartie";
+            $req = "UPDATE `partiecours` SET `etatPartie` = 1, observation=:observation WHERE idPartie=:idPartie";
             $params = array(
-                "idPartie" => $donnees["idPartie"]
+                "idPartie" => $donnees["idPartie"],
+                "observation" => $donnees["observation"]
             );
             return $this->update($req,$params);
         }
