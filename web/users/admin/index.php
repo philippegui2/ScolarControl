@@ -64,7 +64,7 @@ if(0)
                         $nomPage="Ajouter utilisateur";
                         $navig3="Infos utilisateur";
                         //-------------------
-                        $infos=active;
+                        $infos="active";
                         $userEnVue=$req->getUser();
                         $statuts=$req->getStatut();
                         //print_r($userEnVue);
