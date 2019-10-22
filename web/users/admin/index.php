@@ -55,7 +55,7 @@ if(0)
                         $navig3="Lister utilisateur";
                         //-------------------
                         $nomPage="Liste des utilisateurs";
-                        $lister=active;
+                        $lister="active";
                         $users=$req->getUser();
                         $statuts=$req->getStatut();
                     }
