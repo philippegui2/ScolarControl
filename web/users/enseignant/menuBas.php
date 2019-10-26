@@ -15,9 +15,9 @@
     <script src="../../js/scripts.js"></script>
     <?php if($_REQUEST['road']=="allnotes" OR $_REQUEST['road']=="notes"){ ?>
     <script type="text/javascript">
-         $(document).ready( function () {
+        $(document).ready(function(){
             $('#table_list').DataTable();
-        } );
+        });
         function modifNote(idUser){ 
             $(function(){
                 $("#nomPrenom").html($("#prenomUser"+idUser).html()+" "+$("#nomUser"+idUser).html());
@@ -26,19 +26,18 @@
                 $("#placeNoteExamen").val($("#noteExamen"+idUser).html());
                 $("#placeIdMatiereNotes").val($("#idMatiere"+idUser).val());
                 $("#placeIdentifiant").val(idUser);
-                
             });
         }
-         function disparaitAlertOK(){
-            $(function(){
-                $('#alertOK:even').hide(4000);
-            });
-         }
-         disparaitAlertOK();
+        function disparaitAlertOK(){
+           $(function(){
+               $('#alertOK:even').hide(4000);
+           });
+        }
+        disparaitAlertOK();
     </script>
     <?php }?>
     <script type="text/javascript">
-         function CAHIERTEXTEconfirmEffectue(idPartie){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+        function CAHIERTEXTEconfirmEffectue(idPartie){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
             //$("#partieEnVue").attr('value',idPartie); 
             alert(idPartie);
             $(function(){  
@@ -51,9 +50,8 @@
                         success: function(data){
                             //var data2=JSON.parse(data);
                             //$("input").prop('checked', false);//décocher tout au départ
- 
                         }, 
-                        error: function() {
+                        error: function(){
                             alert('Erreur de connexion'); 
                         } 
                     });

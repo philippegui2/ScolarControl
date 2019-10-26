@@ -23,11 +23,11 @@
                                 <input type="hidden" name="idClasse" value="<?php echo $_REQUEST["param2"];//idClasse?>"/>
                                 <input type="hidden" id="partieEnVue" name="idPartie" value=""/>
                                 <p>Voulez-vous marquer cette partie du cours comme effectuée?</p>
-                                <input type="text" placeholder="Ajouter une observation?" name="observation" class="form-control"/>
+                                <input type="text" placeholder="Ajouter une observation? (facultatif)" name="observation" class="form-control"/>
                             </div>
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default" type="button">Fermer</button>
-                                <button class="btn btn-info" type="submit" name="action" value="CAHIERTEXTEconfirmEffectue"> Confirmer</button>
+                                <button class="btn btn-info" type="submit" name="action" value="CAHIERTEXTEconfirmEffectue"> Oui</button>
                             </div>
                         </form>
                     </div>

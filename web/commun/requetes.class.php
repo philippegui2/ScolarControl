@@ -98,8 +98,13 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getAllEleve(){
+        public function getAllEleveSimple(){
             $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve)";
+            return $this->select($req,$params);
+        }
+        
+        public function getAllEleve(){
+            $req= "SELECT users.*, classe.id idClasse, classe.libelle libelleClasse, departement.id idDepartement, departement.libelle libelleDepartement FROM `users` INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id";
             return $this->select($req,$params);
         }
         
@@ -107,6 +112,18 @@ Class Requetes
             $req= "SELECT * FROM `users` where matUser in (SELECT matUser from eleve WHERE idClasse=:idClasse)";
             $params = array(
                     "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getEleveById($idEleve){
+            ;
+        }
+        
+        public function getEleveClasseById($idEleve){
+            $req= "SELECT classe.id FROM `users` INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id where eleve.matUser=:idEleve";
+            $params = array(
+                    "idEleve" => $idEleve
             );
             return $this->select($req,$params);
         }
@@ -312,13 +329,6 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
-
-
-        public function getEleveById($idEleve){
-            ;
-        }
-        
-
         
         public function getMessagesByUser($matUser){
             $req="SELECT * from message where correspondant=:matUser and supprime=0 ORDER BY idMessage desc";
@@ -733,6 +743,15 @@ Class Requetes
         $req = "UPDATE `departement` SET `responsable` = '' WHERE `responsable` LIKE :user";
         $params = array(
             "user"=>"%".$donnees["respClasse"]."%"
+        );
+        return $this->update($req,$params);
+    }
+    
+    public function updateClasseEleve($donnees){//Affecter un prof responsable à une classe
+        $req = "UPDATE `eleve` SET `idClasse`=:idClasse WHERE matUser=:idEleve";
+        $params = array(
+            "idClasse"=>$donnees["idClasse"],
+            "idEleve"=>$donnees["idEleve"]
         );
         return $this->update($req,$params);
     }
