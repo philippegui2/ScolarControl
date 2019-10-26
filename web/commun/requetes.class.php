@@ -522,9 +522,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
 
-<<<<<<< HEAD
-        
-=======
+
         public function setFichePresence($idClasse){//récupère la liste des matières enseignées par un enseignant donné
             $req="INSERT INTO `fichepresence`(`idFichePresence`,`idClasse`) VALUES (NULL,:idClasse)";
             $params = array(
@@ -541,7 +539,6 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
->>>>>>> master
         //fin méthodes d'enregistement dans la base de données
 
     //méthodes de mise à jour dans la base de données
