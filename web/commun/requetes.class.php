@@ -522,22 +522,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
 
-        public function setFichePresence($idClasse){//récupère la liste des matières enseignées par un enseignant donné
-            $req="INSERT INTO `fichepresence`(`idFichePresence`,`idClasse`) VALUES (NULL,:idClasse)";
-            $params = array(
-                "idClasse" => $idClasse
-            );
-            return $this->insert($req,$params);
-        }
         
-        public function setAbsents($idFiche,$idEleve){//récupère la liste des matières enseignées par un enseignant donné
-            $req="INSERT INTO `absents`(`idFiche`,`idEleve`) VALUES (:idFiche,:idEleve)";
-            $params = array(
-                "idFiche" => $idFiche,
-                "idEleve" => $idEleve
-            );
-            return $this->insert($req,$params);
-        }
         //fin méthodes d'enregistement dans la base de données
 
     //méthodes de mise à jour dans la base de données
