@@ -121,6 +121,7 @@ if(0)
                     break;
                 case "userEleves":{//récupération de tous les élèves
                         $usersEleves=$req->getAllEleve();
+                        $classes=$req->getClasseDepartement();
                     }
                     break;
                 case "enseignantMessage":{//récupération de tous les enseignants
@@ -133,7 +134,7 @@ if(0)
                     break;
 
 
-                        print_r($chefsAndAdjoint);
+                        //print_r($chefsAndAdjoint);
                  
                 
                 
@@ -310,12 +311,14 @@ if(0)
                     $req->updateResponsableDepartement($_REQUEST);//affectation d'un prof reponsable à une classe
                     //$req->updateEraseResponsableClasse($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement
                     $req->updateEraseResponsableClasse($_REQUEST);
-
-                    
-                   // print_r($_REQUEST);
-
                 }
                 header("Location:index.php?road=departements");
+                exit();
+            }
+            break;
+            case "USERELEVESchangeClasse":{
+                $req->updateClasseEleve($_REQUEST);
+                header("Location:index.php?road=userEleves");
                 exit();
             }
             break;
@@ -342,10 +345,8 @@ if(0)
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerEmail":{
-
                     $chefsAndAdjoints=$req->getAllChefsAndAdjoint();//récupération de tous les chefs et adjoints
                     foreach($chefsAndAdjoints as $chefsAndAdjoint){
-                        
                     }
                     $fonctions->envoieMail($email,$prenom,$message,$alternative);
 
@@ -375,11 +376,11 @@ if(0)
                 }
                 break;
             case "envoyerEmail":{
-                if($_REQUEST["parametre3"]=="respoClasse"){
-                    $respoClasse=$req->getInfoRespoAndAdjoint();
-                }else if($_REQUEST["parametre3"]=="respoDepartement"){
-                    
-                }
+                    if($_REQUEST["parametre3"]=="respoClasse"){
+                        $respoClasse=$req->getInfoRespoAndAdjoint();
+                    }else if($_REQUEST["parametre3"]=="respoDepartement"){
+
+                    }
                     exit();
                 }
                 break;
@@ -417,11 +418,14 @@ if(0)
                         }
                     }
 
-                    print_r("Notif");
-
+                    //print_r("Notif");
                     exit();
                 }
                 break;
+                case "USERELEVESchangeClasse":{
+                    print_r(json_encode($req->getEleveClasseById($_REQUEST["param"])));
+                    exit();
+                }
             default:
                echo "requete A inconnue";
         }

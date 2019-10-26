@@ -18,7 +18,6 @@
 ?>
 
 <form enctype="multipart/form-data" role="form" method="POST" action="../admin/index.php">
-
     <div class="form-group input-group" >
        <div class="row" >
        <table class="table table-striped table-dark" id="emploi">
@@ -37,7 +36,7 @@
       <tbody>
         <tr>
           <th scope="row">8H00-9H00</th>
-            <td style="padding:1px;line-height: 10px;">
+            <td style="padding:1px;">
                     <!-- Lundi-->
                 <select class="selectpicker input-sm" data-live-search="true" name="lundi_8" >
                     <option value="Choix de la Matiere">Choix de la Matiere</option>
@@ -45,7 +44,6 @@
                     <?php foreach ($matieres as $matiere) {
                         echo '<option value="'.$matiere['libelleMatiere'].'">'.$matiere['libelleMatiere'].' </option>';
                         }
-
                     ?>
                 </select>
             </td>
