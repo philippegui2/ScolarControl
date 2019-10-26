@@ -132,14 +132,8 @@ if(0)
                         
                     }
                     break;
-
-
                         //print_r($chefsAndAdjoint);
-                 
                 
-                
-
-
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
