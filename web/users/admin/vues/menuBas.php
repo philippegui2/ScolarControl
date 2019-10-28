@@ -34,9 +34,9 @@
                 $("#leLoading").hide();
             });
         }
-         disparaitAlertOK();
+        disparaitAlertOK();
          
-        $(document).ready(function () {
+        $(document).ready(function (){
 
             $('#dateP').datepicker({
                 format: "dd/mm/yyyy",
@@ -327,3 +327,29 @@
             });
         }
     </script>
+    
+<?php if($_REQUEST["road"]=="userEleves"){?>
+    <script type="text/javascript">
+        function USERELEVESgestCaseAAcocher(idEleve){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $("#eleveEnVue").attr('value',idEleve);
+            $(function(){  
+                    var param="../admin/index.php?reqajax=USERELEVESchangeClasse&param="+idEleve;
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            var data2=JSON.parse(data);
+                            $("input").prop('checked', false);//décocher tout au départ
+                            $("#input"+data2[0].id).prop('checked',true); 
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
+    </script>
+<?php }?>

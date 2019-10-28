@@ -25,11 +25,10 @@ if(0)
     $fonctions=new Fonctions();
 ?>
 
-
 <?php
     if(isset($_REQUEST["road"])){ //zone de traitement des liens
         if(!isset($_REQUEST["param"])){// si le paramètre de nom "parametre" n'est pas rnseigné
-            switch ($_REQUEST["road"]) {//zone de recupération de toutes les variables nécessaires aux pages
+            switch ($_REQUEST["road"]){//zone de recupération de toutes les variables nécessaires aux pages
                 case "notifications":{
                         $messages=$req->getMessagesByUser($_SESSION["user"]["matUser"]);//05R22
                         include_once("../../commun/vues/".$_REQUEST["road"].".php");
@@ -63,14 +62,12 @@ if(0)
                         include_once("../../commun/vues/".$_REQUEST["road"].".php");
                         include_once("menuBas.php");
                         exit();
-
                     }
                     break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-
             include_once("vues/".$_REQUEST["road"].".php");
         }
         else{
