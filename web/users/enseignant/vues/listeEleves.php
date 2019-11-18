@@ -9,7 +9,7 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <table class=" bobo table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class=" bobo table table-striped table-bordered table-hover" id="table_list">
                         <thead>
                             <tr>
                                 <th><i class="fa fa-user fa-fw"></i>Prénom</th>

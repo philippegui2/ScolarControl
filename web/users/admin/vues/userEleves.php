@@ -39,7 +39,7 @@
     <div class="col-lg-10 col-md-10 col-sm-10">
         <section class="panel">
             <header class="panel-heading">
-                Liste des chefs de département
+                Liste des élèves
                  <button type="button" data-toggle="modal" data-target="#EnvoieTexto" title="Envoyer un texto à tous" id="" style="display:inline;" class="btn btn-info pull-right btn-minimize" >Écrire à tous</button>
             </header>
             <!--//----- debut zone modal-->

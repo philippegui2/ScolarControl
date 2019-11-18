@@ -36,15 +36,12 @@ if(0)
                     }
                     break;
                 case "accueil":{
+                    
                     }
                     break;
                 case "listeclasses":{
                         $couleur=array('panel-primary','panel-success','panel-warning','panel-danger','panel-info');
                         $classes=$req->getClasseByEnseignant($_SESSION["user"]["matUser"]);
-                    }
-                    break;
-                case "evaluations":{
-                    echo $_REQUEST["idClasse"];
                     }
                     break;
                 case "listeEleves":{
@@ -78,7 +75,8 @@ if(0)
                     //$statuts=$req->getStatut();
                     }
                 case "evaluations":{
-                    
+                        //param=idMatiere ; param2=idClasse
+                        echo $_REQUEST["param2"]; 
                     }
                     break;
                 case "listeEleves":{

@@ -15,8 +15,7 @@
     <!-- bootstrap theme -->
     <link href="../../css/bootstrap-theme.css" rel="stylesheet">
     <!--external css-->
-    
-    
+    <link rel="stylesheet" type="text/css" href="../../css/datePicker.css"/>
     <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
     <!-- font icon -->
     <link href="../../css/elegant-icons-style.css" rel="stylesheet" />

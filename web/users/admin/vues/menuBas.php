@@ -37,7 +37,6 @@
         disparaitAlertOK();
          
         $(document).ready(function (){
-
             $('#dateP').datepicker({
                 format: "dd/mm/yyyy",
             });  

@@ -45,12 +45,12 @@
                 <strong>Super!</strong> la modification a été effectuée avec succès.
             </div>            
         <?php }?>
-        
-        
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 Liste des notes en <span class="label label-info"><?php echo $notes[0]["libelle"];?></span> 
-                <a class="label label-primary pull-right" href="index.php?road=cahierTexte&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>"> Voir le cahier de texte</a>
+                &nbsp;<a class="btn btn-primary pull-right" href="index.php?road=cahierTexte&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>"> Voir le cahier de texte</a>
+                &nbsp;<a class="btn btn-success pull-right" href="index.php?road=evaluations&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>"> Préparer un examen</a>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">

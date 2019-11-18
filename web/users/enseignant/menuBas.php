@@ -8,16 +8,25 @@
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../bSelect/dist/js/bootstrap-select.js"></script>
-    <script type="text/javascript" src="../../DataTables/datatables.min.js"></script>
+    <script src="../../DataTables/datatables.min.js"></script>
+    <script src="../../js2/datePicker.js"></script>
     <!-- nice scroll -->
     <script src="../../js/jquery.scrollTo.min.js"></script>
     <script src="../../js/jquery.nicescroll.js" type="text/javascript"></script><!--custome script for all page-->
     <script src="../../js/scripts.js"></script>
-    <?php if($_REQUEST['road']=="allnotes" OR $_REQUEST['road']=="notes"){ ?>
     <script type="text/javascript">
+        $(document).ready(function (){
+            $('#dateP').datepicker({
+                format: "dd/mm/yyyy",
+            });  
+
+        });
         $(document).ready(function(){
             $('#table_list').DataTable();
         });
+    </script>
+    <?php if($_REQUEST['road']=="allnotes" OR $_REQUEST['road']=="notes"){ ?>
+    <script type="text/javascript">
         function modifNote(idUser){ 
             $(function(){
                 $("#nomPrenom").html($("#prenomUser"+idUser).html()+" "+$("#nomUser"+idUser).html());
