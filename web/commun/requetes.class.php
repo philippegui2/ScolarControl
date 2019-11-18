@@ -470,7 +470,7 @@ Class Requetes
         }
         
         public function setCours($idEnseignant,$idMatiere,$idClasse){//récupère la liste des matières enseignées par un enseignant donné
-            $req="INSERT INTO `cours` (`matUser`, `idMatiere`,`idClasse`) VALUES (:matUser, :idMatiere, :idClasse)";
+            $req="INSERT INTO `cours` (`matUser`, `idMatiere`,`idClasse`,`idCours`) VALUES (:matUser, :idMatiere, :idClasse,NULL)";
             $params = array(
                 "matUser" => $idEnseignant,
                 "idMatiere" => $idMatiere,
@@ -521,7 +521,6 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
-
 
         public function setFichePresence($idClasse){//récupère la liste des matières enseignées par un enseignant donné
             $req="INSERT INTO `fichepresence`(`idFichePresence`,`idClasse`) VALUES (NULL,:idClasse)";
@@ -579,8 +578,6 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-
-
         public function updateUser($donnees){
             $req = "UPDATE `users` SET `prenomUser` = :prenomUser,`nomUser` = :nomUser,`naissanceUser` = :naissanceUser,`lieuNaissance` = :lieuNaissance,`adresseUser` = :adresseUser, `contactUser` = :contactUser,`sexeUser` = :sexeUser WHERE `users`.`matUser` = :matUser";
             $params = array(

@@ -1,4 +1,4 @@
-<?php
+<?php 
         if(isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="add"){?>
         <div class="alert alert-success fade in" id="alertOK">
             <button data-dismiss="alert" class="close close-sm" type="button">
