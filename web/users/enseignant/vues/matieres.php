@@ -7,7 +7,7 @@
         <div class="panel-body">
             <?php
                 foreach ($matieres as $key => $matiere) {?>
-                    <a class="btn btn-block btn-default" href="../enseignant/index.php?road=allnotes&param=<?php echo $matiere["idMatiere"];?>&param2=<?php echo $_REQUEST["param"];//param=idClasse?>">
+                    <a class="btn btn-block btn-default" href="../enseignant/index.php?road=allnotes&param=<?php echo $matiere["idMatiere"];?>&param2=<?php echo $_REQUEST["param"];//param=idClasse?>&param3=<?php echo $matiere["idCours"];//param=idCours?>">
                         <?php echo $matiere["libelleMatiere"]; ?>
                     </a>
             <?php }?>

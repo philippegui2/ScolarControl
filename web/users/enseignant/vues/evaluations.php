@@ -6,6 +6,9 @@
         <div class="panel-body">
             <div class="col-lg-12 col-md-12 col-sx-12">
                 <form action="index.php" method="POST">
+                    <input type="hidden" name="idCours" value="<?php echo $_REQUEST["param3"];?>"/>
+                    <input type="hidden" name="param" value="<?php echo $_REQUEST["param"];?>"/>
+                    <input type="hidden" name="param2" value="<?php echo $_REQUEST["param2"];?>"/>
                     <label>Date de l'évaluation</label>
                     <div class="form-group input-group"> 
                         <span class="input-group-addon"><i class="fa fa-calendar fa-faw"></i></span>
@@ -15,29 +18,29 @@
                     <div class="form-group input-group"> 
                         <select style="width:75px;" required="true" name="heureEvaluation">
                             <option value=''>Heure</option>
-                            <option value='orale'>8</option>
-                            <option value='ecrite'>9</option>
-                            <option value='qcm'>10</option>
-                            <option value='mixte'>11</option>
-                            <option value='orale'>12</option>
-                            <option value='ecrite'>13</option>
-                            <option value='qcm'>14</option>
-                            <option value='mixte'>15</option>
-                            <option value='orale'>16</option>
-                            <option value='ecrite'>17</option>
-                            <option value='qcm'>18</option>
-                            <option value='mixte'>19</option>
-                            <option value='orale'>20</option>
-                            <option value='ecrite'>21</option>
+                            <option value='8'>8</option>
+                            <option value='9'>9</option>
+                            <option value='10'>10</option>
+                            <option value='11'>11</option>
+                            <option value='12'>12</option>
+                            <option value='13'>13</option>
+                            <option value='14'>14</option>
+                            <option value='15'>15</option>
+                            <option value='16'>16</option>
+                            <option value='17'>17</option>
+                            <option value='18'>18</option>
+                            <option value='19'>19</option>
+                            <option value='20'>20</option>
+                            <option value='21'>21</option>
                         </select>
                         <select  style="width:75px;" required="true" name="minuteEvaluation">
                             <option value=''>Minute</option>
-                            <option value='orale'>00</option>
-                            <option value='ecrite'>10</option>
-                            <option value='qcm'>20</option>
-                            <option value='mixte'>30</option>
-                            <option value='orale'>40</option>
-                            <option value='ecrite'>50</option>
+                            <option value='00'>00</option>
+                            <option value='10'>10</option>
+                            <option value='20'>20</option>
+                            <option value='30'>30</option>
+                            <option value='40'>40</option>
+                            <option value='50'>50</option>
                         </select>
                     </div>
                     <label>Type d'évaluation</label>
@@ -50,7 +53,7 @@
                             <option value='mixte'>Mixte</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-info"><span class="icon_check_alt"></span> Valider</button>
+                    <button type="submit" name="action" value="EVALUATIONvalider" class="btn btn-info"><span class="icon_check_alt"></span> Valider</button>
                 </form>
             </div>
         </div>

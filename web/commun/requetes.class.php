@@ -271,7 +271,7 @@ Class Requetes
         }
         
         public function getMatiereByEnseignantAndClasse($idClasse,$idUser){//récupère la liste des matières enseignées par un enseignant donné dans une classe donnée
-            $req="SELECT m.id idMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
+            $req="SELECT m.id idMatiere, m.libelle libelleMatiere, cours.idCours idCours from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
             $params = array(
                     "idClasse" => $idClasse,
                     "idUser"   => $idUser
@@ -390,8 +390,8 @@ Class Requetes
         public function setFormateurClasse($donnees){//Affection d'une classe à un formateur
             $req = "INSERT INTO `formateur_classe` (`matUser`, `idClasse`) VALUES (:matUser,:idClasse)";
             $params = array(
-             "matUser" => $donnees["matUser"],
-             "idClasse" => $donnees["idClasse"]
+             "matUser" => htmlspecialchars($donnees["matUser"]),
+             "idClasse" => htmlspecialchars($donnees["idClasse"])
             );
             return $this->insert($req,$params);
         }
@@ -533,10 +533,20 @@ Class Requetes
         public function setAbsents($idFiche,$idEleve){//récupère la liste des matières enseignées par un enseignant donné
             $req="INSERT INTO `absents`(`idFiche`,`idEleve`) VALUES (:idFiche,:idEleve)";
             $params = array(
-                "idFiche" => $idFiche,
-                "idEleve" => $idEleve
+                "idFiche" => htmlspecialchars($idFiche),
+                "idEleve" => htmlspecialchars($idEleve)
             );
             return $this->insert($req,$params);
+        }
+        
+        public function setEvaluation($donnees,$date){//récupère la liste des matières enseignées par un enseignant donné
+            $req="INSERT INTO `evaluation`(`idEvaluation`,`dateEvaluation`,`typeEvaluation`,`idCours`) VALUES (NULL,:dateEvaluation,:typeEvaluation,:idCours)";
+            $params = array(
+                "dateEvaluation" => htmlspecialchars($date),
+                "typeEvaluation" => htmlspecialchars($donnees['typeEvaluation']),
+                "idCours" => htmlspecialchars($donnees['idCours'])
+            );
+            return $this->insert($req,$params); 		
         }
         //fin méthodes d'enregistement dans la base de données
 

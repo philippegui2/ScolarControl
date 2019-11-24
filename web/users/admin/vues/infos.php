@@ -64,10 +64,12 @@
                                                          <th>Téléphone</th>
                                                          <td><?php echo $userEnVue[0]['contactUser']; ?></td>
                                                      </tr>
+                                                     <?php if($userEnVue[0]['statutUser']==2){?>
                                                      <tr>
                                                          <th>Etat du payement</th>
                                                          <td><?php echo "à jour ou pas"; ?></td>
                                                      </tr>
+                                                     <?php } ?>
                                                      </tbody>
                                                    </table>
                                                    <button   data-toggle="modal" data-target="#modifInfosUser" style="" type="button" class="btn btn-info"  name="modifInfosPat" id="modifInfosPat" value="" >Modifier</button>
