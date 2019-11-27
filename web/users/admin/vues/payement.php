@@ -3,26 +3,28 @@
         <form action='index.php' method="POST">
             <div class="modal-content">
                 <div class="modal-header">
-                    Modifier la classe de l'élève 
+                    Etat de payement 
                     <button type="button" class="btn btn-danger pull-right btn-minimize" data-dismiss="modal" style="display:inline;">Fermer</button>
-                    <button type="submit" name='action' value='USERELEVESchangeClasse'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
+                    <button type="submit" name='action' value='PAYEMENTValider'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
                 </div>
                 <div class="modal-body" style="z-index: 3600;">
                     <input type="hidden" id="eleveEnVue" value="" name="idEleve"> <!-- Stockage de l'id de l'utilisateur choisis pour utilisation dans les fonctions js-->
                     <table class="table" id="">
                         <thead>
                           <tr>
-                            <th>Classe</th>
-                            <th>Département</th>
+                            <th>N°</th>
+                            <th>Offre</th>
+                            <th>Etat Payement </th>
+                            <th>Date Payement </th>
+                            <th>Montant payé </th>
                             <th><i class="fa fa-check-circle fa-fw"></i></th>
                           </tr>
                         </thead>
-                        <tbody id="corpsEleveclasse">
-                        <?php foreach($classes as $classe){?>
-                            <tr class="active">
-                                <td><?php echo $classe["libelleClasse"];?></td>
-                                <td><?php echo $classe["libelleDepartement"];?></td>
-                                <td><input id="<?php  echo "input".$classe["idClasse"];?>" name="idClasse" value="<?php  echo $classe["idClasse"];?>" type="radio"/></td>
+                        <tbody id="corpsOffres">
+                        <?php  foreach($offres as $key => $offre){ ?>
+                            <tr>
+                                <td> <?php echo intval($key)+1?></td>
+                                <td><?php echo $offre["libelleOffre"];?></td>
                             </tr>
                         <?php } ?>       
                         </tbody>
@@ -39,34 +41,50 @@
     <div class="col-lg-10 col-md-10 col-sm-10">
         <section class="panel">
             <header class="panel-heading">
-                Liste des élèves
-                 <button type="button" data-toggle="modal" data-target="#EnvoieTexto" title="Envoyer un texto à tous" id="" style="display:inline;" class="btn btn-info pull-right btn-minimize" >Écrire à tous</button>
+                Liste des offres
+                 <button type="button" data-toggle="modal" data-target="#Offres" title="Liste des prestations" id="" style="display:inline;" class="btn btn-info pull-right btn-minimize" >Ajouter une offre</button>
             </header>
             <!--//----- debut zone modal-->
-            <div class="modal fade" id="EnvoieTexto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="Offres" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Envoyer un message à tous</h4>
+                            <h4 class="modal-title" id="myModalLabel">Liste des Offres</h4>
                         </div>
                         <div class="modal-body" style="z-index: 3600;">
                             <!--Debut du formulaire d'enregistrement-->
                                 <form role="form" method="POST" action="../admin/index.php">
                                     <div class="form-group input-group">
                                         <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-                                        <input type="text" class="form-control" id="objectMessage" placeholder="Objet du message"/>
+                                        <input type="text" class="form-control" name="libelleOffre" placeholder="Libelle de l'offre"/>
                                     </div>
                                     <span id="messageNotice"></span>
                                     <div class="form-group input-group"> 
-                                        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                                        <textarea class="form-control" rows="3" id="message" placeholder="Ecrire le message ici" style=""></textarea>
+                                        <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+                                        <input type="number" class="form-control" name="prixOffre" placeholder="Coût de l'offre"/>
                                     </div>
-                                    <button type="button" class="btn btn-info" name="action" value="USERCHEFSCLASSEenvoyerEmail" onclick="envoyerEmail('tousEleve')">Envoyer email</button>
-                                    <button type="button" class="btn btn-primary" name="action" value="USERCHEFSCLASSEenvoyerSMS" onclick="envoyerSMS('tousEleve')">Envoyer SMS</button>
-                                    <button type="button" class="btn btn-success" name="action" value="USERCHEFSCLASSEenvoyerNotif" onclick="envoyerNotif('tousEleve')">Envoyer Texto</button>
+                                    <button type="submit" class="btn btn-info" name="action" value="PAYEMENTajouter">Ajouter l'offre</button>
                                 </form>
                             <!-- fin du formulaire d'enregistrement-->
+                                <table class="table display">
+                                    <thead>
+                                      <tr>
+                                          <th>N°</th>
+                                          <th>Libelle Offre</th>
+                                          <th>Coût Offre</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php  foreach($offres as $key => $offre){ ?>
+                                          <tr>
+                                              <td> <?php echo intval($key)+1?></td>
+                                              <td><?php echo $offre["libelleOffre"];?></td>
+                                              <td><?php echo $offre["prixOffre"];?></td> 
+                                          </tr>
+                                      <?php } ?>       
+                                    </tbody>
+                              </table>
                         </div>
                         <!--Fin du formulaire d'inscription-->
                     </div><!-- /.modal-content -->

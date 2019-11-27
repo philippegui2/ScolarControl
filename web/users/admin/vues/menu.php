@@ -192,6 +192,12 @@
                           <span>Utilisateurs</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a class="" href="../admin/index.php?road=payement">
+                          <i class="fa fa-users fa-fw"></i>
+                          <span>Payement</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>

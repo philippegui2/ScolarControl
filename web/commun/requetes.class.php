@@ -346,6 +346,18 @@ Class Requetes
                 );
             return $this->select($req,$params);
         }
+        
+        public function getOffre(){
+            $req="SELECT * from offre";
+            $params = array();
+            return $this->select($req,$params);
+        }
+        
+        public function getPayementByEleve($donnees){
+            $req="SELECT payement.*, eleve.matUser from eleve INNER JOIN payement ON eleve.matUser=payement.matuser where eleve.matuser=:idEleve";
+            $params = array("idEleve"=> $donnees['idEleve']);
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
 
     //méthodes d'enregistement dans la base de données
@@ -502,7 +514,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setCahierTexte($donnees,$idPartie){//récupère la liste des matières enseignées par un enseignant donné
+        public function setCahierTexte($donnees,$idPartie){//
             $req="INSERT INTO `cahiertexte` (`idMatiere`,`idClasse`,`idPartie`) VALUES (:idMatiere, :idClasse, :idPartie)";
             $params = array(
                 "idMatiere" => $donnees["idMatiere"],
@@ -512,7 +524,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setPartieCours($donnees){//récupère la liste des matières enseignées par un enseignant donné
+        public function setPartieCours($donnees){//
             $req="INSERT INTO `partiecours` (`idPartie`,`nomPartie`,`etatPartie`,`observation`) VALUES (NULL,:nomPartie, :etatPartie, :observation)";
             $params = array(
                 "nomPartie" => $donnees["nomPartieMatiere"],
@@ -522,7 +534,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
 
-        public function setFichePresence($idClasse){//récupère la liste des matières enseignées par un enseignant donné
+        public function setFichePresence($idClasse){//
             $req="INSERT INTO `fichepresence`(`idFichePresence`,`idClasse`) VALUES (NULL,:idClasse)";
             $params = array(
                 "idClasse" => $idClasse
@@ -530,7 +542,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setAbsents($idFiche,$idEleve){//récupère la liste des matières enseignées par un enseignant donné
+        public function setAbsents($idFiche,$idEleve){//
             $req="INSERT INTO `absents`(`idFiche`,`idEleve`) VALUES (:idFiche,:idEleve)";
             $params = array(
                 "idFiche" => htmlspecialchars($idFiche),
@@ -539,12 +551,21 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setEvaluation($donnees,$date){//récupère la liste des matières enseignées par un enseignant donné
+        public function setEvaluation($donnees,$date){//
             $req="INSERT INTO `evaluation`(`idEvaluation`,`dateEvaluation`,`typeEvaluation`,`idCours`) VALUES (NULL,:dateEvaluation,:typeEvaluation,:idCours)";
             $params = array(
                 "dateEvaluation" => htmlspecialchars($date),
                 "typeEvaluation" => htmlspecialchars($donnees['typeEvaluation']),
                 "idCours" => htmlspecialchars($donnees['idCours'])
+            );
+            return $this->insert($req,$params); 		
+        }
+        
+        public function setOffre($donnees){//Ajoute une nouvelle offre à la base de données
+            $req="INSERT INTO `offre`(`idOffre`,`libelleOffre`,`prixOffre`) VALUES (NULL,:libelleOffre,:prixOffre)";
+            $params = array(
+                "libelleOffre" => htmlspecialchars($donnees['libelleOffre']),
+                "prixOffre" => htmlspecialchars($donnees['prixOffre'])
             );
             return $this->insert($req,$params); 		
         }

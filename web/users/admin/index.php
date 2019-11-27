@@ -128,6 +128,12 @@ if(0)
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                     }
                     break;
+                case "payement":{//Zone de gestion des payements de scolarité
+                        $offres=$req->getOffre();//récupération de toutes les offres
+                        $usersEleves=$req->getAllEleve();
+                        $classes=$req->getClasseDepartement();
+                    }
+                    break;
                 case "test":{//récupération de tous les enseignants
                         
                     }
@@ -316,6 +322,12 @@ if(0)
                 exit();
             }
             break;
+            case "PAYEMENTajouter":{
+                    $req->setOffre($_REQUEST);
+                    header("Location:index.php?road=payement");
+                    exit();
+                }
+            break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
         }
@@ -378,9 +390,14 @@ if(0)
                     exit();
                 }
                 break;
-            case "envoyerSMS":{
+            case "envoyerSMS":{$usersEleves=getPayementByEleve($donnees);
                     print_r($_REQUEST["parametre3"]);
                     
+                    exit();
+                }
+                break;
+            case "PAYEMENTgetPayement":{
+                    print_r($usersEleves=getPayementByEleve('M34RTE'));
                     exit();
                 }
                 break;
