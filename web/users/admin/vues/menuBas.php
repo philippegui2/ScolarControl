@@ -352,3 +352,54 @@
         }
     </script>
 <?php }?>
+
+<?php if($_REQUEST["road"]=="payement" OR $_REQUEST["road"]=="infos"){?>
+    <script type="text/javascript">
+        function PAYEMENTgetCaseAAcocher(idEleve){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $("#eleveEnVue").attr('value',idEleve);
+            $(function(){  
+                    var param="../admin/index.php?reqajax=PAYEMENTgetPayement&param="+idEleve;
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            var data2=JSON.parse(data);
+                            $("input").prop('checked', false);//décocher tout au départ
+                            $('#corpsOffres tr').each(function(index){//remplissage des lignes
+                                var ligneTabDateDate=$(this).find("#datePayement");
+                                    ligneTabDateDate.html("");//réinitialisation
+                                var ligneTabInput=$(this).find("input");
+                                    ligneTabInput.attr('disabled', false);//réinialisation
+                                var lignemontantPayement=$(this).find("#montantPayement");
+                                    lignemontantPayement.html("");//reinitialisation
+                                $.each(data2,function(index,obj){//recupération du contenu venu de la base de données
+                                    if(obj.idOffre === ligneTabInput.attr("identifiant")){
+                                        ligneTabInput.prop('checked', true);
+                                        ligneTabInput.attr('disabled', true);
+                                        ligneTabDateDate.html(obj.datePayement);
+                                        lignemontantPayement.html(obj.montantPayement);
+                                        lignemontantPayement.show();
+                                    }
+                                });
+                            });
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
+        
+        function afficheZoneMontant(idOffre){
+            if($(':checkbox[identifiant='+idOffre+']:checked').val()){
+                //alert($(':checkbox[identifiant='+idOffre+']:checked').val());
+                $('td[identifiant='+idOffre+']').html('<input type="text" name="montant[]"/>');
+            }else 
+                $('td[identifiant='+idOffre+']').html('');
+        }
+        //afficheZoneMontant();
+    </script>
+<?php }?>

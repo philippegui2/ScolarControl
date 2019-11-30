@@ -3,7 +3,7 @@
         <form action='index.php' method="POST">
             <div class="modal-content">
                 <div class="modal-header">
-                    Liste des classes 
+                    Modifier la classe de l'élève 
                     <button type="button" class="btn btn-danger pull-right btn-minimize" data-dismiss="modal" style="display:inline;">Fermer</button>
                     <button type="submit" name='action' value='USERELEVESchangeClasse'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
                 </div>
@@ -97,13 +97,4 @@
             </table>
         </section>
     </div>
-    <!--div class="col-lg-2 col-md-2 col-sm-2">
-        <a class="" href="../admin/index.php?road=userEnseignant">
-            <div class="info-box gray-bg">
-                    <i class="fa fa-user fa-fw"></i>
-                    <div class="count">Enseignant</div>
-                    <div class="title">Gestion des enseignants</div>
-            </div><!--/.info-box-->
-        <!--/a>
-    </div-->
 </div><!--/.row-->

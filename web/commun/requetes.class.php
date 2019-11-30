@@ -79,6 +79,7 @@ Class Requetes
     //méthodes de recupération dans la base de données
         public function getUser(){//récupère les utilisateurs
             $req= "SELECT * FROM `users` where supprimer=0 order by prenomUser";
+            $params = array();
             return $this->select($req,$params);
         }
 
@@ -271,7 +272,7 @@ Class Requetes
         }
         
         public function getMatiereByEnseignantAndClasse($idClasse,$idUser){//récupère la liste des matières enseignées par un enseignant donné dans une classe donnée
-            $req="SELECT m.id idMatiere, m.libelle libelleMatiere from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
+            $req="SELECT m.id idMatiere, m.libelle libelleMatiere, cours.idCours idCours from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
             $params = array(
                     "idClasse" => $idClasse,
                     "idUser"   => $idUser
@@ -346,6 +347,18 @@ Class Requetes
                 );
             return $this->select($req,$params);
         }
+        
+        public function getOffre(){
+            $req="SELECT * from offre";
+            $params = array();
+            return $this->select($req,$params);
+        }
+        
+        public function getPayementByEleve($idEleve){
+            $req="SELECT payement.*, eleve.matUser from eleve INNER JOIN payement ON eleve.matUser=payement.matuser where eleve.matuser=:idEleve";
+            $params = array("idEleve"=> $idEleve);
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
 
     //méthodes d'enregistement dans la base de données
@@ -390,8 +403,8 @@ Class Requetes
         public function setFormateurClasse($donnees){//Affection d'une classe à un formateur
             $req = "INSERT INTO `formateur_classe` (`matUser`, `idClasse`) VALUES (:matUser,:idClasse)";
             $params = array(
-             "matUser" => $donnees["matUser"],
-             "idClasse" => $donnees["idClasse"]
+             "matUser" => htmlspecialchars($donnees["matUser"]),
+             "idClasse" => htmlspecialchars($donnees["idClasse"])
             );
             return $this->insert($req,$params);
         }
@@ -502,7 +515,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setCahierTexte($donnees,$idPartie){//récupère la liste des matières enseignées par un enseignant donné
+        public function setCahierTexte($donnees,$idPartie){//
             $req="INSERT INTO `cahiertexte` (`idMatiere`,`idClasse`,`idPartie`) VALUES (:idMatiere, :idClasse, :idPartie)";
             $params = array(
                 "idMatiere" => $donnees["idMatiere"],
@@ -512,7 +525,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setPartieCours($donnees){//récupère la liste des matières enseignées par un enseignant donné
+        public function setPartieCours($donnees){//
             $req="INSERT INTO `partiecours` (`idPartie`,`nomPartie`,`etatPartie`,`observation`) VALUES (NULL,:nomPartie, :etatPartie, :observation)";
             $params = array(
                 "nomPartie" => $donnees["nomPartieMatiere"],
@@ -522,7 +535,7 @@ Class Requetes
             return $this->insert($req,$params);
         }
 
-        public function setFichePresence($idClasse){//récupère la liste des matières enseignées par un enseignant donné
+        public function setFichePresence($idClasse){//
             $req="INSERT INTO `fichepresence`(`idFichePresence`,`idClasse`) VALUES (NULL,:idClasse)";
             $params = array(
                 "idClasse" => $idClasse
@@ -530,13 +543,42 @@ Class Requetes
             return $this->insert($req,$params);
         }
         
-        public function setAbsents($idFiche,$idEleve){//récupère la liste des matières enseignées par un enseignant donné
+        public function setAbsents($idFiche,$idEleve){//
             $req="INSERT INTO `absents`(`idFiche`,`idEleve`) VALUES (:idFiche,:idEleve)";
             $params = array(
-                "idFiche" => $idFiche,
-                "idEleve" => $idEleve
+                "idFiche" => htmlspecialchars($idFiche),
+                "idEleve" => htmlspecialchars($idEleve)
             );
             return $this->insert($req,$params);
+        }
+        
+        public function setEvaluation($donnees,$date){//
+            $req="INSERT INTO `evaluation`(`idEvaluation`,`dateEvaluation`,`typeEvaluation`,`idCours`) VALUES (NULL,:dateEvaluation,:typeEvaluation,:idCours)";
+            $params = array(
+                "dateEvaluation" => htmlspecialchars($date),
+                "typeEvaluation" => htmlspecialchars($donnees['typeEvaluation']),
+                "idCours" => htmlspecialchars($donnees['idCours'])
+            );
+            return $this->insert($req,$params); 		
+        }
+        
+        public function setOffre($donnees){//Ajoute une nouvelle offre à la base de données
+            $req="INSERT INTO `offre`(`idOffre`,`libelleOffre`,`prixOffre`) VALUES (NULL,:libelleOffre,:prixOffre)";
+            $params = array(
+                "libelleOffre" => htmlspecialchars($donnees['libelleOffre']),
+                "prixOffre" => htmlspecialchars($donnees['prixOffre'])
+            );
+            return $this->insert($req,$params); 		
+        }
+        
+        public function setPayement($idEleve,$idOffre,$montant){//Ajoute une nouvelle offre à la base de données
+            $req="INSERT INTO `payement`(matUser, idOffre, montantPayement) VALUES (:matUser,:idOffre,:montantPayement)";
+            $params = array(
+                "matUser" => htmlspecialchars($idEleve),
+                "idOffre" => htmlspecialchars($idOffre),
+                "montantPayement" => htmlspecialchars($montant)
+            );
+            return $this->insert($req,$params); 		
         }
         //fin méthodes d'enregistement dans la base de données
 

@@ -11,10 +11,9 @@ ob_start();
 if(0)
   {
      header("Location:../../index.php");
-      exit();
+     exit();
   }
 ?>
-
 
 <?php
     include_once("../../../server/baseConf.php");
@@ -76,7 +75,7 @@ if(0)
                     }
                 case "evaluations":{
                         //param=idMatiere ; param2=idClasse
-                        echo $_REQUEST["param2"]; 
+                        echo $_REQUEST["param3"]; 
                     }
                     break;
                 case "listeEleves":{
@@ -147,6 +146,16 @@ if(0)
                 header("Location:index.php?road=cahierTexte&param=".$_REQUEST['idMatiere']."&param2=".$_REQUEST['idClasse']);
                 exit();
             }
+            break;
+            case "EVALUATIONvalider":{
+                //
+                $dateTime=implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"])))." ".$_REQUEST["heureEvaluation"].":".$_REQUEST["minuteEvaluation"].":00";
+                print_r($_REQUEST);
+                $req->setEvaluation($_REQUEST,$dateTime);
+                header("Location:index.php?road=allnotes&param=".$_REQUEST['param']."&param2=4&alert=ok");
+                exit();
+            }
+            break;
             default:
                echo "requete A inconnue";
         }

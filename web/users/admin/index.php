@@ -67,7 +67,6 @@ if(0)
                         $infos=active;
                         $userEnVue=$req->getUser();
                         $statuts=$req->getStatut();
-                        //print_r($userEnVue);
                     }
                     break;
                 case "parametrage":{
@@ -128,6 +127,12 @@ if(0)
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                     }
                     break;
+                case "payement":{//Zone de gestion des payements de scolarité
+                        $offres=$req->getOffre();//récupération de toutes les offres
+                        $usersEleves=$req->getAllEleve();
+                        $classes=$req->getClasseDepartement();
+                    }
+                    break;
                 case "test":{//récupération de tous les enseignants
                         
                     }
@@ -145,7 +150,10 @@ if(0)
             $route=  explode(".",$_REQUEST["road"])["0"];//recuperation de la route sans les parametres
             switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "infos":{
-                        $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);
+                        //param = idEleve
+                        $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);//récupération des informations d'un utilisateur sélectionné
+                        $offres=$req->getOffre();//récupération de toutes les offres
+                        $payement=$req->getPayementByEleve($_REQUEST['param']);
                     }
                     break;
                 case "modifClasse":{
@@ -174,7 +182,14 @@ if(0)
 
             include_once("vues/".$route.".php");
         }
-
+    /***
+     * Fin zone de traitement des liens
+     * 
+     * 
+     * 
+     * 
+     * Début zone de traitement des actions
+     */
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
@@ -245,10 +260,7 @@ if(0)
                  header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=edit');
                
                
-              }
-
-             // header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse']);
-              
+              }              
             }
             break;
 
@@ -286,12 +298,8 @@ if(0)
                     $req->updateResponsableClasse($_REQUEST);//affectation d'un prof reponsable à une classe
                     //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement 
                     $req->updateEraseResponsableDepartement($_REQUEST);
-
-                   
-                    //print_r($_REQUEST);
-
                 }
-                header("Location:index.php?road=classes");
+                header("Location:?road=classes");
                 exit();
             }
             break;
@@ -306,19 +314,51 @@ if(0)
                     //$req->updateEraseResponsableClasse($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement
                     $req->updateEraseResponsableClasse($_REQUEST);
                 }
-                header("Location:index.php?road=departements");
+                header("Location:?road=departements");
                 exit();
             }
             break;
             case "USERELEVESchangeClasse":{
                 $req->updateClasseEleve($_REQUEST);
-                header("Location:index.php?road=userEleves");
+                header("Location:?road=userEleves");
                 exit();
             }
+            break;
+            case "PAYEMENTajouter":{
+                    $req->setOffre($_REQUEST);
+                    header("Location:?road=payement");
+                    exit();
+                }
+            break;
+            case "PAYEMENTValider":{
+                    $payements=$_REQUEST['payement'];
+                    $montants=$_REQUEST['montant'];
+                    foreach ($payements as $key => $payement){
+                        $req->setPayement($_REQUEST['matUser'],$payement,$montants[$key]);
+                    }
+                    header("Location:index.php?road=payement");
+                    exit();
+                }
+            break;
+            case "INFOSValiderPayement":{
+                    $payements=$_REQUEST['payement'];
+                    $montants=$_REQUEST['montant'];
+                    foreach ($payements as $key => $payement){
+                        $req->setPayement($_REQUEST['matUser'],$payement,$montants[$key]);
+                    }
+                    header("Location:?road=infos&param=".$_REQUEST['matUser']."#payement");
+                    exit();
+                }
             break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
         }
+        /***
+        * Fin zone de traitement des actions
+        * 
+        * 
+        * Début zone de traitement des requêtes Ajax
+        */
     }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
         switch ($_REQUEST["reqajax"]) {//zone de recupération de toutes les variables nécessaires aux pages
             case "ENSEIGNANTMATIEREensmatiere2":{
@@ -381,6 +421,11 @@ if(0)
             case "envoyerSMS":{
                     print_r($_REQUEST["parametre3"]);
                     
+                    exit();
+                }
+                break;
+            case "PAYEMENTgetPayement":{
+                    print_r(json_encode($req->getPayementByEleve($_REQUEST['param'])));
                     exit();
                 }
                 break;

@@ -9,6 +9,7 @@
                              <?php echo $userEnVue[0]['prenomUser']." ".$userEnVue[0]['nomUser'];?>
                          </a>
                      </li>
+                    <?php if($userEnVue[0]['statutUser']==2){?>
                      <li class="">
                          <a data-toggle="tab" href="#dossier">
                              <i class="fa fa-folder-open fa-fw"></i>
@@ -16,11 +17,12 @@
                          </a>
                      </li>
                      <li class="">
-                         <a data-toggle="tab" href="#payement">
+                         <a data-toggle="tab" identifiant="<?php echo $userEnVue[0]["matUser"];?>" href="#payement" onclick="PAYEMENTgetCaseAAcocher(this.getAttribute('identifiant'))">
                              <i class="fa fa-money fa-fw"></i>
                              Scolarité
                          </a>
                      </li>
+                    <?php }?>
                  </ul>
              </header>
              <div class="panel-body">
@@ -64,10 +66,12 @@
                                                          <th>Téléphone</th>
                                                          <td><?php echo $userEnVue[0]['contactUser']; ?></td>
                                                      </tr>
+                                                     <?php if($userEnVue[0]['statutUser']==2){?>
                                                      <tr>
                                                          <th>Etat du payement</th>
                                                          <td><?php echo "à jour ou pas"; ?></td>
                                                      </tr>
+                                                     <?php } ?>
                                                      </tbody>
                                                    </table>
                                                    <button   data-toggle="modal" data-target="#modifInfosUser" style="" type="button" class="btn btn-info"  name="modifInfosPat" id="modifInfosPat" value="" >Modifier</button>
@@ -166,10 +170,37 @@
 
                      <!-- consultation -->
                      <div id="payement" class="tab-pane">
-                       <div class="col-lg-6">
+                       <div class="col-lg-12">
                        <section class="panel">
                              <div class="panel-body bio-graph-info">
-
+                                <form action='index.php' method="POST">
+                                    <input type="hidden" id="eleveEnVue" value="" name="matUser">
+                                    <table class="table" id="">
+                                        <thead>
+                                          <tr>
+                                            <th>N°</th>
+                                            <th>Offre</th>
+                                            <th>Etat Payement </th>
+                                            <th>Date Payement </th>
+                                            <th>Montant payé </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody id="corpsOffres">
+                                        <?php  foreach($offres as $key => $offre){ ?>
+                                            <tr>
+                                                <td> <?php echo intval($key)+1?></td>
+                                                <td><?php echo $offre["libelleOffre"];?></td>
+                                                <td><input id="<?php echo $offre["idOffre"]?>" type='checkbox' name='payement[]' value="<?php echo $offre["idOffre"]?>" identifiant='<?php echo $offre["idOffre"]?>' onchange="afficheZoneMontant(this.getAttribute('identifiant'))"/></td>
+                                                <td id='datePayement'></td>
+                                                <td id='montantPayement' identifiant='<?php echo $offre["idOffre"]?>'><span id='<?php echo $offre["idOffre"]?>'> </span></td>
+                                            </tr>
+                                        <?php } ?>       
+                                        </tbody>
+                                    </table>
+                                    <div class="modal-footer">
+                                        <button type="submit" name='action' value='INFOSValiderPayement'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
+                                    </div>
+                                </form>
                              </div>
                        </section>
                        </div>
