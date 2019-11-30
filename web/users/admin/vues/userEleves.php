@@ -97,13 +97,4 @@
             </table>
         </section>
     </div>
-    <!--div class="col-lg-2 col-md-2 col-sm-2">
-        <a class="" href="../admin/index.php?road=userEnseignant">
-            <div class="info-box gray-bg">
-                    <i class="fa fa-user fa-fw"></i>
-                    <div class="count">Enseignant</div>
-                    <div class="title">Gestion des enseignants</div>
-            </div><!--/.info-box-->
-        <!--/a>
-    </div-->
 </div><!--/.row-->

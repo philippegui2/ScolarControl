@@ -79,6 +79,7 @@ Class Requetes
     //méthodes de recupération dans la base de données
         public function getUser(){//récupère les utilisateurs
             $req= "SELECT * FROM `users` where supprimer=0 order by prenomUser";
+            $params = array();
             return $this->select($req,$params);
         }
 
@@ -353,9 +354,9 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getPayementByEleve($donnees){
+        public function getPayementByEleve($idEleve){
             $req="SELECT payement.*, eleve.matUser from eleve INNER JOIN payement ON eleve.matUser=payement.matuser where eleve.matuser=:idEleve";
-            $params = array("idEleve"=> $donnees['idEleve']);
+            $params = array("idEleve"=> $idEleve);
             return $this->select($req,$params);
         }
     //fin méthodes de recupération dans la base de données
@@ -566,6 +567,16 @@ Class Requetes
             $params = array(
                 "libelleOffre" => htmlspecialchars($donnees['libelleOffre']),
                 "prixOffre" => htmlspecialchars($donnees['prixOffre'])
+            );
+            return $this->insert($req,$params); 		
+        }
+        
+        public function setPayement($idEleve,$idOffre,$montant){//Ajoute une nouvelle offre à la base de données
+            $req="INSERT INTO `payement`(matUser, idOffre, montantPayement) VALUES (:matUser,:idOffre,:montantPayement)";
+            $params = array(
+                "matUser" => htmlspecialchars($idEleve),
+                "idOffre" => htmlspecialchars($idOffre),
+                "montantPayement" => htmlspecialchars($montant)
             );
             return $this->insert($req,$params); 		
         }

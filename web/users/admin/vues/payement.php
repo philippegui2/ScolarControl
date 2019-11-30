@@ -4,11 +4,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     Etat de payement 
-                    <button type="button" class="btn btn-danger pull-right btn-minimize" data-dismiss="modal" style="display:inline;">Fermer</button>
-                    <button type="submit" name='action' value='PAYEMENTValider'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
                 </div>
                 <div class="modal-body" style="z-index: 3600;">
-                    <input type="hidden" id="eleveEnVue" value="" name="idEleve"> <!-- Stockage de l'id de l'utilisateur choisis pour utilisation dans les fonctions js-->
+                    <input type="hidden" id="eleveEnVue" value="" name="matUser"> <!-- Stockage de l'id de l'utilisateur choisis pour utilisation dans les fonctions js-->
                     <table class="table" id="">
                         <thead>
                           <tr>
@@ -17,7 +15,6 @@
                             <th>Etat Payement </th>
                             <th>Date Payement </th>
                             <th>Montant payé </th>
-                            <th><i class="fa fa-check-circle fa-fw"></i></th>
                           </tr>
                         </thead>
                         <tbody id="corpsOffres">
@@ -25,10 +22,17 @@
                             <tr>
                                 <td> <?php echo intval($key)+1?></td>
                                 <td><?php echo $offre["libelleOffre"];?></td>
+                                <td><input id="<?php echo $offre["idOffre"]?>" type='checkbox' name='payement[]' value="<?php echo $offre["idOffre"]?>" identifiant='<?php echo $offre["idOffre"]?>' onchange="afficheZoneMontant(this.getAttribute('identifiant'))"/></td>
+                                <td id='datePayement'></td>
+                                <td id='montantPayement' identifiant='<?php echo $offre["idOffre"]?>'><span id='<?php echo $offre["idOffre"]?>'> </span></td>
                             </tr>
                         <?php } ?>       
                         </tbody>
                     </table>   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-right btn-minimize" data-dismiss="modal" style="display:inline;">Fermer</button>
+                    <button type="submit" name='action' value='PAYEMENTValider'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
                 </div>
             </div><!-- /.modal-content -->
         </form>
@@ -103,7 +107,7 @@
               </thead>
               <tbody>
                 <?php foreach($usersEleves as $usersEleve){ ?>
-                    <tr identifiant="<?php echo $usersEleve["matUser"];?>" class="active" data-toggle="modal" data-target="#ajoutEleveClasse" onclick="USERELEVESgestCaseAAcocher(this.getAttribute('identifiant'))">
+                    <tr identifiant="<?php echo $usersEleve["matUser"];?>" class="active" data-toggle="modal" data-target="#ajoutEleveClasse" onclick="PAYEMENTgetCaseAAcocher(this.getAttribute('identifiant'))">
                         <td><?php echo $usersEleve["matUser"];?></td>
                         <td><?php echo $usersEleve["prenomUser"];?></td>
                         <td><?php echo $usersEleve["nomUser"];?></td> 
@@ -115,13 +119,4 @@
             </table>
         </section>
     </div>
-    <!--div class="col-lg-2 col-md-2 col-sm-2">
-        <a class="" href="../admin/index.php?road=userEnseignant">
-            <div class="info-box gray-bg">
-                    <i class="fa fa-user fa-fw"></i>
-                    <div class="count">Enseignant</div>
-                    <div class="title">Gestion des enseignants</div>
-            </div><!--/.info-box-->
-        <!--/a>
-    </div-->
 </div><!--/.row-->
