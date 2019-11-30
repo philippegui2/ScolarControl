@@ -93,7 +93,7 @@
             </div>
 
             <!--logo start-->
-            <a href="../admin/index.php?road=accueil" class="logo" style='color:red;'>Scolar<span class="lite">Control</span></a>
+            <a href="../admin/index.php?road=accueil" class="logo" style='color:red;'>Scolar<span style="color:green;">Control</span></a>
             <!--logo end-->
 
             <div class="nav search-row" id="top_menu">
