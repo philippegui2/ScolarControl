@@ -146,7 +146,7 @@
 
       <!--sidebar start-->
       <aside>
-          <div id="sidebar"  class="nav-collapse ">
+          <div id="sidebar"  class="nav-collapse" style="background-color:grey;">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li>

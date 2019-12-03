@@ -1041,8 +1041,8 @@ div[data-role="editor-toolbar"] {
 }
 .dark-bg {
   color : #fff;
-  background : #1a2732;
-  background-color : #1a2732;
+  background : rgb(8,36,52);
+  background-color : rgb(8,36,52);
 }
 .facebook-bg {
   color: #fff;
