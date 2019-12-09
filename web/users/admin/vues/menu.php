@@ -169,31 +169,31 @@
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=departements">
+                      <a class="" href="../admin/?road=departements">
                           <i class="fa fa-university fa-fw"></i>
                           <span>Départements</span>
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=classes">
+                      <a class="" href="../admin/?road=classes">
                           <i class="fa fa-graduation-cap fa-fw"></i>
                           <span>Classes</span>
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=matiere">
+                      <a class="" href="../admin/?road=matiere">
                           <i class="fa fa-book fa-fw"></i>
                           <span>Matières</span>
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=users">
+                      <a class="" href="../admin/?road=users">
                           <i class="fa fa-users fa-fw"></i>
                           <span>Utilisateurs</span>
                       </a>
                   </li>
                   <li class="">
-                      <a class="" href="../admin/index.php?road=payement">
+                      <a class="" href="../admin/?road=payement">
                           <i class="fa fa-users fa-fw"></i>
                           <span>Payement</span>
                       </a>

@@ -25,7 +25,6 @@
                                     echo '<tr>';
                                         echo '<td>'.$user['prenomUser'].'</td> <td>'.$user['nomUser'].'</td>   <td>'.$user['matUser'].'</td>   <td>'.$statuts[$user['statutUser']-1]["nomStatut"].'</td>';
                                 ?>
-
                                         <td>
                                             <div class="btn-group">
                                                 <a class="btn btn-primary" href="../admin/index.php?road=infos&param=<?php echo $user['matUser'];?>" style="color: #2b2b2b;"><i class="fa fa-eye fa-fw"></i></a>
@@ -35,11 +34,9 @@
                                         </td>
                                     </tr>
                             <?php    }
-
                             ?>
                         </tbody>
                     </table>
-
                     <!-- Modal -->
                     <div class="modal fade" id="modifInfosUser" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -69,7 +66,6 @@
                     </div>
                 </div>
                 <!-- /.table-responsive -->
-
             </div>
             <!-- /.panel-body -->
             <!-- /.panel-body -->

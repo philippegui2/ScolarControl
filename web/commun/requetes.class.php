@@ -129,6 +129,14 @@ Class Requetes
             return $this->select($req,$params);
         }
         
+        public function getEleveClasseDepartementByIdEleve($idEleve){
+            $req= "SELECT classe.id, classe.libelle, departement.libelle FROM `users` INNER JOIN eleve ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where eleve.matUser=:idEleve";
+            $params = array(
+                    "idEleve" => $idEleve
+            );
+            return $this->select($req,$params);
+        }
+        
         public function getAllEleveAndNoteByClasse($idClasse,$idMatiere){//récupère toutes les notes de tous les élèves d'une classe données dans une matière donnée
             $req="SELECT users.matUser, users.prenomUser, users.nomUser, notes.*, matiere.libelle from `users` INNER JOIN eleve ON users.matUser=eleve.matUser RIGHT JOIN notes ON eleve.matUser=notes.matUser INNER JOIN matiere ON notes.idMatiere=matiere.id WHERE eleve.idClasse=:idClasse and notes.idMatiere=:idMatiere";
             $params = array(
@@ -216,6 +224,7 @@ Class Requetes
 
         public function getClasse($idClasse){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
+            $params=array();
             return $this->select($req,$params);
         }
         
@@ -229,6 +238,7 @@ Class Requetes
 
         public function getClasseDepartement(){//récupération des classes et leur département
             $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id ORDER BY classe.libelle";
+            $params=array();
             return $this->select($req,$params);
         }
 
@@ -242,11 +252,20 @@ Class Requetes
 
        public function getMatiere(){//récupère les matières
             $req= "SELECT * FROM `matiere` order by libelle";
+            $params = array();
             return $this->select($req,$params);
         }
 
         public function getMatiereClasseDepartement(){//récupère les matières leur classe et départements
             $req="SELECT matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id";
+            return $this->select($req,$params);
+        }
+        
+        public function getMatiereClasseDepartementByMatiere($idMatiere){//récupère les matières leur classe et départements
+            $req="SELECT matcla.idMatiere, matcla.idClasse, matcla.coefficient coefMatiere, classe.id, classe.libelle libelleClasse, classe.departement, departement.id idDepartement, departement.libelle libelleDepartement, matiere.id, matiere.libelle libelleMatiere FROM `matiere-classe` matcla INNER JOIN classe ON matcla.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id INNER JOIN matiere ON matcla.idMatiere=matiere.id where matcla.idMatiere=:idMatiere";
+            $params = array(
+                "idMatiere" => $idMatiere
+            );
             return $this->select($req,$params);
         }
         
@@ -320,7 +339,6 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        //get Calendar by Id Classe
 
         public function getCalendarByIdClasse($idClasse){
             $req="SELECT * from calendrier where idClasse=:idClasse";
@@ -655,38 +673,8 @@ Class Requetes
             );
             return $this->update($req,$params);
         }
-    //fin méthodes de mise à jour dans la base de données
-
-
-    //méthodes de suppression dans la base de données
-        public function delUser($donnees){
-            $req = "UPDATE `users` SET `supprimer` = 1 WHERE `users`.`matUser` = :matUser";
-            $params = array(
-             "matUser" => $donnees["matUser"]
-            );
-            return $this->delete($req,$params);
-        }
         
-        public function delCoursByEnseignant($idEnseignant){
-            $req = "DELETE FROM `cours` WHERE `cours`.`matUser` = :matUser";
-            $params = array(
-             "matUser" => $idEnseignant
-            );
-            return $this->delete($req,$params);
-        }
-    //fin méthodes de suppression dans la base de données
-
-    //mise a jour du password eleve
-    public function updatePassword($pseudo,$password){
-        $req = "update users set passwordUser= :password where pseudoUser=:pseudo";
-        $params = array(
-            "password"=>$password,
-            "pseudo"=>$pseudo
-        );
-        return $this->update($req,$params);
-    }
-    
-    public function updateChef($donnees){//Choix d'un chef
+        public function updateChef($donnees){//Choix d'un chef
         $req = "update eleve set role= 2 where matUser=:pseudo";
         $params = array(
             "pseudo"=> explode("|", $donnees["chefClasse"])[0]
@@ -778,6 +766,39 @@ Class Requetes
         return $this->update($req,$params);
     }
     
+    //fin méthodes de mise à jour dans la base de données
+
+
+    //méthodes de suppression dans la base de données
+        public function delUser($donnees){
+            $req = "UPDATE `users` SET `supprimer` = 1 WHERE `users`.`matUser` = :matUser";
+            $params = array(
+             "matUser" => $donnees["matUser"]
+            );
+            return $this->delete($req,$params);
+        }
+        
+        public function delCoursByEnseignant($idEnseignant){
+            $req = "DELETE FROM `cours` WHERE `cours`.`matUser` = :matUser";
+            $params = array(
+             "matUser" => $idEnseignant
+            );
+            return $this->delete($req,$params);
+        }
+    //fin méthodes de suppression dans la base de données
+
+    //mise a jour du password eleve
+    public function updatePassword($pseudo,$password){
+        $req = "update users set passwordUser= :password where pseudoUser=:pseudo";
+        $params = array(
+            "password"=>$password,
+            "pseudo"=>$pseudo
+        );
+        return $this->update($req,$params);
+    }
+    
+    
+    
     public function updateEnseignantResponsableDepartement($donnees){//Ajouter le role de responsable à un enseigant 
         $req = "update formateur set role= 3 where matUser=:pseudo";
         $params = array(
@@ -811,6 +832,15 @@ Class Requetes
         );
         return $this->update($req,$params);
     }
+    
+    public function deleteMatiereClasse($donnees){//Affecter une matiere a une classe
+        $req = "DELETE FROM `matiere-classe` WHERE `matiere-classe`.`idMatiere` = :idMatiere";
+        $params = array(
+            "idMatiere"=>$donnees["idMatiere"]
+        );
+        return $this->delete($req,$params);
+    }
+    
     // recuperation de la liste des mmatieres d'un eleve
     public function listeMatiere ($pseudo){
 

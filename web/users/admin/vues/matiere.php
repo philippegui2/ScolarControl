@@ -1,4 +1,22 @@
 <div class="row">
+    <?php
+        if(isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="add"){?>
+        <div class="alert alert-success fade in" id="alertOK">
+            <button data-dismiss="alert" class="close close-sm" type="button">
+                <i class="icon-remove"></i>
+            </button>
+            <strong>Super!</strong> Nouvelle matière ajoutée avec succès.
+        </div>
+    <?php
+     }elseif (isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="edit") {?>
+      <div class="alert alert-success fade in" id="alertOK">
+            <button data-dismiss="alert" class="close close-sm" type="button">
+                <i class="icon-remove"></i>
+            </button>
+            <strong>Super!</strong> Modification effectuée avec succès.
+        </div>
+    <?php }
+    ?>
     <div class="col-lg-10">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -19,7 +37,6 @@
                                             <span class="input-group-addon"><i class="fa fa-university fa-fw"></i></span>
                                             <input type="text" class="form-control" placeholder="Ajouter le libellé de la nouvelle matière" name="designation">
                                         </div>
-                                        
                                         <table class="table">
                                             <thead>
                                               <tr>
@@ -31,8 +48,7 @@
                                             </thead>
                                             <tbody id="corpsEnseignantMatiere">
                                              <?php foreach($classesDpt as $classe){?>
-                                                  <tr class="active">
-                                                      
+                                                  <tr class="active">  
                                                       <td><input identifiant="<?php  echo $classe["idClasse"];?>" class="<?php  echo $classe["idClasse"];?>" type="checkbox" name="idClasse[]" value='<?php  echo $classe["idClasse"];?>' onclick="MATIEREApparution(this.getAttribute('identifiant'))"/></td>
                                                       <td><?php echo $classe["libelleClasse"];?></td>
                                                       <td><?php echo $classe["libelleDepartement"];?></td>
@@ -67,18 +83,51 @@
         
             <!-- /.panel-heading -->
             
+            <div class="modal fade" id="ajoutEleveClasse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width:70%;">
+                    <form action='index.php' method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                Modifier les classes de la matière 
+                                <button type="button" class="btn btn-danger pull-right btn-minimize" data-dismiss="modal" style="display:inline;">Fermer</button>
+                                <button type="submit" name='action' value='MATIEREchangeClasse'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
+                            </div>
+                            <div class="modal-body" style="z-index: 3600;">
+                                <input type="hidden" id="matiereEnVue" name="idMatiere" value=""/>
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th><i class="fa fa-check-circle fa-fw"></i></th>
+                                        <th>Classe</th>
+                                        <th>Département</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="corpsMatiereClasse">
+                                     <?php foreach($classesDpt as $classe){?>
+                                          <tr class="active">
+                                              <td><input identifiant="<?php  echo $classe["idClasse"];?>" class="<?php  echo $classe["idClasse"];?>" type="checkbox" name="idClasse[]" value='<?php  echo $classe["idClasse"];?>'/></td>
+                                              <td><?php echo $classe["libelleClasse"];?></td>
+                                              <td><?php echo $classe["libelleDepartement"];?></td>
+                                          </tr>
+                                      <?php } ?>       
+                                    </tbody>
+                                </table>    
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </form>
+                </div><!-- /.modal-dialog -->
+            </div>
+            
+            
             
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <table class=" bobo table table-striped table-bordered table-hover" id="dataTables-example">
+                    <table class="bobo table table-striped table-bordered table-hover display" id="table_list">
                         <thead>
                             <tr>
                                 <th><i class="fa fa-list-ol fa-fw"></i></th>
                                 <th><i class="fa fa-cube fa-fw"></i>Libellé</th>
-                                <th><i class="fa fa-cube fa-fw"></i>Coefficient</th>
-                                <th><i class="fa fa-home fa-fw"></i>Classe</th>
-                                <th><i class="fa fa-home fa-fw"></i>Département</th>
-                                <th><i class="fa fa-wrench fa-fw"></i>Action</th>
+                                <th><i class="fa fa-gear fa-fw"></i>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,11 +135,14 @@
                                 foreach ($matieres as $key => $matiere) {?>
                             <tr>
                                 <td><?php echo intval($key+1);?></td>
-                                <td><?php echo $matiere["libelleMatiere"];?></td>
-                                <td><?php echo $matiere["coefMatiere"];?></td>
-                                <td><?php echo $matiere["libelleClasse"];?></td>
-                                <td><?php echo $matiere["libelleDepartement"];?></td>
-                                <td></td>
+                                <td><?php echo $matiere["libelle"];?></td>
+                                <td>
+                                    <div class="btn-group">
+                                      <a class="btn btn-primary" href="#"   identifiant="<?php echo $matiere["id"];?>" class="active" data-toggle="modal" data-target="#ajoutEleveClasse" onclick="MATIEREgetClasseMatiere(this.getAttribute('identifiant'))"    ><i class="icon_pencil"></i></a>
+                                      <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
+                                      <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                                    </div>
+                                </td>
                             </tr>                                
                             <?php        
                                 }
