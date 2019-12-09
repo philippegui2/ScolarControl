@@ -403,3 +403,48 @@
         //afficheZoneMontant();
     </script>
 <?php }?>
+
+<?php if($_REQUEST["road"]=="matiere"){?>
+    <script type="text/javascript">
+        function MATIEREgetClasseMatiere(idMatiere){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $("#matiereEnVue").attr('value',idMatiere);
+            $(function(){  
+                    var param="../admin/index.php?reqajax=MATIEREgetClasseMatiere&param="+idMatiere;
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            var data2=JSON.parse(data);
+                            
+                            $("input").prop('checked', false);//décocher tout au départ
+                            $('#corpsMatiereClasse tr').each(function(index){//remplissage des lignes
+                                //var ligneTabNomPrenom=$(this).find("#nomPrenomEnseigant");
+                                var ligneTabInput=$(this).find("input");
+                                $.each(data2,function(index,obj){//recupération du contenu venu de la base de données
+                                    if(obj.idClasse === ligneTabInput.attr("identifiant")){
+                                        ligneTabInput.prop('checked', true);
+                                        ligneTabInput.attr('disabled', false);
+                                    }
+                                });
+                            });
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
+        
+        function afficheZoneMontant(idOffre){
+            if($(':checkbox[identifiant='+idOffre+']:checked').val()){
+                //alert($(':checkbox[identifiant='+idOffre+']:checked').val());
+                $('td[identifiant='+idOffre+']').html('<input type="text" name="montant[]"/>');
+            }else 
+                $('td[identifiant='+idOffre+']').html('');
+        }
+        //afficheZoneMontant();
+    </script>
+<?php }?>

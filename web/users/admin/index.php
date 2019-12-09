@@ -87,7 +87,8 @@ if(0)
                     }
                     break;
                 case "matiere":{
-                        $matieres=$req->getMatiereClasseDepartement();
+                        //$matieres=$req->getMatiereClasseDepartement();
+                        $matieres=$req->getMatiere();
                         $classesDpt=$req->getClasseDepartement();
                     }
                     break;
@@ -151,6 +152,7 @@ if(0)
             switch ($route) {//zone de recupération de toutes les variables nécessaires aux pages
                 case "infos":{
                         //param = idEleve
+                        $classe=$req->getEleveClasseDepartementByIdEleve($_REQUEST["param"])[0];
                         $userEnVue=$_SESSION["userEnVue"]=$req->getUserByid($_REQUEST["param"]);//récupération des informations d'un utilisateur sélectionné
                         $offres=$req->getOffre();//récupération de toutes les offres
                         $payement=$req->getPayementByEleve($_REQUEST['param']);
@@ -165,8 +167,7 @@ if(0)
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
                     }
                     break;
-                
-                    
+  
                 case "emploi":{
                  
                     $matieres = $req->getMatiereByClasse($_REQUEST["param"]);
@@ -237,10 +238,7 @@ if(0)
                 foreach ($_REQUEST["idClasse"] as $idClasse){//Pour cha classe où la matière sera enseignée, association de la classe
                     $req->setClasseMatiere($idClasse,$idMatiere,$_REQUEST["coef".$idClasse]);
                 }
-                $matieres=$req->getMatiere();
-                $matieres=$req->getMatiereClasseDepartement();
-                $classesDpt=$req->getClasseDepartement();
-                include_once("vues/matiere.php");//On recharge la page
+                header('Location:?road=matiere&alert=add');
             }
             break;
 
@@ -258,8 +256,6 @@ if(0)
               else{
                  $req->updateEmploi($_REQUEST);
                  header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=edit');
-               
-               
               }              
             }
             break;
@@ -350,6 +346,17 @@ if(0)
                     exit();
                 }
             break;
+            case "MATIEREchangeClasse":{
+                    $idClasses=$_REQUEST['idClasse'];
+                    $req->deleteMatiereClasse($_REQUEST);
+                    print_r($_REQUEST);
+                    foreach ($idClasses as $key => $idClasse){
+                        $req->setClasseMatiere($idClasse,$_REQUEST["idMatiere"]);
+                    }
+                    header("Location:?road=matiere&alert=edit");
+                    exit();
+                }
+            break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
         }
@@ -391,12 +398,8 @@ if(0)
                 }
                 break;
             case "USERCHEFSCLASSEenvoyerSMS":{
-
                     print_r($_SESSION["user"]["matUser"]);
-                    
-
                     print_r("SMS");
-
                     exit();
                 }
                 break;
@@ -465,6 +468,12 @@ if(0)
                     print_r(json_encode($req->getEleveClasseById($_REQUEST["param"])));
                     exit();
                 }
+                break;
+            case "MATIEREgetClasseMatiere":{
+                    print_r(json_encode($req->getMatiereClasseDepartementByMatiere($_REQUEST["param"])));
+                    exit();
+                }
+                break;
             default:
                echo "requete A inconnue";
         }

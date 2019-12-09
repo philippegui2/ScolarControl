@@ -68,6 +68,10 @@
                                                      </tr>
                                                      <?php if($userEnVue[0]['statutUser']==2){?>
                                                      <tr>
+                                                         <th>Classe</th>
+                                                         <td><?php echo $classe["libelle"][0]." ".$classe["libelle"][1]; ?></td>
+                                                     </tr>
+                                                     <tr>
                                                          <th>Etat du payement</th>
                                                          <td><?php echo "à jour ou pas"; ?></td>
                                                      </tr>
