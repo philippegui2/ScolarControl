@@ -42,19 +42,23 @@
 
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-		<div class="info-box blue-bg">
-			<i class="fa fa-cloud-download"></i>
-			<div class="count">6.674</div>
-			<div class="title">Download</div>
-		</div><!--/.info-box-->
+		<a href="../eleve/index.php?road=scolarite">
+			<div class="info-box blue-bg">
+				<i class="fa fa-cloud-download"></i>
+				<div class="count">6.674</div>
+				<div class="title">Scolarité</div>
+			</div><!--/.info-box-->
+		</a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-		<div class="info-box brown-bg">
-			<i class="fa fa-shopping-cart"></i>
-			<div class="count">7.538</div>
-			<div class="title">Purchased</div>
-		</div><!--/.info-box-->
+		<a href="../eleve/index.php?road=evaluation">
+			<div class="info-box brown-bg">
+				<i class="fa fa-shopping-cart"></i>
+				<div class="count">7.538</div>
+				<div class="title">Evaluation</div>
+			</div><!--/.info-box-->
+		</a>
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
