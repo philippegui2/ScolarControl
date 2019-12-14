@@ -83,10 +83,10 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getUserByid($id){//récupère les utilisateurs en fonction de l'id
+        public function getUserByid($idUser){//récupère les utilisateurs en fonction de l'id
             $req= "SELECT * FROM `users` WHERE matUser=:matUser and supprimer=0";
             $params = array(
-                    "matUser" => $id
+                    "matUser" => $idUser
             );
             return $this->select($req,$params);
         }
@@ -117,8 +117,58 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getEleveById($idEleve){
-            ;
+        public function getElevePayementOKDptAll($idOffre){//récupère les élèves de tous les départements n'ayant pas payé une offre
+            $req= "SELECT payement.montantPayement, users.matUser, users.prenomUser, users.nomUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre";
+            $params = array(
+                "idOffre" => $idOffre
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementNODptAll($idOffre){//récupère les élèves de tous les départements n'ayant pas payé une offre
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser FROM eleve INNER JOIN users ON users.matUser=eleve.matUser where users.matUser not in (SELECT users.matUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre)";
+            $params = array(
+                "idOffre" => $idOffre
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementOKByDpt($idOffre,$idDepartement){//récupère les élèves d'un département donné ayant payé une offre
+            $req= "SELECT payement.montantPayement, users.matUser, users.prenomUser, users.nomUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementNOByDpt($idOffre,$idDepartement){//
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser FROM eleve INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where departement.id=:idDepartement and users.matUser not in (SELECT users.matUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement)";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementOKByDptAndClasse($idOffre,$idDepartement,$idClasse){//récupère les élèves de tous les départements n'ayant pas payé une offre
+            $req= "SELECT payement.montantPayement, users.matUser, users.prenomUser, users.nomUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement and classe.id=:idClasse";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement,
+                "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementNOByDptAndClasse($idOffre,$idDepartement,$idClasse){//
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser FROM eleve INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where departement.id=:idDepartement and classe.id=:idClasse and users.matUser not in (SELECT users.matUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement and classe.id=:idClasse)";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement,
+                "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
         }
         
         public function getEleveClasseById($idEleve){
@@ -222,7 +272,7 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasse($idClasse){//récupère les classes
+        public function getClasse(){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
             $params=array();
             return $this->select($req,$params);
@@ -232,6 +282,14 @@ Class Requetes
             $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id and classe.id=:idClasse ORDER BY classe.libelle";
             $params = array(
                 "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getClasseByDpt($idDepartement){//récupère les classes d'un département donné
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable from classe WHERE classe.departement=:idDeprtement ORDER BY classe.libelle";
+            $params = array(
+                "idDeprtement" => $idDepartement
             );
             return $this->select($req,$params);
         }

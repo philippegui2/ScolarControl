@@ -327,6 +327,57 @@
         }
     </script>
     
+    
+<?php if($_REQUEST["road"]=="recherchePayement"){?>
+    <script type="text/javascript">
+        $(function(){
+            //zone d'initialisation
+                $("#idClasse").hide();
+                $("#labelidClasse").hide();
+            //fin zone d'initialisation
+            $("#idDepartement").click(function(){
+                if($("#idDepartement").prop('selected',true).val()!=0){
+                    RECHERCHEPAYEMENTgetClassesByDepartement($("#idDepartement").prop('selected',true).val())
+                    $("#idClasse").show();
+                    $("#labelidClasse").show();
+                }else{
+                    $("#idClasse").hide();
+                    $("#labelidClasse").hide();
+                }
+                    
+            }
+            );  
+	});
+        
+        
+        
+        
+        
+        function RECHERCHEPAYEMENTgetClassesByDepartement(idDepartement){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            //$("#eleveEnVue").attr('value',idEleve);
+            $(function(){
+                    var param="../admin/index.php?reqajax=RECHERCHEPAYEMENTgetClassesByDepartement&param="+idDepartement;
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            var data2=JSON.parse(data);
+                            $.each(data2,function(index,obj){//recupération du contenu venu de la base de données
+                                $('#idClasse').append(`<option value="${obj.idClasse}"> ${obj.libelleClasse} </option>'`);
+                            });
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
+    </script>
+<?php }?>
+    
 <?php if($_REQUEST["road"]=="userEleves"){?>
     <script type="text/javascript">
         function USERELEVESgestCaseAAcocher(idEleve){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières

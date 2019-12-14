@@ -134,11 +134,16 @@ if(0)
                         $classes=$req->getClasseDepartement();
                     }
                     break;
-                case "test":{//récupération de tous les enseignants
+                case "recherchePayement":{//rechrche avancée sur les payements
+                        $departements=$req->getDepartement();//recupère la liste des départements
+                        $offres=$req->getOffre();
+                        $eleves=$_SESSION["resulaeRecherche"];
+                    }
+                    break;
+                case "test":{//
                         
                     }
                     break;
-                        //print_r($chefsAndAdjoint);
                 
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
@@ -194,17 +199,24 @@ if(0)
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
-                $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
-                if($chemin["0"]==1){
-                    $req->setUser($_REQUEST,$chemin["1"]);//on ajoute les données dans la base de données
+                if($req->getUserByid($_REQUEST["matUser"])){
+                    header("Location:index.php?road=ajouter&alert=existe");
+                    exit();
+                }else{
+                    $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
+                    if($chemin["0"]==1){
+                        $req->setUser($_REQUEST,$chemin["1"]);//on ajoute les données dans la base de données
+                    }else{
+                        $req->setUser($_REQUEST,"../../img/defaultUser.jpg");
+                    }
+                    if($_REQUEST["statutProfil"]==2){
+                        $req->setEleve($_REQUEST);
+                    }elseif($_REQUEST["statutProfil"]==3){
+                        $req->setFormateur($_REQUEST);
+                    }
+                    header("Location:index.php?road=ajouter&alert=ok");
+                    exit();
                 }
-                if($_REQUEST["statutProfil"]==2){
-                    $req->setEleve($_REQUEST);
-                }elseif($_REQUEST["statutProfil"]==3){
-                    $req->setFormateur($_REQUEST);
-                }
-                header("Location:index.php?road=ajouter&alert=ok");
-                exit();
             }
             break;
             case "DEPARTEMENTajouter":{
@@ -357,6 +369,34 @@ if(0)
                     exit();
                 }
             break;
+            case "RECHERCHEPAYEMENTrechercher":{
+                    print_r($_REQUEST);
+                    if($_REQUEST['paye']=="oui"){
+                        if($_REQUEST['idDepartement']=="0"){
+                            $eleves=$req->getElevePayementOKDptAll($_REQUEST["idOffre"]);
+                        }else{
+                            if($_REQUEST['idClasse']=="0"){
+                                $eleves=$req->getElevePayementOKByDpt($_REQUEST["idOffre"],$_REQUEST["idDepartement"]);
+                            }else{
+                                $eleves=$req->getElevePayementOKByDptAndClasse($_REQUEST["idOffre"],$_REQUEST["idDepartement"],$_REQUEST["idClasse"]);
+                            }
+                        }
+                    }else if($_REQUEST['paye']=="non"){
+                        if($_REQUEST['idDepartement']=="0"){
+                            $eleves=$req->getElevePayementNODptAll($_REQUEST["idOffre"]);
+                        }else{
+                            if($_REQUEST['idClasse']=="0"){
+                                $eleves=$req->getElevePayementNOByDpt($_REQUEST["idOffre"],$_REQUEST["idDepartement"]);
+                            }else{
+                                $eleves=$req->getElevePayementNOByDptAndClasse($_REQUEST["idOffre"],$_REQUEST["idDepartement"],$_REQUEST["idClasse"]);
+                            }
+                        }
+                    }
+                    $_SESSION["resulaeRecherche"]=$eleves;
+                    header("Location:?road=recherchePayement");
+                    exit();
+                }
+            break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
         }
@@ -459,8 +499,6 @@ if(0)
                             $req->setMessage($tousEnseignant["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
                         }
                     }
-
-                    //print_r("Notif");
                     exit();
                 }
                 break;
@@ -471,6 +509,11 @@ if(0)
                 break;
             case "MATIEREgetClasseMatiere":{
                     print_r(json_encode($req->getMatiereClasseDepartementByMatiere($_REQUEST["param"])));
+                    exit();
+                }
+                break;
+            case "RECHERCHEPAYEMENTgetClassesByDepartement":{
+                    print_r(json_encode($req->getClasseByDpt($_REQUEST["param"])));
                     exit();
                 }
                 break;
