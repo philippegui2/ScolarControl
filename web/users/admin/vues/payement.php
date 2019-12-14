@@ -46,7 +46,8 @@
         <section class="panel">
             <header class="panel-heading">
                 Liste des offres
-                 <button type="button" data-toggle="modal" data-target="#Offres" title="Liste des prestations" id="" style="display:inline;" class="btn btn-info pull-right btn-minimize" >Ajouter une offre</button>
+                <button type="button" data-toggle="modal" data-target="#Offres" title="Liste des prestations" id="" style="display:inline;" class="btn btn-info pull-right btn-minimize" >Ajouter une offre</button>
+                <a type="button" href="?road=recherchePayement" title="Liste des prestations" id="" style="display:inline;" class="btn btn-success pull-right btn-minimize" >Recherche avancée</a>
             </header>
             <!--//----- debut zone modal-->
             <div class="modal fade" id="Offres" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
