@@ -88,7 +88,7 @@
                     <form action='index.php' method="POST">
                         <div class="modal-content">
                             <div class="modal-header">
-                                Modifier les classes de la matière 
+                                Cocher les classes dans lesquelles sont enseignées la matière sélectionnée
                                 <button type="button" class="btn btn-danger pull-right btn-minimize" data-dismiss="modal" style="display:inline;">Fermer</button>
                                 <button type="submit" name='action' value='MATIEREchangeClasse'  title="mettre à jour" id=""  class="btn btn-info pull-right btn-minimize" style="display:inline;margin-right:2px;" onclick="">mettre à jour</button>
                             </div>
