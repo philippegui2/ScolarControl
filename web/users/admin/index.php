@@ -42,8 +42,13 @@ if(0)
 
                     }
                     break;
+                case "anneescolaire":{
+                        $nomPage="Année scolaire";
+                        $anneeScolaires=$req->getAnneeScolaire();
+                    }
+                    break;
                 case "ajouter":{
-                        $nomPage="Ajouter utilisateur";
+                        $nomPage="Ajouter des utilisateurs";
                         $navig3="Ajouter utilisateur";
                         //-------------------
                         $classesDpt=$req->getClasseDepartement();
@@ -51,17 +56,16 @@ if(0)
                     }
                     break;
                 case "lister":{
-                        $nomPage="Ajouter utilisateur";
+                        $nomPage="Liste des utilisateurs";
                         $navig3="Lister utilisateur";
                         //-------------------
-                        $nomPage="Liste des utilisateurs";
                         $lister=active;
                         $users=$req->getUser();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "infos":{
-                        $nomPage="Ajouter utilisateur";
+                        $nomPage="Infos des utilisateurs";
                         $navig3="Infos utilisateur";
                         //-------------------
                         $infos=active;
@@ -70,7 +74,9 @@ if(0)
                     }
                     break;
                 case "parametrage":{
-
+                        $nomPage="Parametrage général";
+                        $navig3="Paramètres";
+                        //-------------------
                     }
                     break;
                 case "notes":{//pas fini
@@ -78,24 +84,41 @@ if(0)
                     }
                     break;
                 case "departements":{
+                        $nomPage="Gestion des départements";
+                        $navig3="Départements";
+                        //-------------------
                         $departements=$req->getDepartement();
+                        $anneeScolaires=$req->getAnneeScolaire();
                     }
                     break;
                 case "classes":{
+                        $nomPage="Gestion des classes";
+                        $navig3="Classes";
+                        //-------------------
                         $classesDpt=$req->getClasseDepartement();
                         $departements=$req->getDepartement();
                     }
                     break;
                 case "matiere":{
-                        //$matieres=$req->getMatiereClasseDepartement();
+                        $nomPage="Gestion des matières";
+                        $navig3="matières";
+                        //----------------------
                         $matieres=$req->getMatiere();
                         $classesDpt=$req->getClasseDepartement();
                     }
                     break;
                 case "users":{
+                        $nomPage="Gestion des utilisateurs";
+                        $navig3="utilisateurs";
+                        //----------------------
                     }
                     break;
                 case "userEnseignant":{
+                        $nomPage="Gestion des enseignants";
+                        $navig2="utilisateurs";
+                        $navig2Lien="users";
+                        $navig3="enseignants";
+                        //----------------------
                     }
                     break; 
                 case "enseignantMatiere":{
@@ -116,6 +139,11 @@ if(0)
                     }
                     break;
                 case "userTous":{//récupération de tous les responsables de département
+                        $nomPage="Tous les utilisateurs";
+                        $navig2="utilisateurs";
+                        $navig2Lien="users";
+                        $navig3="Tous les utilisateurs";
+                        //----------------------
                         $usersTous=$req->getUser();
                     }
                     break;
@@ -134,17 +162,30 @@ if(0)
                         $classes=$req->getClasseDepartement();
                     }
                     break;
-                case "recherchePayement":{//rechrche avancée sur les payements
+                case "recherchePayement":{//recherche avancée sur les payements
                         $departements=$req->getDepartement();//recupère la liste des départements
                         $offres=$req->getOffre();
                         $eleves=$_SESSION["resulaeRecherche"];
                     }
                     break;
-                case "test":{//
+                case "pointage":{//pointage
+                        $nomPage="pointage des enseignants";
+                        $navig3="pointage";
+                        //------------------------
+                        $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
+                    }
+                    break;
+                case "agenda":{//agenda
+                        $nomPage="Agenda scolaire";
+                        $navig3="agenda";
+                        //------------------------
                         
                     }
                     break;
-                
+                case "test":{//pointage
+                        
+                    }
+                    break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -172,14 +213,19 @@ if(0)
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
                     }
                     break;
-  
                 case "emploi":{
-                 
                     $matieres = $req->getMatiereByClasse($_REQUEST["param"]);
                     $DefaultMatieres = $req->getCalendarByIdClasse($_REQUEST["param"]);
                     
                 }break;
-
+                case "infosPointage":{
+                    if(isset($_REQUEST["param2"]) and $_REQUEST["param2"]=="present"){
+                        $pointages=$_SESSION["resultatRechercheInfosPointage"];
+                    }else{
+                        $pointages=$req->getPointageByFormateur($_REQUEST["param"]);
+                    }
+                    $totalHeure=0;
+                }break;
                    
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
@@ -258,12 +304,9 @@ if(0)
                 $DefaultMatieresValidation = $req->getCalendarByIdClasse($_REQUEST["idClasse"]);
                // print_r($DefaultMatieresValidation );
 
-              if(empty($DefaultMatieresValidation))
-              {
-              
+              if(empty($DefaultMatieresValidation)){
                $req->setEmploi($_REQUEST);
                header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=add');
-              
               }
               else{
                  $req->updateEmploi($_REQUEST);
@@ -298,7 +341,6 @@ if(0)
                     $req->updateAdjointClasse($_REQUEST);
                 }
                 if($_REQUEST["respClasse"]!="vide"){//Insertion du responsable de classe
-
                     $req->updateReinitResponsable($_REQUEST);//modification de l'ancienne responsabilité de responsable de classe
                     //$req->updateReinitResponsableDepartement($_REQUEST);//--modification de l'ancienne responsabilité de responsable de département
                     $req->updateEnseignantResponsable($_REQUEST);//affectation du rôle de responsable à une classe
@@ -369,6 +411,17 @@ if(0)
                     exit();
                 }
             break;
+            case "INFOSPOINTAGErechercher":{
+                    if(isset($_REQUEST['dateDebut']) and isset($_REQUEST['dateFin']) and $_REQUEST['dateFin']!=""){
+                        $pointages=$req->getPointageByFormateurAndDateIntervall($_REQUEST['param'],implode("-",array_reverse(explode("/",$_REQUEST['dateDebut']))),implode("-",array_reverse(explode("/",$_REQUEST['dateFin'])))." 23:59:59");
+                    }else{
+                        $pointages=$req->getPointageByFormateurAndDateDebut($_REQUEST['param'],implode("-",array_reverse(explode("/",$_REQUEST['dateDebut']))));
+                    }
+                    $_SESSION["resultatRechercheInfosPointage"]=$pointages;
+                    header("Location:?road=infosPointage&param=".$_REQUEST['param']."&param2=present");
+                    exit();
+                }
+            break;
             case "RECHERCHEPAYEMENTrechercher":{
                     print_r($_REQUEST);
                     if($_REQUEST['paye']=="oui"){
@@ -394,6 +447,18 @@ if(0)
                     }
                     $_SESSION["resulaeRecherche"]=$eleves;
                     header("Location:?road=recherchePayement");
+                    exit();
+                }
+            break;
+            case "ANNEESCOLAIREAjouter":{
+                    $req->setAnneeScolaire($_REQUEST);
+                    header("Location:?road=anneescolaire&alert=ok");
+                    exit();
+                }
+            break;
+            case "POINTAGEValider":{
+                    $req->setPointage($_REQUEST);
+                    header("Location:?road=pointage&alert=ok");
                     exit();
                 }
             break;
@@ -514,6 +579,12 @@ if(0)
                 break;
             case "RECHERCHEPAYEMENTgetClassesByDepartement":{
                     print_r(json_encode($req->getClasseByDpt($_REQUEST["param"])));
+                    exit();
+                }
+                break;
+            case "POINTAGEgetClassesByEnseignant":{
+                //Récupération des classes dans lesquelles enseigne un enseignant donné
+                    print_r(json_encode($req->getClasseByEnseignant($_REQUEST["param"])));
                     exit();
                 }
                 break;

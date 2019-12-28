@@ -1,4 +1,14 @@
 <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <a class="" href="../admin/index.php?road=userTous">
+		<div class="info-box gray-bg">
+			<i class="fa fa-user fa-fw"></i>
+			<div class="count">Utilisateurs</div>
+			<div class="title">Tous les utilisateurs</div>
+		</div><!--/.info-box-->
+            </a>
+	</div><!--/.col-->
+        
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <a class="" href="../admin/index.php?road=userEnseignant">
 		<div class="info-box gray-bg">
@@ -9,6 +19,26 @@
             </a>
 	</div><!--/.col-->
 
+	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <a class="" href="../admin/index.php?road=userEleves">
+		<div class="info-box brown-bg">
+			<i class="fa fa-users fa-fw"></i>
+			<div class="count">Eleves</div>
+			<div class="title">L'ensemble des élèves</div>
+		</div><!--/.info-box-->
+            </a>
+	</div><!--/.col-->	
+</div><!--/.row-->
+<div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <a class="" href="../admin/index.php?road=userResponsableDepartement">
+		<div class="info-box green-bg">
+			<i class="fa fa-users"></i>
+			<div class="count">Respo Dpt</div>
+			<div class="title">Responsables de département</div>
+		</div><!--/.info-box-->
+            </a>
+	</div><!--/.col-->
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <a class="" href="../admin/index.php?road=userChefsClasse">
 		<div class="info-box brown-bg">
@@ -29,44 +59,13 @@
             </a>
 	</div><!--/.col-->
 
-	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=userResponsableDepartement">
-		<div class="info-box green-bg">
-			<i class="fa fa-users"></i>
-			<div class="count">Respo Dpt</div>
-			<div class="title">Responsables de département</div>
-		</div><!--/.info-box-->
-            </a>
-	</div><!--/.col-->
-</div><!--/.row-->
-<div class="row">
-	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=userTous">
-		<div class="info-box gray-bg">
-			<i class="fa fa-user fa-fw"></i>
-			<div class="count">Utilisateurs</div>
-			<div class="title">Tous les utilisateurs</div>
-		</div><!--/.info-box-->
-            </a>
-	</div><!--/.col-->
-
-	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../admin/index.php?road=userEleves">
-		<div class="info-box brown-bg">
-			<i class="fa fa-users fa-fw"></i>
-			<div class="count">Eleves</div>
-			<div class="title">L'ensemble des élèves</div>
-		</div><!--/.info-box-->
-            </a>
-	</div><!--/.col-->
-
-	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+	<!--div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <a class="" href="../admin/index.php?road=test">
 		<div class="info-box green-bg">
 			<i class="fa fa-users"></i>
 			<div class="count">Test</div>
 			<div class="title">Zone de test</div>
-		</div><!--/.info-box-->
+		</div>
             </a>
-	</div><!--/.col-->
+	</div--><!--/.col-->
 </div><!--/.row-->
