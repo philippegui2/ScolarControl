@@ -8,13 +8,15 @@
             </div>
             <div class="panel-body" style="z-index: 3600;">
                 <form role="form" method="POST" action="../admin/index.php">
-                    <label>Date de début</label>
+                    
                     <div class="form-group input-group"> 
+                        <label>Date de début</label>
                         <span class="input-group-addon"><i class="fa fa-calendar fa-faw"></i></span>
                         <input type="text" class="form-control" placeholder="Date de début" name="dateDebut" id="dateP" required>
                     </div>
-                    <label>Date de fin</label>
-                    <div class="form-group input-group"> 
+                    
+                    <div class="form-group input-group">
+                        <label>Date de fin &nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <span class="input-group-addon"><i class="fa fa-calendar fa-faw"></i></span>
                         <input type="text" class="form-control" placeholder="Date de fin" name="dateFin" id="dateP2">
                     </div>
