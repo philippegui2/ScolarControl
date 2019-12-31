@@ -19,7 +19,7 @@
         </div><!--/.col-->
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <a class="" href="?road=pointage">
-                <div class="info-box green-bg">
+                <div class="info-box blue-bg">
                         <i class="fa fa-users fa-fw"></i>
                         <div class="count">Enseigant-pointage</div>
                         <div class="title">Pointage enseignant enseignants</div>

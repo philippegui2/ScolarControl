@@ -44,6 +44,10 @@ if(0)
                     break;
                 case "anneescolaire":{
                         $nomPage="Année scolaire";
+                        $navig2="paramètres";
+                        $navig2Lien="parametrage";
+                        $navig3="anneescolaire";
+                        //-------------------
                         $anneeScolaires=$req->getAnneeScolaire();
                     }
                     break;
@@ -153,6 +157,11 @@ if(0)
                     }
                     break;
                 case "enseignantMessage":{//récupération de tous les enseignants
+                        $nomPage="Message vers les enseignants";
+                        $navig2="gestion des enseigants";
+                        $navig2Lien="userEnseignant";
+                        $navig3="messages";
+                        //------------------------
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                     }
                     break;
@@ -169,7 +178,9 @@ if(0)
                     }
                     break;
                 case "pointage":{//pointage
-                        $nomPage="pointage des enseignants";
+                        $nomPage="Pointage des enseignants";
+                        $navig2="gestion des enseigants";
+                        $navig2Lien="userEnseignant";
                         $navig3="pointage";
                         //------------------------
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
@@ -179,7 +190,21 @@ if(0)
                         $nomPage="Agenda scolaire";
                         $navig3="agenda";
                         //------------------------
-                        
+                        $rdv=$req->getRendezvous();
+                        $rendezvous=array();
+                        foreach ($rdvs as $key => $rdv){
+                            array_push(
+                                $rendezvous,
+                                array(
+                                        'id' => $rdv["idRendezvous"],
+                                        'title' => $rdv["titreRendezvous"],
+                                        'start' => $rdv["dateRendezvous"],
+                                        'end' => $rdv["dateRendezvous"],
+                                        'url' => "",
+                                        'color' => "green"//type 2 pour les autres types de rendez-vous
+                                )
+                            );
+                        }    
                     }
                     break;
                 case "test":{//pointage
@@ -219,6 +244,11 @@ if(0)
                     
                 }break;
                 case "infosPointage":{
+                    $nomPage="Rechercher";
+                    $navig2="pointage";
+                    $navig2Lien="pointage";
+                    $navig3="recherche pointage";
+                    //----------------------
                     if(isset($_REQUEST["param2"]) and $_REQUEST["param2"]=="present"){
                         $pointages=$_SESSION["resultatRechercheInfosPointage"];
                     }else{
@@ -231,8 +261,8 @@ if(0)
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-
-            include_once("vues/".$route.".php");
+            include_once("vues/navigationParam.php");//insertion de la zone de navigation
+            include_once("vues/".$route.".php");//insertion du bas de page 
         }
     /***
      * Fin zone de traitement des liens
@@ -585,6 +615,41 @@ if(0)
             case "POINTAGEgetClassesByEnseignant":{
                 //Récupération des classes dans lesquelles enseigne un enseignant donné
                     print_r(json_encode($req->getClasseByEnseignant($_REQUEST["param"])));
+                    exit();
+                }
+                break;
+            case "AGENDAsetRendezvous":{
+                    //Enregistrer un rendez-vous
+                    $req->setRendezvous($_REQUEST['laDate'],$_REQUEST['titre'],$_SESSION["user"]["matUser"]);
+                    //print_r($_REQUEST);
+                    exit();
+                }
+                break;
+            case "AGENDAupdateRendezvous":{
+                    //Enregistrer un rendez-vous
+                    $req->updateRendezvous($_REQUEST['laDateDebut'],$_REQUEST['laDateFin'],$_REQUEST['id']);
+                    print_r(json_encode($_REQUEST));
+                    exit();
+                }
+                break;
+            case "AGENDAgetRendezvous":{
+                    //Récupération des données de l'agenda
+                    $rdvs=$req->getRendezvous();
+                    $rendezvous=array();
+                    foreach ($rdvs as $key => $rdv){
+                        array_push(
+                            $rendezvous,
+                            array(
+                                'id' => $rdv["idRendezvous"],
+                                'title' => $rdv["titreRendezvous"],
+                                'start' => $rdv["dateRendezvous"],
+                                'end' => $rdv["dateFinRendezvous"],
+                                'url' => "",
+                                'color' => "green"//type 2 pour les autres types de rendez-vous
+                            )
+                        );
+                    }
+                    print_r(json_encode($rendezvous));
                     exit();
                 }
                 break;

@@ -462,6 +462,12 @@ Class Requetes
                             "dateDebut" => $dateDebut);
             return $this->select($req,$params);
         }
+        
+        public function getRendezvous(){
+            $req="SELECT * from rendezvous";
+            $params = array();
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
 
     //méthodes d'enregistement dans la base de données
@@ -702,6 +708,16 @@ Class Requetes
             );
             return $this->insert($req,$params);
         }
+        
+        public function setRendezvous($dateRendezvous,$titreRendezvous,$matUser){//Ajoute un nouveau pointage d'un enseignat dans une classe
+            $req="INSERT INTO `rendezvous`(`idRendezvous`,`dateRendezvous`,`titreRendezvous`,`matUser`) VALUES (NULL,:dateRendezvous,:titreRendezvous,:matUser)";
+            $params = array(
+                "dateRendezvous" => $dateRendezvous,
+                "titreRendezvous" => $titreRendezvous,
+                "matUser" => $matUser
+            );
+            return $this->insert($req,$params);
+        }
         //fin méthodes d'enregistement dans la base de données
 
     //méthodes de mise à jour dans la base de données
@@ -779,45 +795,45 @@ Class Requetes
         }
         
         public function updateChef($donnees){//Choix d'un chef
-        $req = "update eleve set role= 2 where matUser=:pseudo";
-        $params = array(
-            "pseudo"=> explode("|", $donnees["chefClasse"])[0]
-        );
-        return $this->update($req,$params);
-    }
+            $req = "update eleve set role= 2 where matUser=:pseudo";
+            $params = array(
+                "pseudo"=> explode("|", $donnees["chefClasse"])[0]
+            );
+            return $this->update($req,$params);
+        }
     
-    public function updateReinitChef($donnees){//Enlève l'ancien chef de classe
-        $req ="update eleve set role= 1 where role=2 and idClasse=:idClasse";
-        $params = array(
-            "idClasse"=>$donnees["idClasse"]
-        );
-        return $this->update($req,$params);
-    }
+        public function updateReinitChef($donnees){//Enlève l'ancien chef de classe
+            $req ="update eleve set role= 1 where role=2 and idClasse=:idClasse";
+            $params = array(
+                "idClasse"=>$donnees["idClasse"]
+            );
+            return $this->update($req,$params);
+        }
+
+        public function updateChefClasse($donnees){//Ajouter le chef au niveau de la table classe
+            $req = "update classe set chefClasse=:pseudo WHERE id=:idClasse";
+            $params = array(
+                "pseudo"=>$donnees["chefClasse"],
+                "idClasse"=>$donnees["idClasse"]
+            );
+            return $this->update($req,$params);
+        }
     
-    public function updateChefClasse($donnees){//Ajouter le chef au niveau de la table classe
-        $req = "update classe set chefClasse=:pseudo WHERE id=:idClasse";
-        $params = array(
-            "pseudo"=>$donnees["chefClasse"],
-            "idClasse"=>$donnees["idClasse"]
-        );
-        return $this->update($req,$params);
-    }
-    
-    public function updateAdjoint($donnees){//Choix d'un chef de classe
-        $req = "update eleve set role= 3 where matUser=:pseudo";
-        $params = array(
-            "pseudo"=>explode("|", $donnees["adjointChef"])[0]
-        );
-        return $this->update($req,$params);
-    }
-    
-    public function updateReinitAdjoint($donnees){//Enlève l'ancien chef de classe
-        $req = "update eleve set role= 1 WHERE role=3 and idClasse=:idClasse";
-        $params = array(
-            "idClasse"=>$donnees["idClasse"]
-        );
-        return $this->update($req,$params);
-    }
+        public function updateAdjoint($donnees){//Choix d'un chef de classe
+            $req = "update eleve set role= 3 where matUser=:pseudo";
+            $params = array(
+                "pseudo"=>explode("|", $donnees["adjointChef"])[0]
+            );
+            return $this->update($req,$params);
+        }
+
+        public function updateReinitAdjoint($donnees){//Enlève l'ancien chef de classe
+            $req = "update eleve set role= 1 WHERE role=3 and idClasse=:idClasse";
+            $params = array(
+                "idClasse"=>$donnees["idClasse"]
+            );
+            return $this->update($req,$params);
+        }
     
     public function updateAdjointClasse($donnees){//Ajouter l'adjoint eu niveau de la table classe
         $req = "update classe set adjointChef=:pseudo WHERE id=:idClasse";
@@ -869,6 +885,16 @@ Class Requetes
         );
         return $this->update($req,$params);
     }
+    
+    public function updateRendezvous($dateDebutRendezvous,$dateFinRendezvous,$idrendezvous){
+            $req = "UPDATE `rendezvous` SET `dateRendezvous`= :dateRendezvous, `dateFinRendezvous`= :dateFinRendezvous WHERE idRendezvous=:idRendezvous";
+            $params = array(
+                "idRendezvous" => $idrendezvous,
+                "dateRendezvous" => $dateDebutRendezvous,
+                "dateFinRendezvous" => $dateFinRendezvous
+            );
+            return $this->update($req,$params);
+        }
     
     //fin méthodes de mise à jour dans la base de données
 

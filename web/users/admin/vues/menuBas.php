@@ -35,8 +35,8 @@
             var Script = function () {
                 /* initialize the external events
                  -----------------------------------------------------------------*/
-                $('#external-events div.external-event').each(function() {
-
+                $('#external-events div.external-event').each(function(){
+                    alert("ici");
                     // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
                     // it doesn't need to have a start or end
                     var eventObject = {
@@ -69,10 +69,33 @@
                         center: 'title',
                         right: 'month,basicWeek,basicDay'
                     },
-                    editable: true,
+                    selectable: true,
+                    selectHelper: true,
+                    select: function(start, end, allDay){
+                        var title = prompt('Nom du nouvel élément');
+                        if (title) {
+                            var laDate=(start).toISOString().substring(0, 10);
+                            var param ='../admin/index.php?reqajax=AGENDAsetRendezvous&titre='+title+'&laDate='+laDate;
+                            $.ajax({
+                            type: 'GET',
+                            url: param, 
+                            timeout: 3000,
+                            success: function(data){
+                              document.location.href="?road=agenda";
+                            }, error: function() {
+                            alert('La requête n\'a pas abouti'); } });
+                        }
+                    },
+                    <?php 
+                        if($_SESSION['user']["statutUser"]=="1"){
+                            echo "editable: true,";
+                        } else{
+                            echo "editable: false,";
+                        }
+                     ?>
+                    
                     droppable: true, // this allows things to be dropped onto the calendar !!!
-                    drop: function(date, allDay) { // this function is called when something is dropped
-
+                    drop: function(date, allDay){ // this function is called when something is dropped   
                         // retrieve the dropped element's stored Event Object
                         var originalEventObject = $(this).data('eventObject');
 
@@ -88,62 +111,91 @@
                         $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 
                         // is the "remove after drop" checkbox checked?
-                        if ($('#drop-remove').is(':checked')) {
+                        if ($('#drop-remove').is(':checked')){
                             // if so, remove the element from the "Draggable Events" list
                             $(this).remove();
                         }
-
                     },
-                    events: [
-                        {
-                            title: 'All Day Event',
-                            start: new Date(y, m, 1)
-                        },
-                        {
-                            title: 'Long Event',
-                            start: new Date(y, m, d-5),
-                            end: new Date(y, m, d-2)
-                        },
-                        {
-                            id: 999,
-                            title: 'Repeating Event',
-                            start: new Date(y, m, d-3, 16, 0),
-                            allDay: false
-                        },
-                        {
-                            id: 999,
-                            title: 'Repeating Event',
-                            start: new Date(y, m, d+4, 16, 0),
-                            allDay: false
-                        },
-                        {
-                            title: 'Meeting',
-                            start: new Date(y, m, d, 10, 30),
-                            allDay: false
-                        },
-                        {
-                            title: 'Lunch',
-                            start: new Date(y, m, d, 12, 0),
-                            end: new Date(y, m, d, 14, 0),
-                            allDay: false
-                        },
-                        {
-                            title: 'Birthday Party',
-                            start: new Date(y, m, d+1, 19, 0),
-                            end: new Date(y, m, d+1, 22, 30),
-                            allDay: false
-                        },
-                        {
-                            title: 'Click for Google',
-                            start: new Date(y, m, 28),
-                            end: new Date(y, m, 29),
-                            url: 'http://google.com/'
+                    
+                    eventDrop: function(event, delta){
+                        alert(event.title + ' a bougé de ' + delta + ' jours\n');
+                        if((event.end - event.start)<=0){
+                            var laDateDebut=(event.start).toISOString().substring(0, 10);
+                            var param ='../admin/index.php?reqajax=AGENDAupdateRendezvous&id='+event.id+'&laDateDebut='+laDateDebut+'&laDateFin='+laDateDebut;
+                        }else{
+                            var laDateDebut=(event.start).toISOString().substring(0, 10);
+                            var laDateFin=(event.end).toISOString().substring(0, 10);
+                            var param ='../admin/index.php?reqajax=AGENDAupdateRendezvous&id='+event.id+'&laDateDebut='+laDateDebut+'&laDateFin='+laDateFin;
                         }
-                    ]
+                        $.ajax({
+                            type: 'GET',
+                            url: param, 
+                            timeout: 3000,
+                            success: function(data){
+                              //document.location.href="?road=agenda";
+                            }, error: function() {
+                                alert('La requête n\'a pas abouti'); 
+                            } 
+                        });
+                    },
+                            
+                    eventResize: function(event, delta) {
+                        //alert(info.event.title + " end is now " + info.event.end.toISOString());
+
+                        //if (!confirm("is this okay?")) {
+                          //info.revert();
+                        //}
+                        //alert(event.title + ' a bougé de ' + delta + ' jours\n');
+
+                        if((event.end - event.start)<=0){
+                            var laDateDebut=(event.start).toISOString().substring(0, 10);
+                            var param ='../admin/index.php?reqajax=AGENDAupdateRendezvous&id='+event.id+'&laDateDebut='+laDateDebut+'&laDateFin='+laDateDebut;
+                        }else{
+                            var laDateDebut=(event.start).toISOString().substring(0, 10);
+                            var laDateFin=(event.end).toISOString().substring(0, 10);
+                            var param ='../admin/index.php?reqajax=AGENDAupdateRendezvous&id='+event.id+'&laDateDebut='+laDateDebut+'&laDateFin='+laDateFin;
+                        }
+                        $.ajax({
+                            type: 'GET',
+                            url: param, 
+                            timeout: 3000,
+                            success: function(data){
+                              //document.location.href="?road=agenda";
+                            }, error: function() {
+                                alert('La requête n\'a pas abouti'); 
+                            } 
+                        });
+                    },      
+                            
+                    events: "../admin/index.php?reqajax=AGENDAgetRendezvous",
+                    
+                    loading: function(bool) {
+                        if (bool) $('#loading').show();
+                        else $('#loading').hide();
+                    }
                 });
-
             }();
-
+            
+   
+        function AGENDAgetRendezvous(){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
+            $(function(){  
+                    var param="../admin/index.php?reqajax=AGENDAgetRendezvous";
+                    $.ajax({
+                        type: 'GET',
+                        url: param, 
+                        timeout: 5000,
+                        cache: true,
+                        success: function(data){
+                            //var data2=JSON.parse(data);
+                            alert(data);
+                        }, 
+                        error: function() {
+                            alert('Erreur de connexion'); 
+                        } 
+                    });
+                }
+            );
+        }
         </script>    
         
         

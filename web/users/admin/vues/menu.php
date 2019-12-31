@@ -195,7 +195,7 @@
                   </li>
                   <li class="">
                       <a class="" href="../admin/?road=payement">
-                          <i class="fa fa-users fa-fw"></i>
+                          <i class="fa fa-money fa-fw"></i>
                           <span>Payement</span>
                       </a>
                   </li>
