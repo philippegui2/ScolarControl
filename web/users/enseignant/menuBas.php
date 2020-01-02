@@ -19,11 +19,20 @@
             $('#dateP').datepicker({
                 format: "dd/mm/yyyy",
             });  
-
+            $('#dateP2').datepicker({
+                format: "dd/mm/yyyy",
+            });
         });
         $(document).ready(function(){
             $('#table_list').DataTable();
         });
+        function disparaitAlertOK(){
+            $(function(){
+                $('#alertOK:even').hide(6000);
+                $("#leLoading").hide();
+            });
+        }
+        disparaitAlertOK();
     </script>
     <?php if($_REQUEST['road']=="allnotes" OR $_REQUEST['road']=="notes"){ ?>
     <script type="text/javascript">
