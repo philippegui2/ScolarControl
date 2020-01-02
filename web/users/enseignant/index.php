@@ -83,6 +83,15 @@ if(0)
                         exit();
                     }
                     break;
+                    case "infosPointage":{
+                        $nomPage="Rechercher";
+                        $navig2="pointage";
+                        $navig2Lien="pointage";
+                        $navig3="recherche pointage";
+                        //----------------------
+                        $pointages=$req->getPointageByFormateur($_SESSION["user"]["matUser"]);
+                        $totalHeure=0;
+                    }break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -131,6 +140,19 @@ if(0)
                         $partieCours=$req->getCahierTexte($_REQUEST["param"],$_REQUEST["param2"]);
                     }
                     break;
+                case "infosPointage":{
+                    $nomPage="Rechercher";
+                    $navig2="pointage";
+                    $navig2Lien="pointage";
+                    $navig3="recherche pointage";
+                    //----------------------
+                    if(isset($_REQUEST["param2"]) and $_REQUEST["param2"]=="present"){
+                        $pointages=$_SESSION["resultatRechercheInfosPointage"];
+                    }else{
+                        $pointages=$req->getPointageByFormateur($_REQUEST["param"]);
+                    }
+                    $totalHeure=0;
+                }break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction param";
                     break;
@@ -174,10 +196,22 @@ if(0)
                 //
                 $dateTime=implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"])))." ".$_REQUEST["heureEvaluation"].":".$_REQUEST["minuteEvaluation"].":00";
                 print_r($_REQUEST);
-                $req->setEvaluation($_REQUEST,$dateTime);
+                $req->setEvaluation($_REQUEST,$dateTime);//ajoute de l'évaluation
+                $req->setRendezvous(implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"]))),"Evaluation",$_SESSION["user"]["matUser"]);//ajout de l'évaluation dans l'agenda
                 header("Location:index.php?road=allnotes&param=".$_REQUEST['param']."&param2=4&alert=ok");
                 exit();
             }
+            break;
+            case "INFOSPOINTAGErechercher":{
+                    if(isset($_REQUEST['dateDebut']) and isset($_REQUEST['dateFin']) and $_REQUEST['dateFin']!=""){
+                        $pointages=$req->getPointageByFormateurAndDateIntervall($_REQUEST['param'],implode("-",array_reverse(explode("/",$_REQUEST['dateDebut']))),implode("-",array_reverse(explode("/",$_REQUEST['dateFin'])))." 23:59:59");
+                    }else{
+                        $pointages=$req->getPointageByFormateurAndDateDebut($_REQUEST['param'],implode("-",array_reverse(explode("/",$_REQUEST['dateDebut']))));
+                    }
+                    $_SESSION["resultatRechercheInfosPointage"]=$pointages;
+                    header("Location:?road=infosPointage&param=".$_REQUEST['param']."&param2=present");
+                    exit();
+                }
             break;
             default:
                echo "requete A inconnue";

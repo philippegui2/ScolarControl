@@ -145,6 +145,12 @@
                           <span>Informations</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a class="" href="../enseignant/?road=listeclasses">
+                          <i class="fa fa-university fa-fw"></i>
+                          <span>Mes classes</span>
+                      </a>
+                  </li>
                   <li>
                       <a class="" href="../enseignant/?road=accueil">
                           <i class="fa fa-gears fa-fw"></i>
@@ -155,6 +161,12 @@
                       <a class="" href="../enseignant/?road=agenda">
                           <i class="fa fa-calendar fa-fw"></i>
                           <span>Agenda</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="../enseignant/?road=infosPointage">
+                          <i class="fa fa-pencil-square fa-fw"></i>
+                          <span>Pointage</span>
                       </a>
                   </li>
               </ul>
