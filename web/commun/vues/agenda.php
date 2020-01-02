@@ -1,4 +1,21 @@
-<!-- page end-->
+<div class="row">
+    <div class="col-md-8 portlets">
+        <div class="panel panel-default">
+                            <div class="panel-heading">
+              <h2><strong>Calendar</strong></h2>
+
+            </div><br><br><br>
+            <div class="panel-body">
+              <!-- Widget content -->
+
+                <!-- Below line produces calendar. I am using FullCalendar plugin. -->
+                <div id="calendar"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- page end-->
           </section>
       </section>
       <!--main content end-->
@@ -69,7 +86,7 @@
                         center: 'title',
                         right: 'month,basicWeek,basicDay'
                     },
-                    selectable: true,
+                    selectable: false,
                     selectHelper: true,
                     select: function(start, end, allDay){
                         var title = prompt('Nom du nouvel élément');
@@ -86,14 +103,8 @@
                             alert('La requête n\'a pas abouti'); } });
                         }
                     },
-                    <?php 
-                        if($_SESSION['user']["statutUser"]=="1"){
-                            echo "editable: true,";
-                        } else{
-                            echo "editable: false,";
-                        }
-                     ?>
-                    
+
+                    editable: false,
                     droppable: true, // this allows things to be dropped onto the calendar !!!
                     drop: function(date, allDay){ // this function is called when something is dropped   
                         // retrieve the dropped element's stored Event Object
@@ -115,11 +126,6 @@
                             // if so, remove the element from the "Draggable Events" list
                             $(this).remove();
                         }
-                    },
-                    
-                    eventClick: function(event, delta){
-                        var title = prompt("Entrer le nouveau nom pour modifier");
-
                     },
                     
                     eventDrop: function(event, delta){
