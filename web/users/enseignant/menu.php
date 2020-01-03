@@ -151,7 +151,12 @@
                           <span>Parametrage</span>
                       </a>
                   </li>
-
+                  <li class="">
+                      <a class="" href="../enseignant/?road=agenda">
+                          <i class="fa fa-calendar fa-fw"></i>
+                          <span>Agenda</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>

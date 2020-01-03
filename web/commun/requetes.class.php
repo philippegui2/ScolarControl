@@ -83,10 +83,10 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getUserByid($id){//récupère les utilisateurs en fonction de l'id
+        public function getUserByid($idUser){//récupère les utilisateurs en fonction de l'id
             $req= "SELECT * FROM `users` WHERE matUser=:matUser and supprimer=0";
             $params = array(
-                    "matUser" => $id
+                    "matUser" => $idUser
             );
             return $this->select($req,$params);
         }
@@ -117,8 +117,58 @@ Class Requetes
             return $this->select($req,$params);
         }
         
-        public function getEleveById($idEleve){
-            ;
+        public function getElevePayementOKDptAll($idOffre){//récupère les élèves de tous les départements n'ayant pas payé une offre
+            $req= "SELECT payement.montantPayement, users.matUser, users.prenomUser, users.nomUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre";
+            $params = array(
+                "idOffre" => $idOffre
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementNODptAll($idOffre){//récupère les élèves de tous les départements n'ayant pas payé une offre
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser FROM eleve INNER JOIN users ON users.matUser=eleve.matUser where users.matUser not in (SELECT users.matUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre)";
+            $params = array(
+                "idOffre" => $idOffre
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementOKByDpt($idOffre,$idDepartement){//récupère les élèves d'un département donné ayant payé une offre
+            $req= "SELECT payement.montantPayement, users.matUser, users.prenomUser, users.nomUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementNOByDpt($idOffre,$idDepartement){//
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser FROM eleve INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where departement.id=:idDepartement and users.matUser not in (SELECT users.matUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement)";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementOKByDptAndClasse($idOffre,$idDepartement,$idClasse){//récupère les élèves de tous les départements n'ayant pas payé une offre
+            $req= "SELECT payement.montantPayement, users.matUser, users.prenomUser, users.nomUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement and classe.id=:idClasse";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement,
+                "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
+        }
+        
+        public function getElevePayementNOByDptAndClasse($idOffre,$idDepartement,$idClasse){//
+            $req= "SELECT users.matUser, users.prenomUser, users.nomUser FROM eleve INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where departement.id=:idDepartement and classe.id=:idClasse and users.matUser not in (SELECT users.matUser FROM payement INNER JOIN eleve ON payement.matUser=eleve.matUser INNER JOIN users ON users.matUser=eleve.matUser INNER JOIN classe ON eleve.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id where idOffre=:idOffre and departement.id=:idDepartement and classe.id=:idClasse)";
+            $params = array(
+                "idOffre" => $idOffre,
+                "idDepartement" => $idDepartement,
+                "idClasse" => $idClasse
+            );
+            return $this->select($req,$params);
         }
         
         public function getEleveClasseById($idEleve){
@@ -210,7 +260,7 @@ Class Requetes
         }
 
         public function getDepartement(){//récupère les départements
-            $req= "SELECT * FROM `departement`";
+            $req= "SELECT departement.*,anneescolaire.libelleAnnee FROM `departement` INNER JOIN anneescolaire ON departement.idAnnee=anneescolaire.idAnnee";
             return $this->select($req,$params);
         }
         
@@ -222,7 +272,7 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasse($idClasse){//récupère les classes
+        public function getClasse(){//récupère les classes
             $req= "SELECT * FROM `classe` order by libelle";
             $params=array();
             return $this->select($req,$params);
@@ -235,6 +285,14 @@ Class Requetes
             );
             return $this->select($req,$params);
         }
+        
+        public function getClasseByDpt($idDepartement){//récupère les classes d'un département donné
+            $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable from classe WHERE classe.departement=:idDeprtement ORDER BY classe.libelle";
+            $params = array(
+                "idDeprtement" => $idDepartement
+            );
+            return $this->select($req,$params);
+        }
 
         public function getClasseDepartement(){//récupération des classes et leur département
             $req="select classe.id as idClasse, classe.libelle as libelleClasse, classe.chefClasse as chefClasse, classe.adjointChef as adjointChef, classe.profResponsable as profResponsable, departement.id as idDepartement, departement.libelle as libelleDepartement from classe, departement where classe.departement=departement.id ORDER BY classe.libelle";
@@ -242,7 +300,7 @@ Class Requetes
             return $this->select($req,$params);
         }
 
-        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes dans lesquelles enseignat un enseignant donné
+        public function getClasseByEnseignant($idEnseignant){ //Récupération des classes dans lesquelles enseigne un enseignant donné
             $req="SELECT cours.matUser, cours.idClasse, departement.id idDepartement, departement.libelle libDepartement, classe.id, classe.libelle libClasse, classe.departement from cours,classe,departement where idClasse=classe.id and classe.departement=departement.id and `matUser` = :matUser GROUP BY idClasse";
             $params = array(
                 "matUser" => $idEnseignant
@@ -377,6 +435,39 @@ Class Requetes
             $params = array("idEleve"=> $idEleve);
             return $this->select($req,$params);
         }
+        
+        public function getAnneeScolaire(){
+            $req="SELECT * from anneescolaire order by idAnnee DESC";
+            $params = array();
+            return $this->select($req,$params);
+        }
+        
+        public function getPointageByFormateur($idFormateur){
+            $req="SELECT pointage.*, classe.libelle, departement.libelle from pointage INNER JOIN classe ON pointage.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE pointage.idFormateur=:matUser ORDER BY pointage.datePointage DESC";
+            $params = array("matUser" => $idFormateur);
+            return $this->select($req,$params);
+        }
+        
+        public function getPointageByFormateurAndDateIntervall($idFormateur,$dateDebut,$dateFin){
+            $req="SELECT pointage.*, classe.libelle, departement.libelle from pointage INNER JOIN classe ON pointage.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE pointage.idFormateur=:matUser and (pointage.datePointage BETWEEN :dateDebut AND :dateFin) ORDER BY pointage.datePointage DESC";
+            $params = array("matUser" => $idFormateur,
+                            "dateDebut" => $dateDebut,
+                            "dateFin" => $dateFin);
+            return $this->select($req,$params);
+        }
+        
+        public function getPointageByFormateurAndDateDebut($idFormateur,$dateDebut){
+            $req="SELECT pointage.*, classe.libelle, departement.libelle from pointage INNER JOIN classe ON pointage.idClasse=classe.id INNER JOIN departement ON classe.departement=departement.id WHERE pointage.idFormateur=:matUser and (pointage.datePointage >= :dateDebut) ORDER BY pointage.datePointage DESC";
+            $params = array("matUser" => $idFormateur,
+                            "dateDebut" => $dateDebut);
+            return $this->select($req,$params);
+        }
+        
+        public function getRendezvous(){
+            $req="SELECT * from rendezvous";
+            $params = array();
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
 
     //méthodes d'enregistement dans la base de données
@@ -428,9 +519,10 @@ Class Requetes
         }
 
         public function setDepartement($donnees){//enregistrement des nouveaux départements
-            $req = "INSERT INTO `departement` (`id`, `libelle`) VALUES (NULL, :libelle)";
+            $req = "INSERT INTO `departement` (`id`, `libelle`, `idAnnee`) VALUES (NULL, :libelle, :idAnnee)";
             $params = array(
-             "libelle" => $donnees["libDpt"]
+             "libelle" => $donnees["libDpt"],
+             "idAnnee" => $donnees["idAnnee"]
             );
             return $this->insert($req,$params);
         }
@@ -598,6 +690,34 @@ Class Requetes
             );
             return $this->insert($req,$params); 		
         }
+        
+        public function setAnneeScolaire($donnees){//Ajoute une nouvelle année scolaire
+            $req="INSERT INTO `anneescolaire`(`idAnnee`,`libelleAnnee`) VALUES (NULL,:libelleAnnee)";
+            $params = array(
+                "libelleAnnee" => $donnees['libelleAnnee']
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setPointage($donnees){//Ajoute un nouveau pointage d'un enseignat dans une classe
+            $req="INSERT INTO `pointage`(`idPointage`,`idFormateur`,`idClasse`,`dureePointage`) VALUES (NULL,:idFormateur,:idClasse,:dureePointage)";
+            $params = array(
+                "idFormateur" => $donnees['idFormateur'],
+                "idClasse" => $donnees['idClasse'],
+                "dureePointage" => $donnees['dureePointage']
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setRendezvous($dateRendezvous,$titreRendezvous,$matUser){//Ajoute un nouveau pointage d'un enseignat dans une classe
+            $req="INSERT INTO `rendezvous`(`idRendezvous`,`dateRendezvous`,`titreRendezvous`,`matUser`) VALUES (NULL,:dateRendezvous,:titreRendezvous,:matUser)";
+            $params = array(
+                "dateRendezvous" => $dateRendezvous,
+                "titreRendezvous" => $titreRendezvous,
+                "matUser" => $matUser
+            );
+            return $this->insert($req,$params);
+        }
         //fin méthodes d'enregistement dans la base de données
 
     //méthodes de mise à jour dans la base de données
@@ -675,45 +795,45 @@ Class Requetes
         }
         
         public function updateChef($donnees){//Choix d'un chef
-        $req = "update eleve set role= 2 where matUser=:pseudo";
-        $params = array(
-            "pseudo"=> explode("|", $donnees["chefClasse"])[0]
-        );
-        return $this->update($req,$params);
-    }
+            $req = "update eleve set role= 2 where matUser=:pseudo";
+            $params = array(
+                "pseudo"=> explode("|", $donnees["chefClasse"])[0]
+            );
+            return $this->update($req,$params);
+        }
     
-    public function updateReinitChef($donnees){//Enlève l'ancien chef de classe
-        $req ="update eleve set role= 1 where role=2 and idClasse=:idClasse";
-        $params = array(
-            "idClasse"=>$donnees["idClasse"]
-        );
-        return $this->update($req,$params);
-    }
+        public function updateReinitChef($donnees){//Enlève l'ancien chef de classe
+            $req ="update eleve set role= 1 where role=2 and idClasse=:idClasse";
+            $params = array(
+                "idClasse"=>$donnees["idClasse"]
+            );
+            return $this->update($req,$params);
+        }
+
+        public function updateChefClasse($donnees){//Ajouter le chef au niveau de la table classe
+            $req = "update classe set chefClasse=:pseudo WHERE id=:idClasse";
+            $params = array(
+                "pseudo"=>$donnees["chefClasse"],
+                "idClasse"=>$donnees["idClasse"]
+            );
+            return $this->update($req,$params);
+        }
     
-    public function updateChefClasse($donnees){//Ajouter le chef au niveau de la table classe
-        $req = "update classe set chefClasse=:pseudo WHERE id=:idClasse";
-        $params = array(
-            "pseudo"=>$donnees["chefClasse"],
-            "idClasse"=>$donnees["idClasse"]
-        );
-        return $this->update($req,$params);
-    }
-    
-    public function updateAdjoint($donnees){//Choix d'un chef de classe
-        $req = "update eleve set role= 3 where matUser=:pseudo";
-        $params = array(
-            "pseudo"=>explode("|", $donnees["adjointChef"])[0]
-        );
-        return $this->update($req,$params);
-    }
-    
-    public function updateReinitAdjoint($donnees){//Enlève l'ancien chef de classe
-        $req = "update eleve set role= 1 WHERE role=3 and idClasse=:idClasse";
-        $params = array(
-            "idClasse"=>$donnees["idClasse"]
-        );
-        return $this->update($req,$params);
-    }
+        public function updateAdjoint($donnees){//Choix d'un chef de classe
+            $req = "update eleve set role= 3 where matUser=:pseudo";
+            $params = array(
+                "pseudo"=>explode("|", $donnees["adjointChef"])[0]
+            );
+            return $this->update($req,$params);
+        }
+
+        public function updateReinitAdjoint($donnees){//Enlève l'ancien chef de classe
+            $req = "update eleve set role= 1 WHERE role=3 and idClasse=:idClasse";
+            $params = array(
+                "idClasse"=>$donnees["idClasse"]
+            );
+            return $this->update($req,$params);
+        }
     
     public function updateAdjointClasse($donnees){//Ajouter l'adjoint eu niveau de la table classe
         $req = "update classe set adjointChef=:pseudo WHERE id=:idClasse";
@@ -765,6 +885,16 @@ Class Requetes
         );
         return $this->update($req,$params);
     }
+    
+    public function updateRendezvous($dateDebutRendezvous,$dateFinRendezvous,$idrendezvous){
+            $req = "UPDATE `rendezvous` SET `dateRendezvous`= :dateRendezvous, `dateFinRendezvous`= :dateFinRendezvous WHERE idRendezvous=:idRendezvous";
+            $params = array(
+                "idRendezvous" => $idrendezvous,
+                "dateRendezvous" => $dateDebutRendezvous,
+                "dateFinRendezvous" => $dateFinRendezvous
+            );
+            return $this->update($req,$params);
+        }
     
     //fin méthodes de mise à jour dans la base de données
 

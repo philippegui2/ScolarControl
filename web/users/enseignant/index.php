@@ -60,6 +60,29 @@ if(0)
                         exit();
                     }
                     break;
+                case "agenda":{//agenda
+                        $nomPage="Agenda scolaire";
+                        $navig3="agenda";
+                        //------------------------
+                        $rdv=$req->getRendezvous();
+                        $rendezvous=array();
+                        foreach ($rdvs as $key => $rdv){
+                            array_push(
+                                $rendezvous,
+                                array(
+                                        'id' => $rdv["idRendezvous"],
+                                        'title' => $rdv["titreRendezvous"],
+                                        'start' => $rdv["dateRendezvous"],
+                                        'end' => $rdv["dateRendezvous"],
+                                        'url' => "",
+                                        'color' => "green"//type 2 pour les autres types de rendez-vous
+                                )
+                            );
+                        }
+                        include_once("../../commun/vues/".$_REQUEST["road"].".php");
+                        exit();
+                    }
+                    break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;

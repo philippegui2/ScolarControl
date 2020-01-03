@@ -8,8 +8,16 @@
                 </button>
                 <strong>Super!</strong> utilisateur ajouté avec succès.
             </div>            
-        <?php }
-        ?>
+        <?php }?>
+        <?php 
+            if(isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="existe"){?>
+            <div class="alert alert-danger fade in">
+                <button data-dismiss="alert" class="close close-sm" type="button">
+                    <i class="icon-remove"></i>
+                </button>
+                <strong>Erreur!</strong> Ce matricule est déjà affecté à un utilisateur. Veuillez choisir un autre.
+            </div>            
+        <?php }?>
         <div class="panel panel-default">
             <div class="panel-heading">
                 Nouvel Utilisateur

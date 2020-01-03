@@ -6,6 +6,14 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
+                <a href="../admin/index.php?road=anneescolaire">
+                    <div class="col-lg-3">
+                        <div class="well">
+                            <h4>A. Scolaire</h4>
+                                <i class="fa fa-calendar fa-5x"></i>
+                        </div>
+                    </div>
+                </a>
                 <a href="../admin/index.php?road=departements">
                     <div class="col-lg-3">
                         <div class="well">

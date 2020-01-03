@@ -7,7 +7,7 @@
             <li><i class="fa fa-bars"></i><a href="../admin/?road=<?php echo $navig2Lien;?>"><?php echo $navig2;?></a></li>
             <?php }?>
             <?php if($navig3!=" "){?>
-            <li><i class="fa fa-square-o"></i><a href="../admin/?road=<?php echo $_REQUEST["road"];?>"> <?php echo $navig3;?></a></li>
+            <li><i class="fa fa-square-o"></i><a href="../admin/?road=<?php echo $_REQUEST["road"].'&param='.$_REQUEST['param'];?>"> <?php echo $navig3;?></a></li>
             <?php }?>
         </ol>
     </div>
