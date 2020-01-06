@@ -5,17 +5,22 @@
     session_start();
 
     include_once("../../commun/requetes.class.php");
+    include_once("modele/Requetes.class.php");
     include_once("../../../server/baseConf.php");
+
+    define("NOMPAGE", "Accueil");
+      define("ENTETEPAGE", "Entete");
+      include_once("menu.php");
 
 
     $requete=new Requetes(HOSTNAME, BASENAME, USERNAME, PASSWORD);
 
+    $requetes = new RequeteLocal(HOSTNAME,BASENAME,USERNAME,PASSWORD);
+
 
     if(isset($_REQUEST["road"]) && $_REQUEST["road"]=="accueil"){
 
-      define("NOMPAGE", "Accueil");
-      define("ENTETEPAGE", "Entete");
-      include_once("menu.php");
+      
 
       include_once("vues/accueil.php");
     }
@@ -27,9 +32,7 @@
     } */
     if (isset($_REQUEST['road']) && $_REQUEST['road'] == 'profil'){
 
-      define("NOMPAGE", "Accueil");
-      define("ENTETEPAGE", "Entete");
-      include_once("menu.php");
+     
       //création des variables de session
       $_SESSION['pseudo'] = $_GET['pseudo'];
       $pseudo = $_GET['pseudo'];
@@ -39,9 +42,7 @@
 
     if (isset($_REQUEST['road']) && $_REQUEST['road'] == "notes") {
       # code...
-      define("NOMPAGE", "Accueil");
-      define("ENTETEPAGE", "Entete");
-      include_once("menu.php");
+      
       //création des variables de session
       $_SESSION['pseudo'] = $_GET['pseudo'];
       $pseudo = $_GET['pseudo'];
@@ -50,9 +51,7 @@
 
     if (isset($_REQUEST['road']) && $_REQUEST['road'] == "lister") {
       # code...
-      define("NOMPAGE", "Accueil");
-      define("ENTETEPAGE", "Entete");
-      include_once("menu.php");
+      
       $_SESSION['pseudo'] = $_GET['pseudo'];
       $pseudo = $_GET['pseudo'];
       
@@ -80,9 +79,7 @@
           //j'insere dans la bdd   
                  
          $test = $requete->updatePassword($_SESSION['pseudo'],md5($password));
-          echo $_SESSION['pseudo'];
-          exit();
-         if($test){
+         if(!$test){
           echo '<meta http-equiv="Refresh" content="0;url=index.php?road=accueil">';
           exit();
         }else{
@@ -96,6 +93,27 @@
         }
 
       }
+
+      // la zone de traitement de la scolarite de l'etudiant
+
+      if (isset($_GET['road']) && $_GET['road']== 'scolarite') {
+        # code...
+        $info = $requetes->getInfoScolariteForStudent($_SESSION['user']['matUser']);
+        // var_dump($info);
+
+        var_dump($_SESSION);
+
+
+      }elseif (isset($_GET['road']) && $_GET['road']== 'evaluation') { //zone de traitement des evaluations de l'etudiant
+        # code...
+        // echo 'dev';
+        $classe = $requetes->getClasseForStudent($_SESSION['user']['matUser']);
+        $evaluations = $requetes->getInfoEvaluationForStudent($classe[0]['idClasse']);
+
+        var_dump($evaluations);
+      }
+
+      // 
       
 ?>
 
