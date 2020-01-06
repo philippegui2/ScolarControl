@@ -107,7 +107,7 @@ if(0)
                     }
                 case "evaluations":{
                         //param=idMatiere ; param2=idClasse
-                        echo $_REQUEST["param3"]; 
+                        //echo $_REQUEST["param3"]; 
                     }
                     break;
                 case "listeEleves":{
@@ -195,9 +195,11 @@ if(0)
             case "EVALUATIONvalider":{
                 //
                 $dateTime=implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"])))." ".$_REQUEST["heureEvaluation"].":".$_REQUEST["minuteEvaluation"].":00";
-                print_r($_REQUEST);
+                print_r($_SESSION["user"]["matUser"]);
+                $titre="Evaluation en ".$_REQUEST['param4'];
                 $req->setEvaluation($_REQUEST,$dateTime);//ajoute de l'évaluation
-                $req->setRendezvous(implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"]))),"Evaluation",$_SESSION["user"]["matUser"]);//ajout de l'évaluation dans l'agenda
+                
+                $req->setRendezvous(implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"]))),$titre,$_SESSION["user"]["matUser"]);//ajout de l'évaluation dans l'agenda
                 header("Location:index.php?road=allnotes&param=".$_REQUEST['param']."&param2=4&alert=ok");
                 exit();
             }

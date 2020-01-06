@@ -621,7 +621,6 @@ if(0)
             case "AGENDAsetRendezvous":{
                     //Enregistrer un rendez-vous
                     $req->setRendezvous($_REQUEST['laDate'],$_REQUEST['titre'],$_SESSION["user"]["matUser"]);
-                    //print_r($_REQUEST);
                     exit();
                 }
                 break;
