@@ -1,7 +1,7 @@
 <div class="col-lg-12 col-md-12 col-sx-12">
-    <section class="panel col-lg-4 col-md-4 col-sx-4" >                        
+    <section class="panel col-lg-5 col-md-5 col-sx-5" >                        
         <header class="panel-heading">
-            Préparer une évaluation
+            Préparer une évaluation en <?php echo $_REQUEST['param4'];?>
         </header>
         <div class="panel-body">
             <div class="col-lg-12 col-md-12 col-sx-12">
@@ -9,6 +9,7 @@
                     <input type="hidden" name="idCours" value="<?php echo $_REQUEST["param3"];?>"/>
                     <input type="hidden" name="param" value="<?php echo $_REQUEST["param"];?>"/>
                     <input type="hidden" name="param2" value="<?php echo $_REQUEST["param2"];?>"/>
+                    <input type="hidden" name="param4" value="<?php echo $_REQUEST["param4"];?>"/>
                     <label>Date de l'évaluation</label>
                     <div class="form-group input-group"> 
                         <span class="input-group-addon"><i class="fa fa-calendar fa-faw"></i></span>

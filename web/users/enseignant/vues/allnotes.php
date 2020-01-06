@@ -48,9 +48,9 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                Liste des notes en <span class="label label-info"><?php echo $notes[0]["libelle"];?></span> 
+                Liste des notes en <span class="label label-info"><?php echo $_REQUEST["param4"];?></span> 
                 &nbsp;<a class="btn btn-primary pull-right" href="index.php?road=cahierTexte&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>"> Voir le cahier de texte</a>
-                &nbsp;<a class="btn btn-success pull-right" href="index.php?road=evaluations&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>&param3=<?php echo $_REQUEST["param3"];//idClasse?>"> Préparer un examen</a>
+                &nbsp;<a class="btn btn-success pull-right" href="index.php?road=evaluations&param=<?php echo $_REQUEST["param"];//idMatiere?>&param2=<?php echo $_REQUEST["param2"];//idClasse?>&param3=<?php echo $_REQUEST["param3"];//idClasse?>&param4=<?php echo $_REQUEST["param4"];//idClasse?>"> Préparer un examen</a>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
