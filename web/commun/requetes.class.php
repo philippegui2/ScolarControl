@@ -309,7 +309,7 @@ Class Requetes
         }
 
        public function getMatiere(){//récupère les matières
-            $req= "SELECT * FROM `matiere` order by libelle";
+            $req= "SELECT * FROM `matiere` WHERE supprimer=0 order by libelle";
             $params = array();
             return $this->select($req,$params);
         }
@@ -969,6 +969,14 @@ Class Requetes
             "idMatiere"=>$donnees["idMatiere"]
         );
         return $this->delete($req,$params);
+    }
+    
+    public function deleteMatiere($donnees){//Affecter une matiere a une classe
+        $req = "update matiere set supprimer=1 where id=:idMatiere";
+        $params = array(
+            "idMatiere"=>$donnees['idMatiere']
+        );
+        return $this->update($req,$params);
     }
     
     // recuperation de la liste des mmatieres d'un eleve

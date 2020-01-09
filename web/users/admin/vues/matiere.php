@@ -15,6 +15,13 @@
             </button>
             <strong>Super!</strong> Modification effectuée avec succès.
         </div>
+    <?php }elseif (isset($_REQUEST["alert"]) and $_REQUEST["alert"]=="supprimer") {?>
+      <div class="alert alert-success fade in" id="alertOK">
+            <button data-dismiss="alert" class="close close-sm" type="button">
+                <i class="icon-remove"></i>
+            </button>
+            <strong>Super!</strong> Suppression effectuée avec succès.
+        </div>
     <?php }
     ?>
     <div class="col-lg-10">
@@ -140,7 +147,7 @@
                                     <div class="btn-group">
                                       <a class="btn btn-primary" href="#"   identifiant="<?php echo $matiere["id"];?>" class="active" data-toggle="modal" data-target="#ajoutEleveClasse" onclick="MATIEREgetClasseMatiere(this.getAttribute('identifiant'))"    ><i class="icon_pencil"></i></a>
                                       <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                                      <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a>
+                                      <a identifiant="<?php echo $matiere["id"]."*".$matiere["libelle"]."*".$user['nomUser'];?>" href="#" data-toggle="modal" data-target="#modifInfosUser" class="btn btn-danger" onclick="transfertInfo(this.getAttribute('identifiant'));"><i class="icon_close_alt2"></i></a>
                                     </div>
                                 </td>
                             </tr>                                
@@ -149,6 +156,32 @@
                             ?>
                         </tbody>
                     </table>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modifInfosUser" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                  <h4> Supprimer une matière</h4>
+                                </div> <!-- fin modal header -->
+
+                                <div class="modal-body">
+
+                                  <h4> Voulez-vous vraiment supprimer <span id="noui"></span> ?</h4>
+
+                                </div><!-- fin modal body -->
+
+                                <div class="modal-footer">
+                                    <form method="POST" action="../admin/index.php">
+                                      <input id="nouiID" type="hidden" name="idMatiere" value="">
+                                      <button type="submit" class="btn btn-danger" name="action" value="MATIEREsupprimer">OUI</button>
+                                      <button type="button" class="btn btn-info" data-dismiss="modal">NON</button>
+                                    </form>
+                                </div><!-- /.modal-content -->
+
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </div>
                 </div>
                 <!-- /.table-responsive -->
                                                      

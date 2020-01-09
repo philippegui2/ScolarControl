@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Zone de recherche</h4>
+                <h4 class="modal-title" id="myModalLabel">Choisir les critères de recherche</h4>
             </div>
             <div class="panel-body" style="z-index: 3600;">
                 <form role="form" method="POST" action="index.php">

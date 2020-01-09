@@ -14,7 +14,7 @@
                         <a class="btn btn-primary" href="../enseignant/index.php?road=listeEleves&param=<?php echo $classe['idClasse'];?>&param2=<?php echo $classe['libClasse']." | ".$classe['libDepartement']; ?>">Liste des élèves</a>
 
 
-                        <a class="btn btn-success" href="../enseignant/index.php?road=evaluations&param=<?php echo $classe['idClasse'];?>">Evaluation</a>
+                        <a class="btn btn-success">Evaluation</a>
                         <a class="btn btn-info" href="../enseignant/index.php?road=matieres&param=<?php echo $classe['idClasse'];?>">Matières</a>
                     </div>
                   </div>

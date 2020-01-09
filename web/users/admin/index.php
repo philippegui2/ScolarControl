@@ -8,11 +8,10 @@
 */
 session_start();
 ob_start();
-if(0)
-  {
+if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
      header("Location:../../index.php");
       exit();
-  }
+}
 ?>
 <?php
     define("NOMPAGE", "Accueil");
@@ -166,12 +165,20 @@ if(0)
                     }
                     break;
                 case "payement":{//Zone de gestion des payements de scolarité
+                        $nomPage="Payement scolaire";
+                        $navig3="payement";
+                        //------------------------
                         $offres=$req->getOffre();//récupération de toutes les offres
                         $usersEleves=$req->getAllEleve();
                         $classes=$req->getClasseDepartement();
                     }
                     break;
                 case "recherchePayement":{//recherche avancée sur les payements
+                        $nomPage="Recherche payement";
+                        $navig2="Payement scolaire";
+                        $navig2Lien="payement";
+                        $navig3="recherche";
+                        //------------------------
                         $departements=$req->getDepartement();//recupère la liste des départements
                         $offres=$req->getOffre();
                         $eleves=$_SESSION["resulaeRecherche"];
@@ -489,6 +496,12 @@ if(0)
             case "POINTAGEValider":{
                     $req->setPointage($_REQUEST);
                     header("Location:?road=pointage&alert=ok");
+                    exit();
+                }
+            break;
+            case "MATIEREsupprimer":{
+                    $req->deleteMatiere($_REQUEST);
+                    header("Location:?road=matiere&alert=supprimer");
                     exit();
                 }
             break;
