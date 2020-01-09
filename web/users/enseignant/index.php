@@ -8,11 +8,10 @@
 */
 session_start();
 ob_start();
-if(0)
-  {
+if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
      header("Location:../../index.php");
-     exit();
-  }
+      exit();
+}
 ?>
 
 <?php
@@ -35,10 +34,14 @@ if(0)
                     }
                     break;
                 case "accueil":{
-                    
+                        $nomPage="Accueil";
+                        //----------------------
                     }
                     break;
                 case "listeclasses":{
+                        $nomPage="Liste de mes classes";
+                        $navig3="mes classes";
+                        //----------------------
                         $couleur=array('panel-primary','panel-success','panel-warning','panel-danger','panel-info');
                         $classes=$req->getClasseByEnseignant($_SESSION["user"]["matUser"]);
                     }
@@ -64,7 +67,7 @@ if(0)
                         $nomPage="Agenda scolaire";
                         $navig3="agenda";
                         //------------------------
-                        $rdv=$req->getRendezvous();
+                        $rdvs=$req->getRendezvous();
                         $rendezvous=array();
                         foreach ($rdvs as $key => $rdv){
                             array_push(
@@ -85,8 +88,6 @@ if(0)
                     break;
                     case "infosPointage":{
                         $nomPage="Rechercher";
-                        $navig2="pointage";
-                        $navig2Lien="pointage";
                         $navig3="recherche pointage";
                         //----------------------
                         $pointages=$req->getPointageByFormateur($_SESSION["user"]["matUser"]);
@@ -96,6 +97,7 @@ if(0)
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
+            include_once("vues/navigation.php");//insertion de la zone de navigation
             include_once("vues/".$_REQUEST["road"].".php");
         }
         else{
@@ -157,7 +159,7 @@ if(0)
                     echo "la page recherchée n'existe pas ou est en construction param";
                     break;
             }
-
+            include_once("vues/navigationParam.php");//insertion de la zone de navigation
             include_once("vues/".$route.".php");
         }
 

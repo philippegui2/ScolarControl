@@ -62,7 +62,6 @@
 
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-                      <!--"Fin ce qui apparait quand on clique sur le bouton "modifier" de voir profile-->
                     </div>
                 </div>
                 <!-- /.table-responsive -->
