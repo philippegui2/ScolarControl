@@ -205,6 +205,12 @@
                           <span>Agenda</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a class="" href="../admin/?road=statistiques">
+                          <i class="fa fa-bar-chart-o fa-fw"></i>
+                          <span>Statistiques</span>
+                      </a>
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>

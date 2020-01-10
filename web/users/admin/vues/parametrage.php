@@ -52,7 +52,22 @@
                     </div>
                 </div>
                 </a>
-
+                <a href="../admin/index.php?road=payement">
+                <div class="col-lg-3">
+                    <div class="well">
+                        <h4>Payement</h4>
+                            <i class="fa fa-money fa-5x"></i>
+                    </div>
+                </div>
+                </a>
+                <a href="../admin/index.php?road=agenda">
+                <div class="col-lg-3">
+                    <div class="well">
+                        <h4>Agenda</h4>
+                            <i class="fa fa-calendar fa-5x"></i>
+                    </div>
+                </div>
+                </a>
                 
 
             </div>

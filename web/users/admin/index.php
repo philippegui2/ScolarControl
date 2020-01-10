@@ -214,7 +214,11 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                         }    
                     }
                     break;
-                case "test":{//pointage
+                case "statistiques":{//pointage
+                        
+                    }
+                    break;
+                case "test":{//pointagestatistiques
                         
                     }
                     break;
