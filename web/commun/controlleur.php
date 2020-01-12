@@ -30,7 +30,7 @@
                 "pseudoUser" => $user["pseudoUser"],
                 "statutUser" => $user["statutUser"],
                 "sexeUser" => $user["sexeUser"], 
-                "naissanceUser" => $user["naissanceUser"]
+                "naissanceUser" => $user["naissanceUser"],
             );
         //$_SESSION["requete"]=$requete;
 

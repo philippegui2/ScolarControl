@@ -108,7 +108,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu">
                   <li class="active">
-                      <a class="" href="index.html">
+                      <a class="" href="./?road=accueil">
                           <i class="icon_house_alt"></i>
                           <span>Accueil</span>
                       </a>

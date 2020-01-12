@@ -20,48 +20,43 @@
 </head>
 <body>
     <div class="container">
-        <?php
-                        
-            include_once("../../commun/requetes.class.php");
-            include_once("../../../server/baseConf.php");
+            <div class="row mb-4">
+                <h1 class="text-center">Bulletin de Notes</h1>
+            </div>
+            <div class="bg-light py-3 px-3">
+                   
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">Nom de la matière</th>
+                            <th scope="col">Volume Horaire</th>
+                            <th scope="col">Note du Controle</th>
+                            <th scope="col">Note du TP</th>
+                            <th scope="col">Note d'Examen</th>
 
-            $requete=new Requetes(HOSTNAME, BASENAME, USERNAME, PASSWORD);
-            //appel de la requete qui renvoie les notes d'un eleve
-            $resultat = $requete->bulletin($_SESSION['pseudo']);
-        ?>
-            
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nom de la matière</th>
-                <th scope="col">Volume Horaire</th>
-                <th scope="col">Note du Controle</th>
-                <th scope="col">Note du TP</th>
-                <th scope="col">Note d'Examen</th>
-
-                </tr>
-            </thead>
-            <tbody>
-        <?php
-            for ($i=0; $i < 4; $i++) { 
-             
-        ?>
-                <tr>
-                <th scope="row"><?=$i+1?></th>
-                    <td><?= $resultat[$i]['libelle'] ?> </td>
-                    <td>12H</td>
-                    <td><?= $resultat[$i]['noteControle'] ?> </td>
-                    <td><?= $resultat[$i]['noteTP'] ?> </td>
-                    <td><?= $resultat[$i]['noteExamen'] ?> </td>
-                </tr>
-                
-            <?php
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                foreach ($notes as $key => $note) {
+                                    # code...             
+                            ?>
+                                    <tr>
+                                    <!-- <th scope="row"><?=$i+1?></th> -->
+                                        <td><?= $note['libelle'] ?> </td>
+                                        <td>12H</td>
+                                        <td><?= $note['noteControle'] ?> </td>
+                                        <td><?= $note['noteTP'] ?> </td>
+                                        <td><?= $note['noteExamen'] ?> </td>
+                                    </tr>
                                     
-            }
-            ?>
-            </tbody>
-        </table>
+                                <?php
+                                                        
+                                }
+                                ?>
+                        </tbody>
+                    </table>
+            </div>    
     </div>
 </body>
 </html>

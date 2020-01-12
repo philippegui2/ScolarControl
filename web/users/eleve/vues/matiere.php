@@ -26,36 +26,34 @@
 </head>
 <body>
     <div class="container">
-        <?php
-
-                  
-            include_once("../../commun/requetes.class.php");
-            include_once("../../../server/baseConf.php");
-
-
-            $requete=new Requetes(HOSTNAME, BASENAME, USERNAME, PASSWORD);
-            $resultat = $requete->listeMatiere($_SESSION['pseudo']);
-
-        ?>
+            <div class="row mb-4">
+                <h1 class="text-center" style="margin-bottom: 20px;">Liste des Matières</h1>
+            </div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nom de la matière</th>
-                <th scope="col">Volume Horaire</th>
-                <th scope="col">Nom de L'Enseignant</th>
+                    <th scope="col">Nom de la matière</th>
+                    <th scope="col">Volume Horaire</th>
+                    <th scope="col">Nom de L'Enseignant</th>
+                    <th scope="col">Plus d'infos</th>
                 </tr>
             </thead>
             <tbody>
         <?php
-            for ($i=0; $i < 4; $i++) { 
-             
+            foreach ($matieres as $key => $matiere) {
+                # code...             
         ?>
                 <tr>
-                <th scope="row"><?=$i+1?></th>
-                    <td><?= $resultat[$i]['libelle'] ?> </td>
+                    <td><?= $matiere['libelle'] ?> </td>
                     <td>12H</td>
                     <td>Jean-Paul KOUNDOUNO</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="#"><button type="button" class="btn btn-info">Voir Notes</button></a>
+                            <a href="#"><button type="button" class="btn btn-secondary">Middle</button></a>
+                            <a href="#"><button type="button" class="btn btn-success">Programme</button></a>
+                        </div>
+                    </td>
                 </tr>
                 
             <?php
