@@ -215,7 +215,9 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "statistiques":{//pointage
-                        
+                        $nomPage="Statistiques";
+                        $navig3="statistiques";
+                        //------------------------
                     }
                     break;
                 case "test":{//pointagestatistiques
@@ -286,15 +288,15 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
-                if($req->getUserByid($_REQUEST["matUser"])){
+                if($req->getUserByid($_REQUEST["matUser"])){//vérifier si le matricule de l'utilisateur existe
                     header("Location:index.php?road=ajouter&alert=existe");
                     exit();
                 }else{
                     $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
-                    if($chemin["0"]==1){
+                    if($chemin["0"]==1){//si la photo a été renseignée
                         $req->setUser($_REQUEST,$chemin["1"]);//on ajoute les données dans la base de données
-                    }else{
-                        $req->setUser($_REQUEST,"../../img/defaultUser.jpg");
+                    }else{//si la photo n'a pa été renseignée
+                        $req->setUser($_REQUEST,"../../img/defaultUser.jpg");//on ajoute les données avec le photo par défaut
                     }
                     if($_REQUEST["statutProfil"]==2){
                         $req->setEleve($_REQUEST);

@@ -349,7 +349,7 @@ Class Requetes
         }
         
         public function getMatiereByEnseignantAndClasse($idClasse,$idUser){//récupère la liste des matières enseignées par un enseignant donné dans une classe donnée
-            $req="SELECT m.id idMatiere, m.libelle libelleMatiere, cours.idCours idCours from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.matUser=:idUser";
+            $req="SELECT m.id idMatiere, m.libelle libelleMatiere, cours.idCours idCours from `matiere-classe` mc INNER JOIN matiere m ON mc.idMatiere=m.id INNER JOIN cours ON mc.idMatiere=cours.idMatiere WHERE mc.idClasse=:idClasse and cours.idClasse=:idClasse and cours.matUser=:idUser";
             $params = array(
                     "idClasse" => $idClasse,
                     "idUser"   => $idUser
@@ -474,20 +474,20 @@ Class Requetes
         public function setUser($donnees,$photo){//enregistrement des nouveaux utilisateurs
             $req = "INSERT INTO `users` (`matUser`, `prenomUser`, `nomUser`, `pseudoUser`, `sexeUser`, `naissanceUser`, `lieuNaissance`, `adresseUser`, `contactUser`, `passwordUser`, `dateInscription`, `photo`,`supprimer`, `statutUser`) VALUES (:matUser, :prenomUser, :nomUser, :pseudoUser, :sexeUser, :naissanceUser, :lieuNaissance, :adresseUser, :contactUser,:passwordUser, :dateInscription, :photo,:supprimer, :statutUser)";
             $params = array(
-                    "matUser" => $donnees["matUser"],
-                    "prenomUser" => $donnees["prenomUser"],
-                    "nomUser" => mb_strtoupper($donnees["nomUser"]),
-                    "pseudoUser" => $donnees["matUser"],
-                    "sexeUser" => $donnees["sexeUser"],
-                    "naissanceUser" => implode("-",array_reverse(explode("/",$donnees["naissanceUser"]))),
-                    "lieuNaissance" => $donnees["lieuNaissanceUser"],
-                    "adresseUser" => $donnees["adresseUser"],
-                    "contactUser" => $donnees["contactUser"],
+                    "matUser" => htmlspecialchars($donnees["matUser"]),
+                    "prenomUser" => htmlspecialchars($donnees["prenomUser"]),
+                    "nomUser" => htmlspecialchars(mb_strtoupper($donnees["nomUser"])),
+                    "pseudoUser" => htmlspecialchars($donnees["matUser"]),
+                    "sexeUser" => htmlspecialchars($donnees["sexeUser"]),
+                    "naissanceUser" => htmlspecialchars(implode("-",array_reverse(explode("/",$donnees["naissanceUser"])))),
+                    "lieuNaissance" => htmlspecialchars($donnees["lieuNaissanceUser"]),
+                    "adresseUser" => htmlspecialchars($donnees["adresseUser"]),
+                    "contactUser" => htmlspecialchars($donnees["contactUser"]),
                     "passwordUser" => MD5($donnees["matUser"]),
                     "dateInscription" => date("Y-m-d"),
                     "photo" => $photo,
                     "supprimer" => 0,
-                    "statutUser" => $donnees["statutProfil"]
+                    "statutUser" => htmlspecialchars($donnees["statutProfil"])
             );
             return $this->insert($req,$params);
         }
@@ -495,8 +495,8 @@ Class Requetes
         public function setEleve($donnees){//ajout d'un élève
             $req = "INSERT INTO `eleve` (`matUser`, `idClasse`) VALUES (:matUser, :idClasse)";
             $params = array(
-             "matUser" => $donnees["matUser"],
-             "idClasse" => $donnees["classeEleve"]
+             "matUser" => htmlspecialchars($donnees["matUser"]),
+             "idClasse" => htmlspecialchars($donnees["classeEleve"])
             );
             return $this->insert($req,$params);
         }
@@ -504,7 +504,7 @@ Class Requetes
         public function setFormateur($donnees){//ajout d'un enseignat
             $req = "INSERT INTO `formateur` (`matUser`) VALUES (:matUser)";
             $params = array(
-             "matUser" => $donnees["matUser"]
+             "matUser" => htmlspecialchars($donnees["matUser"])
             );
             return $this->insert($req,$params);
         }
@@ -521,8 +521,8 @@ Class Requetes
         public function setDepartement($donnees){//enregistrement des nouveaux départements
             $req = "INSERT INTO `departement` (`id`, `libelle`, `idAnnee`) VALUES (NULL, :libelle, :idAnnee)";
             $params = array(
-             "libelle" => $donnees["libDpt"],
-             "idAnnee" => $donnees["idAnnee"]
+             "libelle" => htmlspecialchars($donnees["libDpt"]),
+             "idAnnee" => htmlspecialchars($donnees["idAnnee"])
             );
             return $this->insert($req,$params);
         }
@@ -530,8 +530,8 @@ Class Requetes
         public function setClasse($donnees){//enregistrement des nouvelles classes
             $req = "INSERT INTO `classe` (`id`, `libelle`, `departement`) VALUES (NULL, :libelle, :departement)";
             $params = array(
-             "libelle" => $donnees["libDpt"],
-             "departement" => $donnees["departement"]
+             "libelle" => htmlspecialchars($donnees["libDpt"]),
+             "departement" => htmlspecialchars($donnees["departement"])
             );
             return $this->insert($req,$params);
         }
@@ -539,7 +539,7 @@ Class Requetes
         public function setMatiere($donnees){//enregistrement des nouvelles matières
             $req = "INSERT INTO `matiere` (`id`, `libelle`) VALUES (NULL, :libelle)";
             $params = array(
-                "libelle" => $donnees["designation"]
+                "libelle" => htmlspecialchars($donnees["designation"])
             );
             return $this->insert($req,$params);
         }
@@ -585,9 +585,9 @@ Class Requetes
         public function setClasseMatiere($classe,$matiere,$coefficient){//enregistrement des nouvelles classes
             $req = "INSERT INTO `matiere-classe` (`idMatiere`,`idClasse`,`coefficient`) VALUES (:idMatiere,:idClasse,:coefficient)";
             $params = array(
-             "idMatiere" => $matiere,
-             "idClasse" => $classe,
-             "coefficient" => $coefficient,
+             "idMatiere" => htmlspecialchars($matiere),
+             "idClasse" => htmlspecialchars($classe),
+             "coefficient" => htmlspecialchars($coefficient),
             );
             return $this->insert($req,$params);
         }
@@ -595,9 +595,9 @@ Class Requetes
         public function setCours($idEnseignant,$idMatiere,$idClasse){//récupère la liste des matières enseignées par un enseignant donné
             $req="INSERT INTO `cours` (`matUser`, `idMatiere`,`idClasse`,`idCours`) VALUES (:matUser, :idMatiere, :idClasse,NULL)";
             $params = array(
-                "matUser" => $idEnseignant,
-                "idMatiere" => $idMatiere,
-                "idClasse" => $idClasse
+                "matUser" => htmlspecialchars($idEnseignant),
+                "idMatiere" => htmlspecialchars($idMatiere),
+                "idClasse" => htmlspecialchars($idClasse)
             );
             return $this->insert($req,$params);
         }
@@ -605,10 +605,10 @@ Class Requetes
         public function setMessage($correspondant,$expediteur,$message,$objet){//récupère la liste des matières enseignées par un enseignant donné
             $req="INSERT INTO `message` (`idMessage`,`objetMessage`,`expediteurMessage`,`correspondant`,`contenuMessage`) VALUES (NULL,:objetMessage,:expediteurMessage,:correspondant,:contenuMessage)";
             $params = array(
-                "objetMessage" => $objet,
-                "expediteurMessage" => $expediteur,
-                "correspondant" => $correspondant,
-                "contenuMessage" => $message
+                "objetMessage" => htmlspecialchars($objet),
+                "expediteurMessage" => htmlspecialchars($expediteur),
+                "correspondant" => htmlspecialchars($correspondant),
+                "contenuMessage" => htmlspecialchars($message)
             );
             return $this->insert($req,$params);
         }
@@ -616,11 +616,11 @@ Class Requetes
         public function setNote($donnees){//récupère la liste des matières enseignées par un enseignant donné
             $req="INSERT INTO `notes` (`matUser`, `idMatiere`,`noteControle`,`noteTP`,`noteExamen`) VALUES (:matUser, :idMatiere, :noteControle, :noteTP, :noteExamen)";
             $params = array(
-                "matUser" => $donnees["identifiant"],
-                "idMatiere" => $donnees["idMatiere"],
-                "noteControle" => $donnees["noteControle"],
-                "noteTP" => $donnees["noteTP"],
-                "noteExamen" => $donnees["noteExamen"]
+                "matUser" => htmlspecialchars($donnees["identifiant"]),
+                "idMatiere" => htmlspecialchars($donnees["idMatiere"]),
+                "noteControle" => htmlspecialchars($donnees["noteControle"]),
+                "noteTP" => htmlspecialchars($donnees["noteTP"]),
+                "noteExamen" => htmlspecialchars($donnees["noteExamen"])
             );
             return $this->insert($req,$params);
         }
@@ -628,9 +628,9 @@ Class Requetes
         public function setCahierTexte($donnees,$idPartie){//
             $req="INSERT INTO `cahiertexte` (`idMatiere`,`idClasse`,`idPartie`) VALUES (:idMatiere, :idClasse, :idPartie)";
             $params = array(
-                "idMatiere" => $donnees["idMatiere"],
-                "idClasse" => $donnees["idClasse"],
-                "idPartie" => $idPartie
+                "idMatiere" => htmlspecialchars($donnees["idMatiere"]),
+                "idClasse" => htmlspecialchars($donnees["idClasse"]),
+                "idPartie" => htmlspecialchars($idPartie)
             );
             return $this->insert($req,$params);
         }
@@ -715,6 +715,34 @@ Class Requetes
                 "dateRendezvous" => $dateRendezvous,
                 "titreRendezvous" => $titreRendezvous,
                 "matUser" => $matUser
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setDocument($donnees){//Ajoute un nouveau document
+            $req="INSERT INTO `documents`(`idDocument`,`titreDocument`,`auteurDocument`,`categorieDocument`,`typeDocument`,`anneeDocument`) VALUES (NULL,:titreDocument,:auteurDocument,:categorieDocument,:typeDocument,:anneeDocument)";
+            $params = array(
+                "titreDocument" => $donnees['titreDocument'],
+                "auteurDocument" => $donnees['auteurDocument'],
+                "categorieDocument" => $donnees['categorieDocument'],
+                "typeDocument" => $donnees['typeDocument'],
+                "anneeDocument" => $donnees['anneeDocument']
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setCategorieDocument($donnees){//Ajoute une nouvelle categorie
+            $req="INSERT INTO `categorie`(`idCategorie`,`libelleCategorie`) VALUES (NULL,:libelleCategorie)";
+            $params = array(
+                "libelleCategorie" => $donnees['libelleCategorie']
+            );
+            return $this->insert($req,$params);
+        }
+        
+        public function setTypeDocument($donnees){//Ajoute un nouveau type de document
+            $req="INSERT INTO `typedocument`(`idTypedocument`,`libelleType`) VALUES (NULL,:libelleType)";
+            $params = array(
+                "libelleType" => $donnees['libelleType']
             );
             return $this->insert($req,$params);
         }

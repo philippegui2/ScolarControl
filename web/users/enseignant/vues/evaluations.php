@@ -10,6 +10,7 @@
                     <input type="hidden" name="param" value="<?php echo $_REQUEST["param"];?>"/>
                     <input type="hidden" name="param2" value="<?php echo $_REQUEST["param2"];?>"/>
                     <input type="hidden" name="param4" value="<?php echo $_REQUEST["param4"];?>"/>
+                    <input type="hidden" name="classeEvaluation" value="<?php echo $classe['libelleClasse']." ".$classe['libelleDepartement'];?>"/>
                     <label>Date de l'évaluation</label>
                     <div class="form-group input-group"> 
                         <span class="input-group-addon"><i class="fa fa-calendar fa-faw"></i></span>
