@@ -93,6 +93,12 @@ if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
                         $pointages=$req->getPointageByFormateur($_SESSION["user"]["matUser"]);
                         $totalHeure=0;
                     }break;
+                    case "listeEvaluations":{
+                        $nomPage="Evaluations programées";
+                        $navig3="liste evaluation";
+                        //----------------------
+                        
+                    }break;
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -109,7 +115,8 @@ if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
                     }
                 case "evaluations":{
                         //param=idMatiere ; param2=idClasse
-                        //echo $_REQUEST["param3"]; 
+                        //echo $_REQUEST["param3"];
+                        $classe=$req->getClasseById($_REQUEST["param2"])[0];
                     }
                     break;
                 case "listeEleves":{
@@ -195,10 +202,9 @@ if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
             }
             break;
             case "EVALUATIONvalider":{
-                //
+                //param=idMatiere, param2=idClasse, param3=idCours, param4=libelleMatiere 
                 $dateTime=implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"])))." ".$_REQUEST["heureEvaluation"].":".$_REQUEST["minuteEvaluation"].":00";
-                print_r($_SESSION["user"]["matUser"]);
-                $titre="Evaluation en ".$_REQUEST['param4'];
+                $titre="Evaluation en ".$_REQUEST['param4']." ".$_REQUEST['classeEvaluation'];
                 $req->setEvaluation($_REQUEST,$dateTime);//ajoute de l'évaluation
                 
                 $req->setRendezvous(implode("-",array_reverse(explode("/",$_REQUEST["dateEvaluation"]))),$titre,$_SESSION["user"]["matUser"]);//ajout de l'évaluation dans l'agenda

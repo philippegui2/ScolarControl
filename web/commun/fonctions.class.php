@@ -100,11 +100,11 @@ class Fonctions{
         $mail->Body =  $message;// le corps de texte du mail en HTML
         $mail->AltBody =  $alternative;// le corps de texte du mail en texte brut si le HTML n'est pas supporté
 
-        if(!$mail->Send()) { // envoi du mail
-        return "Mailer Error: " . $mail->ErrorInfo; // affichage des erreurs, s’il y en a
+        if(!$mail->Send()){ // envoi du mail
+            return "Mailer Error: " . $mail->ErrorInfo; // affichage des erreurs, s’il y en a
         }
-        else {
-        return  "Le message a bien été envoyé !";
+        else{
+            return  "Le message a bien été envoyé !";
         }
 
     }
