@@ -44,17 +44,26 @@
       # code...
       
       //création des variables de session
-      $_SESSION['pseudo'] = $_GET['pseudo'];
-      $pseudo = $_GET['pseudo'];
-      include_once('vues/note.php');   
+      // var_dump($_SESSION['user']); exit();
+      // $_SESSION['pseudo'] = $_GET['pseudo'];
+       $pseudo = $_SESSION['user']['matUser'];
+       $classe = $requetes->getClasseForStudent($pseudo)[0];
+
+        $notes = $requetes->getNoteForEtudiant($pseudo,$classe['idClasse']);
+       
+        // $notes = array_merge($notes,$classe);
+        // var_dump($notes); exit();
+       include_once('vues/note.php');   
     }
 
     if (isset($_REQUEST['road']) && $_REQUEST['road'] == "lister") {
       # code...
       
-      $_SESSION['pseudo'] = $_GET['pseudo'];
-      $pseudo = $_GET['pseudo'];
-      
+      $pseudo = $_SESSION['user']['matUser'];
+      $classe = $requetes->getClasseForStudent($pseudo)[0];
+
+      $matieres = $requetes->getMatieresByClasse($classe['idClasse']);
+
       include_once('vues/matiere.php');   
 
     }

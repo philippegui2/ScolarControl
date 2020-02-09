@@ -1,9 +1,7 @@
 
-
-
 <div class="row">
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../eleve/index.php?road=profil&pseudo=<?=$_GET['pseudo']?>">
+            <a class="" href="../eleve/index.php?road=profil">
 		<div class="info-box blue-bg">
 			<i class="fa fa-edit fa-fw"></i>
 			<div class="count">Consulter Mon Profil</div>
@@ -13,7 +11,7 @@
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <a class="" href="../eleve/index.php?road=lister&pseudo=<?=$_GET['pseudo']?>">
+            <a class="" href="../eleve/index.php?road=lister">
 		<div class="info-box brown-bg">
 			<i class="fa fa-table fa-fw"></i>
 			<div class="count">Matières</div>
@@ -23,7 +21,7 @@
 	</div><!--/.col-->
 
 	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-		<a class="" href="../eleve/index.php?road=notes&pseudo=<?=$_GET['pseudo']?>">
+		<a class="" href="../eleve/index.php?road=notes">
 		<div class="info-box dark-bg">
 			<i class="fa fa-thumbs-o-up"></i>
 			<div class="count">Notes</div>

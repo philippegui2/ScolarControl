@@ -4938,3 +4938,7 @@ span.customSelect.changed {
 .customSelectInner {
     background:url(../img/customSelect-arrow.gif) no-repeat center right;
 }
+
+td, th{
+    text-align: center;
+}

@@ -12,7 +12,7 @@ if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
      header("Location:../../index.php");
       exit();
 }
-?>
+?> 
 
 <?php
     include_once("../../../server/baseConf.php");

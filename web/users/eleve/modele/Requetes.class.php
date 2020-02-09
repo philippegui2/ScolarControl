@@ -89,8 +89,40 @@ Class RequeteLocal
 
     // fonction qui retourne la classe d'un etudiant
     public function getClasseForStudent($matricule){
-        $req='select idClasse from eleve where eleve.matUser=:mat';
+        $req='  select idClasse from eleve 
+                inner join classe on classe.id=eleve.idClasse
+                where eleve.matUser=:mat';
         $params = array('mat'=>$matricule);
+
+        return $this->select($req,$params);
+    }
+
+    // retourne les notes d'un etudiant
+    public function getNoteForEtudiant($mat,$classe){
+
+        // $req ='select * from notes inner join matiere on notes.idMatiere=matiere.id where notes.matUser=:user';
+        $req = 'select * from matiereClasse 
+
+                inner join matiere on matiere.id=matiereClasse.idMatiere 
+                inner join notes on notes.idMatiere=matiereClasse.idMatiere
+
+                where idClasse=:classe and notes.matUser=:user';
+        $params= array(
+            "classe" => $classe,
+            "user" => $mat
+        );
+
+        return $this->select($req,$params);
+    }
+
+    // retourne la liste des matieres d'une classe pour leleve
+    public function getMatieresByClasse($classe){
+        $req='select * from matiere 
+                inner join matiereClasse on matiere.id=matiereClasse.idMatiere
+                where matiereClasse.idClasse=:classe';
+        $params = array(
+            "classe" => $classe
+        );
 
         return $this->select($req,$params);
     }
