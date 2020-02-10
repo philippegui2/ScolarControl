@@ -56,6 +56,7 @@
                                     <form method="POST" action="../admin/index.php">
                                       <input id="nouiID" type="hidden" name="matUser" value="">
                                       <button type="submit" class="btn btn-danger" name="action" value="LISTERsupprimer">OUI</button>
+                                      <input name="AdresseIP" type="hidden">
                                       <button type="button" class="btn btn-info" data-dismiss="modal">NON</button>
                                     </form>
                                 </div><!-- /.modal-content -->

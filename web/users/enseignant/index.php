@@ -35,7 +35,7 @@ if(0)
                     }
                     break;
                 case "accueil":{
-                    
+
                     }
                     break;
                 case "listeclasses":{
@@ -75,7 +75,7 @@ if(0)
                     }
                 case "evaluations":{
                         //param=idMatiere ; param2=idClasse
-                        echo $_REQUEST["param3"]; 
+                        echo $_REQUEST["param3"];
                     }
                     break;
                 case "listeEleves":{
@@ -92,7 +92,7 @@ if(0)
                         //récupération des matières enseignées par un enseignant donné dans une classe donnée
                         $matieres=$req->getMatiereByEnseignantAndClasse($_REQUEST["param"],$_SESSION["user"]["matUser"]);
                     }
-                    break; 
+                    break;
                 case "allnotes":{
                         //récupération de toutes les notes de tous les élèves d'une classe données dans une matière donnée
                             //param=id de la matière, param2=id de la classe
@@ -169,7 +169,7 @@ if(0)
             break;
             default:
                echo "Cette requete est inconnue";
-    
+
         }
     }else{ //zone de traitement des appuis de bouton
         echo "neutre";

@@ -29,12 +29,13 @@
     <link rel="stylesheet" href="../../css/owl.carousel.css" type="text/css">
     <link href="../../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
     <!-- Custom styles -->
-    <link rel="stylesheet" href="../../css/fullcalendar.css">
-    <link href="../../css/widgets.css" rel="stylesheet">
-    <link href="../../css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/fullcalendar.css" />
+    <link href="../../css/widgets.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
     <link href="../../css/style-responsive.css" rel="stylesheet" />
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../../css/owl.carousel.min.css" rel="stylesheet"/>
     <style>
         .loader {
           border: 16px solid #f3f3f3;
@@ -114,7 +115,7 @@
                                 <a href="../enseignant/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
-                                <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
+                                <a href="../"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
                                 <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>

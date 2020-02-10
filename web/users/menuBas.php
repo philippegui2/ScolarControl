@@ -9,10 +9,11 @@
     <script src="../js/bootstrap.min.js"></script>
     <!-- nice scroll -->
     <script src="../js/jquery.scrollTo.min.js"></script>
-    <script src="../js/jquery.nicescroll.js" type="text/javascript"></script> 
+    <script src="../js/jquery.nicescroll.js" type="text/javascript"></script>
     <!-- bootstrap select js-->
     <script src="../bSelect/dist/js/bootstrap-select.js"></script>
-   
+    <script src="../js/owl.carousel.js"></script>
+
 
 
 

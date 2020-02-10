@@ -14,11 +14,12 @@
     <script src="../../js/jquery.scrollTo.min.js"></script>
     <script src="../../js/jquery.nicescroll.js" type="text/javascript"></script><!--custome script for all page-->
     <script src="../../js/scripts.js"></script>
+    <script src="../../js/owl.carousel.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function (){
             $('#dateP').datepicker({
                 format: "dd/mm/yyyy",
-            });  
+            });
 
         });
         $(document).ready(function(){
@@ -27,7 +28,7 @@
     </script>
     <?php if($_REQUEST['road']=="allnotes" OR $_REQUEST['road']=="notes"){ ?>
     <script type="text/javascript">
-        function modifNote(idUser){ 
+        function modifNote(idUser){
             $(function(){
                 $("#nomPrenom").html($("#prenomUser"+idUser).html()+" "+$("#nomUser"+idUser).html());
                 $("#placeNoteControle").val($("#noteControle"+idUser).html());
@@ -47,22 +48,22 @@
     <?php }?>
     <script type="text/javascript">
         function CAHIERTEXTEconfirmEffectue(idPartie){//Page enseignantMatiere, affichage du tableau de correspondance enseignant et matières
-            //$("#partieEnVue").attr('value',idPartie); 
+            //$("#partieEnVue").attr('value',idPartie);
             alert(idPartie);
-            $(function(){  
+            $(function(){
                     //var param="index.php?reqajax=CAHIERTEXTEconfirmEffectue&param="+idPartie;
                     $.ajax({
                         type: 'GET',
-                        url: param, 
+                        url: param,
                         timeout: 5000,
                         cache: true,
                         success: function(data){
                             //var data2=JSON.parse(data);
                             //$("input").prop('checked', false);//décocher tout au départ
-                        }, 
+                        },
                         error: function(){
-                            alert('Erreur de connexion'); 
-                        } 
+                            alert('Erreur de connexion');
+                        }
                     });
                 }
             );

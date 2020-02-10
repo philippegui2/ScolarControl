@@ -13,6 +13,7 @@ if(0)
      header("Location:../../index.php");
       exit();
   }
+    error_reporting(0);
 ?>
 <?php
     define("NOMPAGE", "Accueil");
@@ -97,7 +98,7 @@ if(0)
                     break;
                 case "userEnseignant":{
                     }
-                    break; 
+                    break;
                 case "enseignantMatiere":{
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                         $matieres=$req->getMatiereClasseDepartement();//récupération des matières, la classe et département
@@ -135,11 +136,19 @@ if(0)
                     }
                     break;
                 case "test":{//récupération de tous les enseignants
-                        
+
                     }
                     break;
                         //print_r($chefsAndAdjoint);
-                
+              case "document":{//récupération de tous les enseignants
+
+                  }
+                  break;
+              case "informatique":{//récupération de tous les enseignants
+
+                  }
+                  break;
+
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -167,15 +176,15 @@ if(0)
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
                     }
                     break;
-  
+
                 case "emploi":{
-                 
+
                     $matieres = $req->getMatiereByClasse($_REQUEST["param"]);
                     $DefaultMatieres = $req->getCalendarByIdClasse($_REQUEST["param"]);
-                    
+
                 }break;
 
-                   
+
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -185,10 +194,10 @@ if(0)
         }
     /***
      * Fin zone de traitement des liens
-     * 
-     * 
-     * 
-     * 
+     *
+     *
+     *
+     *
      * Début zone de traitement des actions
      */
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
@@ -248,15 +257,15 @@ if(0)
 
               if(empty($DefaultMatieresValidation))
               {
-              
+
                $req->setEmploi($_REQUEST);
                header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=add');
-              
+
               }
               else{
                  $req->updateEmploi($_REQUEST);
                  header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=edit');
-              }              
+              }
             }
             break;
 
@@ -292,7 +301,7 @@ if(0)
                     $req->updateEnseignantResponsable($_REQUEST);//affectation du rôle de responsable à une classe
                     //$req->updateEnseignantResponsableDepartement($_REQUEST);//affectation du rôle de responsable à une classe
                     $req->updateResponsableClasse($_REQUEST);//affectation d'un prof reponsable à une classe
-                    //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement 
+                    //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement
                     $req->updateEraseResponsableDepartement($_REQUEST);
                 }
                 header("Location:?road=classes");
@@ -362,8 +371,8 @@ if(0)
         }
         /***
         * Fin zone de traitement des actions
-        * 
-        * 
+        *
+        *
         * Début zone de traitement des requêtes Ajax
         */
     }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
@@ -380,7 +389,7 @@ if(0)
                     $req->delCoursByEnseignant($matUser);//Suppression de toutes les anciennes affectations
                     foreach ($donnees as $donnee) {
                         list($idMatiere, $idClasse) = explode("*", $donnee);
-                           $req->setCours($matUser,$idMatiere,$idClasse);//insertion des nouvelles affectations 
+                           $req->setCours($matUser,$idMatiere,$idClasse);//insertion des nouvelles affectations
                     }
                     exit();
                 }
@@ -423,7 +432,7 @@ if(0)
                 break;
             case "envoyerSMS":{
                     print_r($_REQUEST["parametre3"]);
-                    
+
                     exit();
                 }
                 break;

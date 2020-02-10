@@ -10,15 +10,15 @@
 
     <title>ScolarControl |<?php echo NOMPAGE;?></title>
 
-    <!-- Bootstrap CSS -->    
+    <!-- Bootstrap CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- bootstrap theme -->
     <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    
+
     <!--external css-->
     <!-- font icon -->
     <link href="../css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="../css/font-awesome.min.css" rel="stylesheet" />    
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />
     <!-- full calendar css-->
     <link href="../assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
     <link href="../assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
@@ -32,7 +32,7 @@
     <link href="../css/widgets.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/style-responsive.css" rel="stylesheet" />
-    <link href="../css/xcharts.min.css" rel=" stylesheet"> 
+    <link href="../css/xcharts.min.css" rel=" stylesheet">
     <link href="../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
 
     <!-- bootstrapp select -->
@@ -63,18 +63,18 @@
 
             <div class="nav search-row" id="top_menu">
                 <!--  search form start -->
-                <ul class="nav top-menu">                    
+                <ul class="nav top-menu">
                     <li>
                         <form class="navbar-form">
                             <input class="form-control" placeholder="Search" type="text">
                         </form>
-                    </li>                    
+                    </li>
                 </ul>
-                <!--  search form end -->                
+                <!--  search form end -->
             </div>
 
-            <div class="top-nav notification-row">   
-                &copy; TeGuiLab, all rights reserved             
+            <div class="top-nav notification-row">
+                &copy; TeGuiLab, all rights reserved
                 <!-- notificatoin dropdown start-->
                 <ul class="nav pull-right top-menu">
                     <!-- user login dropdown start-->
@@ -95,7 +95,7 @@
                                 <a href="#"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
-                                <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
+                                <a href="document.php"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
                                 <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
@@ -106,14 +106,14 @@
                 </ul>
                 <!-- notificatoin dropdown end-->
             </div>
-      </header>      
+      </header>
       <!--header end-->
 
       <!--sidebar start-->
       <aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
-              <ul class="sidebar-menu">                
+              <ul class="sidebar-menu">
                   <li class="active">
                       <a class="" href="index.html">
                           <i class="icon_house_alt"></i>
@@ -126,15 +126,15 @@
                           <span>Widgets</span>
                       </a>
                   </li>
-                  <li>                     
+                  <li>
                       <a class="" href="chart-chartjs.html">
                           <i class="icon_piechart"></i>
                           <span>Charts</span>
-                          
+
                       </a>
-                                         
+
                   </li>
-                  
+
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -155,4 +155,3 @@
                 </div>
             </div>
               <!-- debu contenu page -->
-              
