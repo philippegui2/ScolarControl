@@ -133,7 +133,7 @@
                                 <a href="../admin/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
-                                <a href="../../commun/index.php?road=document"><i class="icon_document_alt"></i> Documentation</a>
+                                <a href="../admin/?road=document"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
                                 <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
