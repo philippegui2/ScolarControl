@@ -19,13 +19,9 @@
             $('#dateP').datepicker({
                 format: "dd/mm/yyyy",
             });  
-<<<<<<< HEAD
             $('#dateP2').datepicker({
                 format: "dd/mm/yyyy",
             });
-=======
-
->>>>>>> parent of 424556c... document
         });
         $(document).ready(function(){
             $('#table_list').DataTable();

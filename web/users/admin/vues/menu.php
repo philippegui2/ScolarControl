@@ -34,15 +34,11 @@
     <link href="../../css/style-responsive.css" rel="stylesheet" />
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> parent of e5a4e20... document
     <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
-    
+
     <link rel="stylesheet" href="../../bSelect/dist/css/bootstrap-select.css">
-    
+
     <!--script type='text/javascript' src='../../bootstrapSelect/jquery-1.8.3.js'></script-->
 
     <!--script type='text/javascript' src="../../bootstrapSelect/bootstrap.min.js.css"></script-->
@@ -135,15 +131,7 @@
                                 <a href="../admin/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                <a href="../admin?road=document"><i class="icon_document_alt"></i> Documentation</a>
-=======
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
->>>>>>> parent of 424556c... document
-=======
-                                <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
->>>>>>> parent of e5a4e20... document
                             </li>
                             <li>
                                 <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
