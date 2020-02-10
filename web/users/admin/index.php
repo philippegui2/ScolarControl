@@ -8,10 +8,12 @@
 */
 session_start();
 ob_start();
-if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
+if(0)
+  {
      header("Location:../../index.php");
       exit();
-}
+  }
+    error_reporting(0);
 ?>
 <?php
     define("NOMPAGE", "Accueil");
@@ -41,17 +43,8 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
 
                     }
                     break;
-                case "anneescolaire":{
-                        $nomPage="Année scolaire";
-                        $navig2="paramètres";
-                        $navig2Lien="parametrage";
-                        $navig3="anneescolaire";
-                        //-------------------
-                        $anneeScolaires=$req->getAnneeScolaire();
-                    }
-                    break;
                 case "ajouter":{
-                        $nomPage="Ajouter des utilisateurs";
+                        $nomPage="Ajouter utilisateur";
                         $navig3="Ajouter utilisateur";
                         //-------------------
                         $classesDpt=$req->getClasseDepartement();
@@ -59,16 +52,17 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "lister":{
-                        $nomPage="Liste des utilisateurs";
+                        $nomPage="Ajouter utilisateur";
                         $navig3="Lister utilisateur";
                         //-------------------
+                        $nomPage="Liste des utilisateurs";
                         $lister=active;
                         $users=$req->getUser();
                         $statuts=$req->getStatut();
                     }
                     break;
                 case "infos":{
-                        $nomPage="Infos des utilisateurs";
+                        $nomPage="Ajouter utilisateur";
                         $navig3="Infos utilisateur";
                         //-------------------
                         $infos=active;
@@ -77,9 +71,7 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "parametrage":{
-                        $nomPage="Parametrage général";
-                        $navig3="Paramètres";
-                        //-------------------
+
                     }
                     break;
                 case "notes":{//pas fini
@@ -87,43 +79,26 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "departements":{
-                        $nomPage="Gestion des départements";
-                        $navig3="Départements";
-                        //-------------------
                         $departements=$req->getDepartement();
-                        $anneeScolaires=$req->getAnneeScolaire();
                     }
                     break;
                 case "classes":{
-                        $nomPage="Gestion des classes";
-                        $navig3="Classes";
-                        //-------------------
                         $classesDpt=$req->getClasseDepartement();
                         $departements=$req->getDepartement();
                     }
                     break;
                 case "matiere":{
-                        $nomPage="Gestion des matières";
-                        $navig3="matières";
-                        //----------------------
+                        //$matieres=$req->getMatiereClasseDepartement();
                         $matieres=$req->getMatiere();
                         $classesDpt=$req->getClasseDepartement();
                     }
                     break;
                 case "users":{
-                        $nomPage="Gestion des utilisateurs";
-                        $navig3="utilisateurs";
-                        //----------------------
                     }
                     break;
                 case "userEnseignant":{
-                        $nomPage="Gestion des enseignants";
-                        $navig2="utilisateurs";
-                        $navig2Lien="users";
-                        $navig3="enseignants";
-                        //----------------------
                     }
-                    break; 
+                    break;
                 case "enseignantMatiere":{
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                         $matieres=$req->getMatiereClasseDepartement();//récupération des matières, la classe et département
@@ -142,11 +117,6 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "userTous":{//récupération de tous les responsables de département
-                        $nomPage="Tous les utilisateurs";
-                        $navig2="utilisateurs";
-                        $navig2Lien="users";
-                        $navig3="Tous les utilisateurs";
-                        //----------------------
                         $usersTous=$req->getUser();
                     }
                     break;
@@ -156,74 +126,29 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "enseignantMessage":{//récupération de tous les enseignants
-                        $nomPage="Message vers les enseignants";
-                        $navig2="gestion des enseigants";
-                        $navig2Lien="userEnseignant";
-                        $navig3="messages";
-                        //------------------------
                         $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
                     }
                     break;
                 case "payement":{//Zone de gestion des payements de scolarité
-                        $nomPage="Payement scolaire";
-                        $navig3="payement";
-                        //------------------------
                         $offres=$req->getOffre();//récupération de toutes les offres
                         $usersEleves=$req->getAllEleve();
                         $classes=$req->getClasseDepartement();
                     }
                     break;
-                case "recherchePayement":{//recherche avancée sur les payements
-                        $nomPage="Recherche payement";
-                        $navig2="Payement scolaire";
-                        $navig2Lien="payement";
-                        $navig3="recherche";
-                        //------------------------
-                        $departements=$req->getDepartement();//recupère la liste des départements
-                        $offres=$req->getOffre();
-                        $eleves=$_SESSION["resulaeRecherche"];
+                case "test":{//récupération de tous les enseignants
+
                     }
                     break;
-                case "pointage":{//pointage
-                        $nomPage="Pointage des enseignants";
-                        $navig2="gestion des enseigants";
-                        $navig2Lien="userEnseignant";
-                        $navig3="pointage";
-                        //------------------------
-                        $enseignants=$req->getUserByStatut(3);//récupération des nom de tous les enseignants
-                    }
-                    break;
-                case "agenda":{//agenda
-                        $nomPage="Agenda scolaire";
-                        $navig3="agenda";
-                        //------------------------
-                        $rdv=$req->getRendezvous();
-                        $rendezvous=array();
-                        foreach ($rdvs as $key => $rdv){
-                            array_push(
-                                $rendezvous,
-                                array(
-                                        'id' => $rdv["idRendezvous"],
-                                        'title' => $rdv["titreRendezvous"],
-                                        'start' => $rdv["dateRendezvous"],
-                                        'end' => $rdv["dateRendezvous"],
-                                        'url' => "",
-                                        'color' => "green"//type 2 pour les autres types de rendez-vous
-                                )
-                            );
-                        }    
-                    }
-                    break;
-                case "statistiques":{//pointage
-                        $nomPage="Statistiques";
-                        $navig3="statistiques";
-                        //------------------------
-                    }
-                    break;
-                case "test":{//pointagestatistiques
-                        
-                    }
-                    break;
+                        //print_r($chefsAndAdjoint);
+              case "document":{//récupération de tous les enseignants
+
+                  }
+                  break;
+              case "informatique":{//récupération de tous les enseignants
+
+                  }
+                  break;
+
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
@@ -251,61 +176,44 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                         $enseignants=$req->getEnseignantByDepartement($_REQUEST["param"]);//récupération des enseignants d'un département donnée (paramètre idClasse)
                     }
                     break;
+
                 case "emploi":{
+
                     $matieres = $req->getMatiereByClasse($_REQUEST["param"]);
                     $DefaultMatieres = $req->getCalendarByIdClasse($_REQUEST["param"]);
-                    
+
                 }break;
-                case "infosPointage":{
-                    $nomPage="Rechercher";
-                    $navig2="pointage";
-                    $navig2Lien="pointage";
-                    $navig3="recherche pointage";
-                    //----------------------
-                    if(isset($_REQUEST["param2"]) and $_REQUEST["param2"]=="present"){
-                        $pointages=$_SESSION["resultatRechercheInfosPointage"];
-                    }else{
-                        $pointages=$req->getPointageByFormateur($_REQUEST["param"]);
-                    }
-                    $totalHeure=0;
-                }break;
-                   
+
+
                 default:
                     echo "la page recherchée n'existe pas ou est en construction";
                     break;
             }
-            include_once("vues/navigationParam.php");//insertion de la zone de navigation
-            include_once("vues/".$route.".php");//insertion du bas de page 
+
+            include_once("vues/".$route.".php");
         }
     /***
      * Fin zone de traitement des liens
-     * 
-     * 
-     * 
-     * 
+     *
+     *
+     *
+     *
      * Début zone de traitement des actions
      */
     }else if(isset($_REQUEST["action"])){ //zone de traitement des actions
         switch($_REQUEST["action"]){
             case "AJOUTERajouter":{
-                if($req->getUserByid($_REQUEST["matUser"])){//vérifier si le matricule de l'utilisateur existe
-                    header("Location:index.php?road=ajouter&alert=existe");
-                    exit();
-                }else{
-                    $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
-                    if($chemin["0"]==1){//si la photo a été renseignée
-                        $req->setUser($_REQUEST,$chemin["1"]);//on ajoute les données dans la base de données
-                    }else{//si la photo n'a pa été renseignée
-                        $req->setUser($_REQUEST,"../../img/defaultUser.jpg");//on ajoute les données avec le photo par défaut
-                    }
-                    if($_REQUEST["statutProfil"]==2){
-                        $req->setEleve($_REQUEST);
-                    }elseif($_REQUEST["statutProfil"]==3){
-                        $req->setFormateur($_REQUEST);
-                    }
-                    header("Location:index.php?road=ajouter&alert=ok");
-                    exit();
+                $chemin=$fonctions->enregImg($_FILES["photoUser"], $_REQUEST["matUser"], "../images/users/");//on place l'image sur le serveur et on recupère le chemin pour l'atteindre
+                if($chemin["0"]==1){
+                    $req->setUser($_REQUEST,$chemin["1"]);//on ajoute les données dans la base de données
                 }
+                if($_REQUEST["statutProfil"]==2){
+                    $req->setEleve($_REQUEST);
+                }elseif($_REQUEST["statutProfil"]==3){
+                    $req->setFormateur($_REQUEST);
+                }
+                header("Location:index.php?road=ajouter&alert=ok");
+                exit();
             }
             break;
             case "DEPARTEMENTajouter":{
@@ -347,14 +255,17 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                 $DefaultMatieresValidation = $req->getCalendarByIdClasse($_REQUEST["idClasse"]);
                // print_r($DefaultMatieresValidation );
 
-              if(empty($DefaultMatieresValidation)){
+              if(empty($DefaultMatieresValidation))
+              {
+
                $req->setEmploi($_REQUEST);
                header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=add');
+
               }
               else{
                  $req->updateEmploi($_REQUEST);
                  header('Location:index.php?road=emploi&param='.$_REQUEST['idClasse'].'&alert=edit');
-              }              
+              }
             }
             break;
 
@@ -384,12 +295,13 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     $req->updateAdjointClasse($_REQUEST);
                 }
                 if($_REQUEST["respClasse"]!="vide"){//Insertion du responsable de classe
+
                     $req->updateReinitResponsable($_REQUEST);//modification de l'ancienne responsabilité de responsable de classe
                     //$req->updateReinitResponsableDepartement($_REQUEST);//--modification de l'ancienne responsabilité de responsable de département
                     $req->updateEnseignantResponsable($_REQUEST);//affectation du rôle de responsable à une classe
                     //$req->updateEnseignantResponsableDepartement($_REQUEST);//affectation du rôle de responsable à une classe
                     $req->updateResponsableClasse($_REQUEST);//affectation d'un prof reponsable à une classe
-                    //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement 
+                    //$req->updateEraseResponsableDepartement($_REQUEST);-- à retoucher idClasse ne correspond pas à idDepartement
                     $req->updateEraseResponsableDepartement($_REQUEST);
                 }
                 header("Location:?road=classes");
@@ -454,70 +366,13 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     exit();
                 }
             break;
-            case "INFOSPOINTAGErechercher":{
-                    if(isset($_REQUEST['dateDebut']) and isset($_REQUEST['dateFin']) and $_REQUEST['dateFin']!=""){
-                        $pointages=$req->getPointageByFormateurAndDateIntervall($_REQUEST['param'],implode("-",array_reverse(explode("/",$_REQUEST['dateDebut']))),implode("-",array_reverse(explode("/",$_REQUEST['dateFin'])))." 23:59:59");
-                    }else{
-                        $pointages=$req->getPointageByFormateurAndDateDebut($_REQUEST['param'],implode("-",array_reverse(explode("/",$_REQUEST['dateDebut']))));
-                    }
-                    $_SESSION["resultatRechercheInfosPointage"]=$pointages;
-                    header("Location:?road=infosPointage&param=".$_REQUEST['param']."&param2=present");
-                    exit();
-                }
-            break;
-            case "RECHERCHEPAYEMENTrechercher":{
-                    print_r($_REQUEST);
-                    if($_REQUEST['paye']=="oui"){
-                        if($_REQUEST['idDepartement']=="0"){
-                            $eleves=$req->getElevePayementOKDptAll($_REQUEST["idOffre"]);
-                        }else{
-                            if($_REQUEST['idClasse']=="0"){
-                                $eleves=$req->getElevePayementOKByDpt($_REQUEST["idOffre"],$_REQUEST["idDepartement"]);
-                            }else{
-                                $eleves=$req->getElevePayementOKByDptAndClasse($_REQUEST["idOffre"],$_REQUEST["idDepartement"],$_REQUEST["idClasse"]);
-                            }
-                        }
-                    }else if($_REQUEST['paye']=="non"){
-                        if($_REQUEST['idDepartement']=="0"){
-                            $eleves=$req->getElevePayementNODptAll($_REQUEST["idOffre"]);
-                        }else{
-                            if($_REQUEST['idClasse']=="0"){
-                                $eleves=$req->getElevePayementNOByDpt($_REQUEST["idOffre"],$_REQUEST["idDepartement"]);
-                            }else{
-                                $eleves=$req->getElevePayementNOByDptAndClasse($_REQUEST["idOffre"],$_REQUEST["idDepartement"],$_REQUEST["idClasse"]);
-                            }
-                        }
-                    }
-                    $_SESSION["resulaeRecherche"]=$eleves;
-                    header("Location:?road=recherchePayement");
-                    exit();
-                }
-            break;
-            case "ANNEESCOLAIREAjouter":{
-                    $req->setAnneeScolaire($_REQUEST);
-                    header("Location:?road=anneescolaire&alert=ok");
-                    exit();
-                }
-            break;
-            case "POINTAGEValider":{
-                    $req->setPointage($_REQUEST);
-                    header("Location:?road=pointage&alert=ok");
-                    exit();
-                }
-            break;
-            case "MATIEREsupprimer":{
-                    $req->deleteMatiere($_REQUEST);
-                    header("Location:?road=matiere&alert=supprimer");
-                    exit();
-                }
-            break;
             default:
                echo "i n'est ni égal à 2, ni à 1, ni à 0.";
         }
         /***
         * Fin zone de traitement des actions
-        * 
-        * 
+        *
+        *
         * Début zone de traitement des requêtes Ajax
         */
     }else if(isset($_REQUEST["reqajax"])){ //zone de traitement des requêtes AJAX
@@ -534,7 +389,7 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                     $req->delCoursByEnseignant($matUser);//Suppression de toutes les anciennes affectations
                     foreach ($donnees as $donnee) {
                         list($idMatiere, $idClasse) = explode("*", $donnee);
-                           $req->setCours($matUser,$idMatiere,$idClasse);//insertion des nouvelles affectations 
+                           $req->setCours($matUser,$idMatiere,$idClasse);//insertion des nouvelles affectations
                     }
                     exit();
                 }
@@ -577,7 +432,7 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                 break;
             case "envoyerSMS":{
                     print_r($_REQUEST["parametre3"]);
-                    
+
                     exit();
                 }
                 break;
@@ -613,6 +468,8 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                             $req->setMessage($tousEnseignant["matUser"],$_SESSION["user"]["prenomUser"]." ".$_SESSION["user"]["nomUser"],$_REQUEST["parametre"],$_REQUEST["parametre2"]);
                         }
                     }
+
+                    //print_r("Notif");
                     exit();
                 }
                 break;
@@ -623,51 +480,6 @@ if($_SESSION["user"]["statutUser"]!=1 AND !isset($_REQUEST["reqajax"])){
                 break;
             case "MATIEREgetClasseMatiere":{
                     print_r(json_encode($req->getMatiereClasseDepartementByMatiere($_REQUEST["param"])));
-                    exit();
-                }
-                break;
-            case "RECHERCHEPAYEMENTgetClassesByDepartement":{
-                    print_r(json_encode($req->getClasseByDpt($_REQUEST["param"])));
-                    exit();
-                }
-                break;
-            case "POINTAGEgetClassesByEnseignant":{
-                //Récupération des classes dans lesquelles enseigne un enseignant donné
-                    print_r(json_encode($req->getClasseByEnseignant($_REQUEST["param"])));
-                    exit();
-                }
-                break;
-            case "AGENDAsetRendezvous":{
-                    //Enregistrer un rendez-vous
-                    $req->setRendezvous($_REQUEST['laDate'],$_REQUEST['titre'],$_SESSION["user"]["matUser"]);
-                    exit();
-                }
-                break;
-            case "AGENDAupdateRendezvous":{
-                    //Enregistrer un rendez-vous
-                    $req->updateRendezvous($_REQUEST['laDateDebut'],$_REQUEST['laDateFin'],$_REQUEST['id']);
-                    print_r(json_encode($_REQUEST));
-                    exit();
-                }
-                break;
-            case "AGENDAgetRendezvous":{
-                    //Récupération des données de l'agenda
-                    $rdvs=$req->getRendezvous();
-                    $rendezvous=array();
-                    foreach ($rdvs as $key => $rdv){
-                        array_push(
-                            $rendezvous,
-                            array(
-                                'id' => $rdv["idRendezvous"],
-                                'title' => $rdv["titreRendezvous"],
-                                'start' => $rdv["dateRendezvous"],
-                                'end' => $rdv["dateFinRendezvous"],
-                                'url' => "",
-                                'color' => "green"//type 2 pour les autres types de rendez-vous
-                            )
-                        );
-                    }
-                    print_r(json_encode($rendezvous));
                     exit();
                 }
                 break;
