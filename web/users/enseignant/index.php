@@ -34,8 +34,12 @@ if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
                     }
                     break;
                 case "accueil":{
+<<<<<<< HEAD
                         $nomPage="Accueil";
                         //----------------------
+=======
+                    
+>>>>>>> parent of 424556c... document
                     }
                     break;
                 case "listeclasses":{
@@ -115,8 +119,12 @@ if($_SESSION["user"]["statutUser"]!=3 AND !isset($_REQUEST["reqajax"])){
                     }
                 case "evaluations":{
                         //param=idMatiere ; param2=idClasse
+<<<<<<< HEAD
                         //echo $_REQUEST["param3"];
                         $classe=$req->getClasseById($_REQUEST["param2"])[0];
+=======
+                        echo $_REQUEST["param3"]; 
+>>>>>>> parent of 424556c... document
                     }
                     break;
                 case "listeEleves":{
