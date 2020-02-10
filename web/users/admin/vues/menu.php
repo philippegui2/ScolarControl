@@ -15,6 +15,7 @@
     <!-- bootstrap theme -->
     <link href="../../css/bootstrap-theme.css" rel="stylesheet">
     <!--external css-->
+    <link rel="stylesheet" type="text/css" href="../../css/datePicker.css"/>
     <!-- font icon -->
     <link href="../../css/elegant-icons-style.css" rel="stylesheet" />
     <link href="../../css/font-awesome.min.css" rel="stylesheet" />
@@ -33,7 +34,11 @@
     <link href="../../css/style-responsive.css" rel="stylesheet" />
     <link href="../../css/xcharts.min.css" rel=" stylesheet">
     <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> parent of e5a4e20... document
     <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
     
     <link rel="stylesheet" href="../../bSelect/dist/css/bootstrap-select.css">
@@ -131,10 +136,14 @@
                             </li>
                             <li>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <a href="../admin?road=document"><i class="icon_document_alt"></i> Documentation</a>
 =======
                                 <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
 >>>>>>> parent of 424556c... document
+=======
+                                <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
+>>>>>>> parent of e5a4e20... document
                             </li>
                             <li>
                                 <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
@@ -198,8 +207,20 @@
                   </li>
                   <li class="">
                       <a class="" href="../admin/?road=payement">
-                          <i class="fa fa-users fa-fw"></i>
+                          <i class="fa fa-money fa-fw"></i>
                           <span>Payement</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="../admin/?road=agenda">
+                          <i class="fa fa-calendar fa-fw"></i>
+                          <span>Agenda</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="" href="../admin/?road=statistiques">
+                          <i class="fa fa-bar-chart-o fa-fw"></i>
+                          <span>Statistiques</span>
                       </a>
                   </li>
               </ul>
