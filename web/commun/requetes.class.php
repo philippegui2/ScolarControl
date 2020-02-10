@@ -468,6 +468,18 @@ Class Requetes
             $params = array();
             return $this->select($req,$params);
         }
+        
+        public function getAllDocuments(){//
+            $req="SELECT * from documents";
+            $params = array();
+            return $this->select($req,$params);
+        }
+        
+        public function getDocumentsByCategorie($idCategorie){
+            $req="SELECT * from documents where categorieDocument=:categorieDocument";
+            $params = array("categorieDocument" => $idCategorie);
+            return $this->select($req,$params);
+        }
     //fin méthodes de recupération dans la base de données
 
     //méthodes d'enregistement dans la base de données
