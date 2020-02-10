@@ -15,8 +15,8 @@
     <!-- bootstrap theme -->
     <link href="../../css/bootstrap-theme.css" rel="stylesheet">
     <!--external css-->
-    <link rel="stylesheet" type="text/css" href="../../css/datePicker.css"/>
     <!-- font icon -->
+    <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet"/>
     <link href="../../css/elegant-icons-style.css" rel="stylesheet" />
     <link href="../../css/font-awesome.min.css" rel="stylesheet" />
     <!-- full calendar css-->
@@ -25,15 +25,17 @@
     <!-- easy pie chart-->
     <link href="../../assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <!-- owl carousel -->
-    <link rel="stylesheet" href="../../css/owl.carousel.css" type="text/css">
+    <link href="../../css/owl.carousel.min.css" rel="stylesheet"/>
     <link href="../../css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
     <!-- Custom styles -->
     <link rel="stylesheet" href="../../css/fullcalendar.css">
     <link href="../../css/widgets.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/style-responsive.css" rel="stylesheet" />
-    <link href="../../css/xcharts.min.css" rel=" stylesheet">
-    <link href="../../css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+    <link href="../../css/xcharts.min.css" rel=" stylesheet"/>
+
+
+
 
     <link rel="stylesheet" type="text/css" href="../../DataTables/datatables.min.css"/>
 
@@ -131,7 +133,7 @@
                                 <a href="../admin/?road=notifications"><i class="icon_mail_alt"></i> Messagerie</a>
                             </li>
                             <li>
-                                <a href="login.html"><i class="icon_document_alt"></i> Documentation</a>
+                                <a href="../../commun/index.php?road=document"><i class="icon_document_alt"></i> Documentation</a>
                             </li>
                             <li>
                                 <a href="../../commun/controlleur.php?logout='logout'"><i class="icon_key_alt"></i> Deconnexion</a>
@@ -195,20 +197,8 @@
                   </li>
                   <li class="">
                       <a class="" href="../admin/?road=payement">
-                          <i class="fa fa-money fa-fw"></i>
+                          <i class="fa fa-users fa-fw"></i>
                           <span>Payement</span>
-                      </a>
-                  </li>
-                  <li class="">
-                      <a class="" href="../admin/?road=agenda">
-                          <i class="fa fa-calendar fa-fw"></i>
-                          <span>Agenda</span>
-                      </a>
-                  </li>
-                  <li class="">
-                      <a class="" href="../admin/?road=statistiques">
-                          <i class="fa fa-bar-chart-o fa-fw"></i>
-                          <span>Statistiques</span>
                       </a>
                   </li>
               </ul>
