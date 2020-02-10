@@ -133,7 +133,7 @@
   <!-- debut de la partie gauche-->
 <div class="col-lg-2" style="background-color:gray;height:259px;margin-left:50px;">
   <h3 style="color:black;"><strong>DECOUVREZ</br></strong></h3><h4 style="color:white;"><strong>LES NOUVEAUX LIVRES </strong></h4>
-  <center><img src="../../img/licone_livre.png" alt="" style="height:70px;"></center><br/><br/>
+  <center><img src="../../img/icone-livre.png" alt="" style="height:70px;"></center><br/><br/>
     <nav class="" style="height:40px;width: 110px;margin-bottom:0px;background-color:black;position:0px;">
         <h4 style="color:white; margin-left:10px;"><strong>CeSoTech</strong><br/>School</h4>
     </nav>
@@ -146,7 +146,7 @@
 					  <div class="carousel-inner" >
 					    <div class="item active" >
 					      <div class="col-md-3" >
-									<a href="#"><img src="../../img/valantine.jpg" class="img-responsive">
+									<a href="#"><img src="../../img/livre1.jpg" class="img-responsive">
 										<div class="blog-text" style="background-color:white; width:150px;">
                      <center><p style="color: black;"><strong>Lorem Ipsum</strong><br/> is simply dummy</p></center>
                   </div>
@@ -155,7 +155,7 @@
 					    </div>
 					    <div class="item">
 								<div class="col-md-3 col-sm-6 col-xs-12" >
-									<a href="#"><img src="../../img/arbre.jpg" class="img-responsive">
+									<a href="#"><img src="../../img/livre2.jpg" class="img-responsive">
 										<div class="blog-text" style="background-color:white;width:150px;">
 										 <center><p style="color: black;"><strong>Lorem Ipsum</strong> <br/>is simply dummy</p></center>
 									</div>
@@ -164,7 +164,7 @@
 					    </div>
 					    <div class="item">
 								<div class="col-md-3 col-sm-6 col-xs-12" >
-									<a href="#"><img src="../../img/vie.jpg" class="img-responsive">
+									<a href="#"><img src="../../img/livre3.jpg" class="img-responsive">
 										<div class="blog-text" style="background-color:white;width:150px;">
 										<center><p style="color:black;"><strong>Lorem Ipsum</strong></br> is simply dummy</p></center>
 									</div>
